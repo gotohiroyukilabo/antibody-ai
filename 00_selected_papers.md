@@ -1,0 +1,6 @@
+| リサーチ日      | 論文名                                                                                            | ジャーナル | DOI | 個別メモ                                                                                                       |
+| ---------- | ---------------------------------------------------------------------------------------------- | ----- | --- | ---------------------------------------------------------------------------------------------------------- |
+| 2026-06-28 | AbAffinity: A Large Language Model for Predicting Antibody Binding Affinity against SARS-CoV-2 | arXiv | なし  | [[20260628_AbAffinity A Large Language Model for Predicting Antibody Binding Affinity against SARS-CoV-2]] |
+| 2026-06-29 | CHIMERA-Bench: A Benchmark Dataset for Epitope-Specific Antibody Design | arXiv / ICLR 2026 GEM Workshop | 10.48550/arXiv.2603.13431 | [[20260629_CHIMERA-Bench A Benchmark Dataset for Epitope-Specific Antibody Design]] |
+| 2026-07-06 | AgForce Enables Antigen-conditioned Generative Antibody Design | arXiv | 10.48550/arXiv.2605.21610 | [[20260706_AgForce Enables Antigen-conditioned Generative Antibody Design]] |
+| 2026-07-20 | OpenGerminal: an open-source implementation of the Germinal antibody design pipeline | bioRxiv | 10.64898/2026.06.25.734527 | [[20260720_OpenGerminal an open-source implementation of the Germinal antibody design pipeline]] |
