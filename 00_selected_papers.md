@@ -5,3 +5,4 @@
 | 2026-07-06 | AgForce Enables Antigen-conditioned Generative Antibody Design | arXiv | 10.48550/arXiv.2605.21610 | [[20260706_AgForce Enables Antigen-conditioned Generative Antibody Design]] |
 | 2026-07-20 | OpenGerminal: an open-source implementation of the Germinal antibody design pipeline | bioRxiv | 10.64898/2026.06.25.734527 | [[20260720_OpenGerminal an open-source implementation of the Germinal antibody design pipeline]] |
 | 2026-07-27 | Machine Learning-Guided Engineering of High-Affinity Cross-Reactive Antibodies with Minimal Mutations | bioRxiv | 10.64898/2026.07.15.738714 | [[20260727_Machine Learning-Guided Engineering of High-Affinity Cross-Reactive Antibodies with Minimal Mutations]] |
+| 2026-07-29 | BoltzGen: Toward Universal Binder Design | bioRxiv | 10.1101/2025.11.20.689494 | [[20260729_BoltzGen Toward Universal Binder Design]] |
