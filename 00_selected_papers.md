@@ -6,3 +6,4 @@
 | 2026-07-20 | OpenGerminal: an open-source implementation of the Germinal antibody design pipeline | bioRxiv | 10.64898/2026.06.25.734527 | [[20260720_OpenGerminal an open-source implementation of the Germinal antibody design pipeline]] |
 | 2026-07-27 | Machine Learning-Guided Engineering of High-Affinity Cross-Reactive Antibodies with Minimal Mutations | bioRxiv | 10.64898/2026.07.15.738714 | [[20260727_Machine Learning-Guided Engineering of High-Affinity Cross-Reactive Antibodies with Minimal Mutations]] |
 | 2026-07-29 | BoltzGen: Toward Universal Binder Design | bioRxiv | 10.1101/2025.11.20.689494 | [[20260729_BoltzGen Toward Universal Binder Design]] |
+| 2026-07-30 | SaProt: Protein Language Modeling with Structure-aware Vocabulary | ICLR 2024 / bioRxiv | 10.1101/2023.10.01.560349 | [[20260730_SaProt Protein Language Modeling with Structure-aware Vocabulary]] |
