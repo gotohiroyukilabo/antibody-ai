@@ -12,7 +12,7 @@
 - 公開日/更新日: v1 posted 2026-04-18、v2 posted 2026-04-19。v2ではSupplementary Figure S24/S25の表示修正などが記載されている。
 - 著者・所属: Nicholas Altieri, Joseph L. Harman, David Noble, Natasha Murakowska, Alexander Eng, Kerry L. McGowan, Davis Goodnight, Lucian DiPeso, Colleen Shikany, Emily Engelhart, Leah J. Homad, Miranda C. Lahman, Shyam Gandhi, Mackenzie Goodwin, Kendrick Herbst, Charles Lin, Margot McMurray, Juliana Barrett, Aditya A. Agarwal, James Harrang, Ryan O. Emerson, Randolph M. Lopez, David A. Younger, Adrian W. Lange; A-Alpha Bio, Seattle, WA, USA
 - 掲載誌/プレプリントサーバー: bioRxiv preprint
-- リサーチ日: 2026-08-10
+- リサーチ日: 2026-08-11
 - 分類: 新着 / ベンチマーク・データセット / モデル起点
 
 ## 背景と問題設定
