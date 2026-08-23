@@ -8,3 +8,4 @@
 | 2026-07-29 | BoltzGen: Toward Universal Binder Design | bioRxiv | 10.1101/2025.11.20.689494 | [[20260729_BoltzGen Toward Universal Binder Design]] |
 | 2026-07-30 | SaProt: Protein Language Modeling with Structure-aware Vocabulary | ICLR 2024 / bioRxiv | 10.1101/2023.10.01.560349 | [[20260730_SaProt Protein Language Modeling with Structure-aware Vocabulary]] |
 | 2026-08-11 | The Synthetic Epitope Atlas: High-Throughput Design and Validation of De Novo Antibody-Antigen Complexes | bioRxiv | 10.64898/2026.04.17.719295 | [[20260811_The Synthetic Epitope Atlas High-Throughput Design and Validation of De Novo Antibody-Antigen Complexes]] |
+| 2026-08-24 | Preferential CDR masking in paired antibody language models improves binding affinity prediction | Communications AI & Computing | 10.1038/s44488-026-00010-2 | [[20260824_Preferential CDR masking in paired antibody language models improves binding affinity prediction]] |
