@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>High-throughput machine learning-aided antibody discovery for cell surface antigens — 精読ノート</title>
+  <style>
+    :root {
+      --ink: #17323a;
+      --muted: #5c7076;
+      --paper: #f6f4ee;
+      --panel: #fffefa;
+      --line: #d7ded9;
+      --teal: #167d79;
+      --teal-dark: #0e5e5b;
+      --mint: #dcefeb;
+      --gold: #c88428;
+      --gold-soft: #f5e8cd;
+      --coral: #bd5c4b;
+      --coral-soft: #f7e4df;
+      --navy: #264b68;
+      --shadow: 0 12px 28px rgba(31, 60, 64, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+    }
+    a { color: var(--teal-dark); text-underline-offset: 3px; }
+    a:hover { color: var(--coral); }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 920px); gap: 36px; max-width: 1240px; margin: 0 auto; padding: 24px; }
+    .toc {
+      position: sticky; top: 18px; align-self: start; max-height: calc(100vh - 36px); overflow: auto;
+      padding: 22px 18px; background: rgba(255,254,250,.92); border: 1px solid var(--line); border-radius: 18px;
+    }
+    .toc strong { display: block; margin-bottom: 10px; color: var(--teal-dark); letter-spacing: .08em; font-size: .82rem; }
+    .toc a { display: block; padding: 5px 7px; border-radius: 7px; color: var(--muted); text-decoration: none; font-size: .86rem; line-height: 1.35; }
+    .toc a:hover { background: var(--mint); color: var(--teal-dark); }
+    main { min-width: 0; }
+    .hero {
+      position: relative; overflow: hidden; padding: 54px 52px 46px; color: #f8fffd;
+      background: linear-gradient(135deg, #173e4b 0%, #176b69 62%, #26968a 100%); border-radius: 28px; box-shadow: var(--shadow);
+    }
+    .hero::after { content: ""; position: absolute; width: 280px; height: 280px; right: -90px; top: -100px; border: 44px solid rgba(255,255,255,.09); border-radius: 50%; }
+    .kicker { margin: 0 0 14px; text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; font-weight: 700; color: #bdece4; }
+    h1 { position: relative; z-index: 1; margin: 0; max-width: 800px; font-family: Georgia, "Times New Roman", "Yu Mincho", serif; font-size: clamp(2.15rem, 5vw, 4.4rem); line-height: 1.04; letter-spacing: -.03em; }
+    .hero-summary { position: relative; z-index: 1; max-width: 730px; margin: 24px 0 20px; font-size: 1.08rem; color: #e5f7f4; }
+    .badges { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 9px; margin: 22px 0; }
+    .badge { padding: 5px 11px; border: 1px solid rgba(255,255,255,.27); border-radius: 999px; background: rgba(255,255,255,.11); font-size: .78rem; font-weight: 650; }
+    .hero a { color: #fff; font-weight: 700; }
+    section { scroll-margin-top: 20px; margin: 54px 0; }
+    h2 { margin: 0 0 20px; font-size: 1.65rem; line-height: 1.3; letter-spacing: -.02em; }
+    h2::before { content: ""; display: inline-block; width: 9px; height: 26px; margin-right: 12px; vertical-align: -4px; border-radius: 5px; background: var(--gold); }
+    h3 { margin: 28px 0 12px; font-size: 1.13rem; }
+    p { margin: 0 0 15px; }
+    .grid { display: grid; gap: 16px; }
+    .key-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card { padding: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 5px 14px rgba(31,60,64,.04); }
+    .card h3 { margin-top: 0; color: var(--teal-dark); }
+    .metric { display: block; margin-bottom: 4px; color: var(--teal-dark); font-size: 2.05rem; font-weight: 790; line-height: 1.1; }
+    .metric small { font-size: .85rem; }
+    .muted { color: var(--muted); }
+    .callout { padding: 20px 22px; border-left: 6px solid var(--gold); background: var(--gold-soft); border-radius: 6px 14px 14px 6px; }
+    .warning { border-left-color: var(--coral); background: var(--coral-soft); }
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 22px; }
+    .flow-step { position: relative; min-height: 132px; padding: 17px 13px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; text-align: center; }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -17px; top: 45%; z-index: 2; width: 24px; color: var(--gold); font-size: 1.3rem; font-weight: 800; }
+    .step-no { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-bottom: 7px; color: white; background: var(--teal); border-radius: 50%; font-size: .76rem; font-weight: 800; }
+    .flow-step b { display: block; line-height: 1.35; }
+    .flow-step small { display: block; margin-top: 7px; color: var(--muted); line-height: 1.4; }
+    .viz { padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
+    .caption { margin: 12px 0 0; color: var(--muted); font-size: .83rem; }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 19px 14px; text-align: center; border-radius: 14px; background: var(--mint); }
+    .stat:nth-child(even) { background: var(--gold-soft); }
+    .bar-list { display: grid; gap: 15px; margin-top: 18px; }
+    .bar-label { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 5px; font-size: .9rem; }
+    .bar-track { height: 23px; overflow: hidden; background: #e8ebe7; border-radius: 999px; }
+    .bar-fill { height: 100%; min-width: 2px; border-radius: inherit; background: linear-gradient(90deg, var(--teal), #48a99c); }
+    .bar-fill.gold { background: linear-gradient(90deg, var(--gold), #e4ad58); }
+    .bar-fill.coral { background: linear-gradient(90deg, var(--coral), #db8879); }
+    table { width: 100%; border-collapse: collapse; font-size: .91rem; }
+    th, td { padding: 12px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--teal-dark); background: #edf5f2; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+    .funnel { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 13px; align-items: center; text-align: center; }
+    .funnel-box { padding: 26px 12px; color: white; background: var(--navy); border-radius: 15px; }
+    .funnel-box:nth-of-type(3) { background: var(--gold); }
+    .funnel-box:nth-of-type(5) { background: var(--teal); }
+    .funnel-num { display: block; font-size: 2.3rem; font-weight: 800; line-height: 1; }
+    .arrow { color: var(--gold); font-size: 1.7rem; font-weight: 800; }
+    .split { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .network { width: 100%; height: auto; display: block; }
+    .note-label { display: inline-block; margin-bottom: 7px; color: var(--coral); font-size: .77rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .license-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .license { padding: 18px; border-top: 5px solid var(--teal); background: var(--panel); border-radius: 11px; }
+    .license:nth-child(2) { border-top-color: var(--gold); }
+    .license:nth-child(3) { border-top-color: var(--coral); }
+    dl { display: grid; grid-template-columns: 180px 1fr; margin: 0; }
+    dt, dd { padding: 8px 0; border-bottom: 1px dotted var(--line); }
+    dt { font-weight: 700; color: var(--teal-dark); }
+    dd { margin: 0; }
+    ul { padding-left: 1.2em; }
+    li { margin: 7px 0; }
+    code { padding: 2px 5px; background: #e9efed; border-radius: 5px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; }
+    footer { margin: 56px 0 28px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; max-height: none; columns: 2; }
+      .toc strong { column-span: all; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 660px) {
+      body { font-size: 16px; }
+      .layout { padding: 10px; }
+      .hero { padding: 36px 25px; border-radius: 19px; }
+      .toc { columns: 1; }
+      .key-grid, .split, .license-row, .flow, .stats { grid-template-columns: 1fr; }
+      .funnel { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      dl { grid-template-columns: 1fr; }
+      dt { border-bottom: 0; padding-bottom: 0; }
+      dd { padding-top: 2px; }
+      section { margin: 42px 0; }
+    }
+    @media print {
+      @page { margin: 14mm; }
+      body { background: white; color: #111; font-size: 10.5pt; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .toc { display: none; }
+      .hero { color: white; box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      section, .card, .viz, .callout, table, tr { break-inside: avoid; }
+      a { color: inherit; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav class="toc" aria-label="目次">
+      <strong>CONTENTS</strong>
+      <a href="#takeaways">この論文の要点</a>
+      <a href="#problem">背景と問題</a>
+      <a href="#method">提案手法</a>
+      <a href="#dataset">データと評価設計</a>
+      <a href="#results">主要結果</a>
+      <a href="#figures">重要Figure/Table</a>
+      <a href="#meaning">抗体研究への意味</a>
+      <a href="#limits">限界と注意点</a>
+      <a href="#resources">Code / License / Weights</a>
+      <a href="#prereq">前提知識・次に試すこと</a>
+      <a href="#search">検索ログと出典</a>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <p class="kicker">AI × Antibody · Daily Paper Note · 2026-09-10</p>
+        <h1>High-throughput machine learning-aided antibody discovery for cell surface antigens</h1>
+        <p class="hero-summary">抗体displayを「最終winnerを選ぶ装置」から「各選別ラウンドを学習資産として残す装置」へ。短いARM表現と初期NGSデータから、後半で失われた結合抗体とエピトープ多様性を救済した。</p>
+        <div class="badges" aria-label="書誌情報">
+          <span class="badge">2026</span><span class="badge">Cell Systems 17(8)</span><span class="badge">新着・データセット</span><span class="badge">Priority: High</span><span class="badge">Open data + MIT code</span>
+        </div>
+        <p><a href="https://doi.org/10.1016/j.cels.2026.101645">DOI 10.1016/j.cels.2026.101645 →</a>　·　<a href="20260910_High-throughput%20machine%20learning-aided%20antibody%20discovery%20for%20cell%20surface%20antigens.md">Markdown版</a></p>
+      </header>
+
+      <section id="takeaways">
+        <h2>この論文の要点</h2>
+        <div class="grid key-grid">
+          <article class="card"><span class="metric">&lt;100 nt</span><h3>ARMという短縮コード</h3><p>可変CDRH3と軽鎖バーコードを1本の短いアンプリコンへ集約。配列・重軽鎖ペア・選別軌跡をNGSで追いやすくした。</p></article>
+          <article class="card"><span class="metric">≈10<sup>9</sup></span><h3>自然らしく、liabilityは少なく</h3><p>OAS 950万CDRH3の位置別頻度を模倣し、Cys/Metや凝集・多反応性モチーフを除いたVH1-69×4軽鎖Fabライブラリ。</p></article>
+          <article class="card"><span class="metric">10 targets</span><h3>直交する実験ラベル</h3><p>PD-L1/2、TIGIT、ROBO1/2などを並列選別し、NGSだけでなくSPR、細胞EC50、SEC、PSR、IHCへ接続した。</p></article>
+          <article class="card"><span class="metric">1,909 → 29 → 11</span><h3>選別の取りこぼしを救済</h3><p>ROBO2N初期ARMをk-merロジスティック回帰で再順位づけ。29抗体を再合成し、11抗体の細胞結合を確認した。</p></article>
+        </div>
+      </section>
+
+      <section id="problem">
+        <h2>背景と解決したい問題</h2>
+        <div class="split">
+          <article class="card"><h3>実験選別の盲点</h3><p>FACS後半のclone frequencyは親和性だけで決まらない。yeast display量、重軽鎖pairing、増殖、PCR誤差の影響で、良いbinderが早期に消える。</p></article>
+          <article class="card"><h3>抗体MLのデータ不足</h3><p>6 CDRと重軽鎖が同時に変わる通常ライブラリは入力が複雑。標的、陰性例、選別軌跡、実測物性が同一条件でそろう公開データも少ない。</p></article>
+        </div>
+        <div class="callout" style="margin-top:18px"><b>研究の転換点：</b>モデルを複雑にする前に、実験系を「学習しやすい表現」「全ラウンドの記録」「直交評価」へ設計し直す。</div>
+      </section>
+
+      <section id="method">
+        <h2>提案手法の全体像</h2>
+        <div class="flow" aria-label="入力から出力までの独自フロー図">
+          <div class="flow-step"><span class="step-no">1</span><b>自然配列統計</b><small>OAS 950万CDRH3<br>長さ11–17</small></div>
+          <div class="flow-step"><span class="step-no">2</span><b>ARM library</b><small>VH1-69 × 4軽鎖<br>liability除外</small></div>
+          <div class="flow-step"><span class="step-no">3</span><b>並列選別</b><small>10抗原<br>MACS → FACS×3</small></div>
+          <div class="flow-step"><span class="step-no">4</span><b>初期NGSを学習</b><small>1–3-mer + 鎖ID<br>logistic regression</small></div>
+          <div class="flow-step"><span class="step-no">5</span><b>再合成・検証</b><small>SPR / cell EC50<br>SEC / PSR / epitope</small></div>
+        </div>
+        <p class="caption">原論文Figure 1、2、5を参考にした独自の要約図（原図の転載ではない）。</p>
+
+        <div class="viz" style="margin-top:22px">
+          <h3>モデルが実際に学ぶもの</h3>
+          <table>
+            <thead><tr><th>要素</th><th>具体内容</th><th>意味</th></tr></thead>
+            <tbody>
+              <tr><td>入力</td><td>CDRH3の1/2/3-mer count（L2正規化）＋heavy/light identity</td><td>局所配列motifとscaffold差</td></tr>
+              <tr><td>教師</td><td>FACS1 count &gt; MACS countなら1、それ以外0</td><td>初期選別で濃縮する確率</td></tr>
+              <tr><td>候補条件</td><td>P&gt;0.8、&gt;200 CPM、既知/候補間Levenshtein距離≥5</td><td>高scoreと配列noveltyを両立</td></tr>
+              <tr><td>注意</td><td>結合親和性そのものではなくselection enrichmentのproxy</td><td>display/増殖biasも含む</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="dataset">
+        <h2>データセットと評価設計</h2>
+        <div class="grid stats">
+          <div class="stat"><span class="metric">9.5 M</span><span>設計元OAS CDRH3</span></div>
+          <div class="stat"><span class="metric">390 M</span><span>2 sublibraryで観測したunique CDRH3</span></div>
+          <div class="stat"><span class="metric">&gt;68 K</span><span>公開target-associated ARM</span></div>
+          <div class="stat"><span class="metric">486</span><span>特性付き公開抗体</span></div>
+        </div>
+        <h3>10種の標的</h3>
+        <p>PD-L1、PD-L2、TIGIT、LOX1、DKK1、IL23R、DCC、ROBO1、ROBO2N、Syncytin-2。大きさ、fold、細胞機能、paralog相同性が異なる標的を意図的に組み合わせた。ROBO1/2 N末端は94%同一で、交差結合・epitope transferの検証に使われた。</p>
+        <h3>分割とリーク監査</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>評価面</th><th>設計</th><th>判断</th></tr></thead>
+            <tbody>
+              <tr><td>ROBO2N train/test</td><td>1,909 FACS1 ARMの80% / 20%</td><td>標準的holdoutだがcluster splitではない</td></tr>
+              <tr><td>validation</td><td>FACS3残存ARMをMACS比で評価</td><td>時間的には後段だが同一campaign内</td></tr>
+              <tr><td>novelty</td><td>既存抗体と候補同士で編集距離≥5</td><td>単純な近縁clone再発見を抑える</td></tr>
+              <tr><td>外部性</td><td>ROBO2N modelをROBO1実測抗体へ適用</td><td>近縁paralog間。遠縁/zero-shotではない</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="results">
+        <h2>主要結果</h2>
+        <div class="viz">
+          <h3>424発現抗体の品質・結合</h3>
+          <div class="bar-list" aria-label="抗体数の横棒チャート">
+            <div><div class="bar-label"><span>発現成功</span><b>424 / 429</b></div><div class="bar-track"><div class="bar-fill" style="width:98.8%"></div></div></div>
+            <div><div class="bar-label"><span>PSR合格</span><b>354 / 424</b></div><div class="bar-track"><div class="bar-fill" style="width:83.5%"></div></div></div>
+            <div><div class="bar-label"><span>SEC合格</span><b>302 / 424</b></div><div class="bar-track"><div class="bar-fill gold" style="width:71.2%"></div></div></div>
+            <div><div class="bar-label"><span>SEC + PSR 合格</span><b>285 / 424</b></div><div class="bar-track"><div class="bar-fill gold" style="width:67.2%"></div></div></div>
+            <div><div class="bar-label"><span>cell EC50 &lt;25 nM</span><b>118 / 424</b></div><div class="bar-track"><div class="bar-fill coral" style="width:27.8%"></div></div></div>
+            <div><div class="bar-label"><span>SPR KD &lt;10 nM</span><b>103 / 424</b></div><div class="bar-track"><div class="bar-fill coral" style="width:24.3%"></div></div></div>
+          </div>
+          <p class="caption">横棒は424発現抗体を100%とした割合。結合指標は高いほど良い抗体数が増えるが、KD自体は低いほど高親和性。</p>
+        </div>
+        <div class="split" style="margin-top:18px">
+          <article class="card"><span class="metric">0.93 / 0.78 / 0.76</span><h3>自然配列とのk-mer相関</h3><p>OASに対するSpearman相関（1/2/3-mer）。自然らしい局所統計を残しながら、Cys/Metや既知liability motifを除去した。</p></article>
+          <article class="card"><span class="metric">≈1,000 → ≈100</span><h3>FACSでcluster多様性が急減</h3><p>FACS1からFACS3で約1桁減った。頻度上位clusterが最良potencyとは限らず、初期データを捨てない理由になる。</p></article>
+        </div>
+      </section>
+
+      <section id="figures">
+        <h2>重要なFigure / Table</h2>
+        <article class="viz">
+          <span class="note-label">Figure 5 · ML rescue</span>
+          <div class="funnel" aria-label="ROBO2N候補救済の独自ファネル図">
+            <div class="funnel-box"><span class="funnel-num">1,909</span>FACS1 ARM<br><small>count &gt;5</small></div><span class="arrow">→</span>
+            <div class="funnel-box"><span class="funnel-num">29</span>高score・遠距離候補<br><small>再合成</small></div><span class="arrow">→</span>
+            <div class="funnel-box"><span class="funnel-num">11</span>ROBO2 cell binder<br><small>全てROBO1にも結合</small></div>
+          </div>
+          <p style="margin-top:17px">上位10候補のうち9つは、IHCで使えたROBO抗体に匹敵する強いSPR kineticsを示した。PD-L1、PD-L2、DCC、LOX1へのoff-target結合は観察されなかった。重要なのは最終FACS頻度の予測ではなく、そこから脱落した候補を実験へ戻した点である。</p>
+          <p class="caption">原論文Figure 5の報告値に基づく独自ファネル図。原図の転載ではない。<a href="https://www.sciencedirect.com/science/article/pii/S2405471226001274">出典</a>（CC BY-NC-ND 4.0）。</p>
+        </article>
+
+        <article class="viz" style="margin-top:20px">
+          <span class="note-label">Figure 6 · Epitope diversity</span>
+          <svg class="network" viewBox="0 0 760 330" role="img" aria-labelledby="network-title network-desc">
+            <title id="network-title">ROBO抗体のエピトープビンを概念化した独自模式図</title>
+            <desc id="network-desc">左にROBO1の4ビン、右にROBO2Nの支配的中心ビンと周辺抗体を示す。2つのML由来抗体は互いに競合しない。</desc>
+            <rect x="10" y="15" width="355" height="290" rx="18" fill="#eef6f3" stroke="#cdded8"/>
+            <rect x="395" y="15" width="355" height="290" rx="18" fill="#fbf3e4" stroke="#ead7b6"/>
+            <text x="30" y="48" font-size="18" font-weight="700" fill="#0e5e5b">ROBO1 · 4 epitope bins</text>
+            <circle cx="173" cy="167" r="73" fill="#75b9ad" opacity=".82"/><text x="173" y="160" text-anchor="middle" font-size="24" font-weight="800" fill="white">28</text><text x="173" y="184" text-anchor="middle" font-size="13" fill="white">dominant crowd</text>
+            <circle cx="74" cy="246" r="25" fill="#c88428"/><circle cx="285" cy="235" r="25" fill="#bd5c4b"/><circle cx="302" cy="93" r="25" fill="#506f8a"/>
+            <text x="30" y="287" font-size="12" fill="#5c7076">別binは競合せず、離れたepitope spaceを示す</text>
+            <text x="415" y="48" font-size="18" font-weight="700" fill="#8c5b18">ROBO2N · 12中心 + 6周辺</text>
+            <circle cx="570" cy="165" r="69" fill="#c88428" opacity=".83"/><text x="570" y="160" text-anchor="middle" font-size="24" font-weight="800" fill="white">12</text><text x="570" y="184" text-anchor="middle" font-size="13" fill="white">dominant bin</text>
+            <g fill="#167d79"><circle cx="457" cy="108" r="20"/><circle cx="466" cy="225" r="20"/><circle cx="535" cy="264" r="20"/><circle cx="652" cy="249" r="20"/><circle cx="685" cy="152" r="20"/><circle cx="639" cy="83" r="20"/></g>
+            <circle cx="466" cy="225" r="27" fill="none" stroke="#bd5c4b" stroke-width="4"/><circle cx="639" cy="83" r="27" fill="none" stroke="#bd5c4b" stroke-width="4"/>
+            <path d="M487 211 Q550 152 622 100" fill="none" stroke="#bd5c4b" stroke-width="3" stroke-dasharray="7 7"/>
+            <text x="493" y="292" font-size="12" fill="#5c7076">赤い輪 = 相互非競合だった2つのML由来抗体</text>
+          </svg>
+          <p>SPR競合実験は、ROBO1で4 bin、ROBO2Nで12抗体からなる支配的binと6周辺抗体を示した。ML由来ROBO2N抗体2つが互いに競合しなかったことから、救済は候補数だけでなくepitope diversityも回復したと読める。</p>
+          <p class="caption">原論文Figure 6の事実関係を新しい配置で表現した独自模式図。原図の転載ではない。<a href="https://www.sciencedirect.com/science/article/pii/S2405471226001274">出典</a>（CC BY-NC-ND 4.0）。</p>
+        </article>
+      </section>
+
+      <section id="meaning">
+        <h2>抗体研究・創薬への意味</h2>
+        <div class="grid key-grid">
+          <article class="card"><h3>1. 選別履歴を資産化</h3><p>最終poolだけを読むのではなく、MACS/FACS全ラウンドを保存する。early diversityを再採掘でき、難標的のcandidate countを増やせる。</p></article>
+          <article class="card"><h3>2. 陰性・脱落例が使える</h3><p>成功cloneだけでなく、非濃縮・低頻度・脱落sequenceも学習信号になる。selection biasを研究できる稀少な公開データである。</p></article>
+          <article class="card"><h3>3. 多目的設計への入口</h3><p>SPR、cell binding、SEC、PSRを同じ抗体へ結び、affinityだけでなくdevelopabilityを同時に扱える。</p></article>
+          <article class="card"><h3>4. 単純モデルでも実験価値</h3><p>k-mer LRでもwet screeningの盲点を埋められた。モデル規模より、データ設計と実験検証が価値を決める好例。</p></article>
+        </div>
+      </section>
+
+      <section id="limits">
+        <h2>限界と注意点</h2>
+        <div class="callout warning">
+          <b>zero-shot抗体設計の証明ではない。</b> 同じcampaignの初期選別データを用いた候補救済であり、異なるscaffold・遠縁抗原・独立ラボへ一般化した評価ではない。
+        </div>
+        <div class="split" style="margin-top:18px">
+          <article class="card"><h3>著者が述べる限界</h3><ul><li>VH1-69と4軽鎖、固定CDR1/2に制約。</li><li>PCR/sequence errorと低頻度cross-contamination。</li><li>より多くの重軽鎖pair、抗原family、用途で検証が必要。</li><li>PD-L2救済抗体のSPRはやや弱い。</li></ul></article>
+          <article class="card"><h3>追加の監査ポイント</h3><ul><li>random splitはsequence clusterを跨ぐ可能性。</li><li>教師はKDではなくenrichment proxy。</li><li>主ML検証はROBO2NとPD-L2の2標的。</li><li>cell EC50/KDは治療機能、PK、免疫原性を保証しない。</li></ul></article>
+        </div>
+      </section>
+
+      <section id="resources">
+        <h2>Code / License / Weights</h2>
+        <div class="license-row">
+          <div class="license"><b>論文本体</b><span class="metric" style="font-size:1.35rem">CC BY-NC-ND 4.0</span><span class="muted">原図は転載せず、独自要約図を使用</span></div>
+          <div class="license"><b>公開データ</b><span class="metric" style="font-size:1.35rem">CC BY 4.0</span><a href="https://doi.org/10.5281/zenodo.15707494">Zenodo 15707494</a></div>
+          <div class="license"><b>解析コード</b><span class="metric" style="font-size:1.35rem">MIT</span><a href="https://github.com/debbiemarkslab/ML-antibody-discovery">GitHub</a> · <a href="https://doi.org/10.5281/zenodo.20060875">Zenodo</a></div>
+        </div>
+        <dl style="margin-top:20px">
+          <dt>実装</dt><dd>著者公式。<code>antibody_sorting_regression.py</code> とnotebook、params、score/plot files。</dd>
+          <dt>公開データ</dt><dd>抗原別selection CSV、library key、486抗体のbiophysics CSV。68,000超のtarget-associated ARM。</dd>
+          <dt>Hugging Face</dt><dd>公式model/datasetは見つからず。</dd>
+          <dt>Weights</dt><dd>該当なし。汎用pretrained modelではなく、公開データからLRをfitする。</dd>
+          <dt>再現性</dt><dd>計算部分は追跡可能。ライブラリ構築、MACS/FACS、SPR、cell displayの完全再現には大規模wet設備が必要。</dd>
+        </dl>
+      </section>
+
+      <section id="prereq">
+        <h2>前提知識、関連論文、次に試すこと</h2>
+        <div class="split">
+          <article class="card"><h3>前提知識</h3><ul><li><b>CDRH3:</b> 抗原接触の中心になりやすい高可変loop。</li><li><b>Yeast display:</b> yeast表面Fabと蛍光抗原でbinderを選ぶ。</li><li><b>MACS/FACS:</b> 粗い磁気濃縮と精密な蛍光選別。</li><li><b>SPR:</b> ka/kd/KDで結合速度と親和性を測る。</li><li><b>SEC/PSR:</b> 凝集・分解と多反応性のdevelopability検査。</li><li><b>Levenshtein距離:</b> 挿入・削除を含む配列編集距離。</li></ul></article>
+          <article class="card"><h3>次に試すこと</h3><ol><li>Zenodo CSVをPCR error/contamination基準でcleaning。</li><li>random splitをCDRH3 cluster splitへ変更。</li><li>1–3-mer LR、抗体PLM、構造embeddingを同一splitで比較。</li><li>抗原holdoutで「campaign内救済」からzero-shotまでの距離を測る。</li><li>SPR/cell/SEC/PSRをmulti-taskで同時予測する。</li></ol></article>
+        </div>
+        <h3>関連して読むべき論文</h3>
+        <p>Erasmus et al. 2023（NGS-guided antibody selection）、AIntibody challenge（実験接地benchmark）、AntiFold 2025（structure-based inverse folding）、Xu &amp; Davis 2000（CDRH3 diversityの基礎）。</p>
+      </section>
+
+      <section id="search">
+        <h2>検索ログと出典一覧</h2>
+        <p><b>候補：</b><i>Dual-Specific Antibody Design Using Artificial Intelligence</i>、<i>IgGM2</i>、<i>De novo design of ligand binding proteins using large language models alone</i>。今回は正式誌掲載、実験検証、公開code/data、前回benchmark論文との補完性を優先した。</p>
+        <p><b>確認範囲：</b>PubMed、Cell Systems/ScienceDirect最終HTML、bioRxiv公開PDF、GitHub LICENSE/README、Zenodo dataset/code metadata、Hugging Face検索。ScienceDirectの自動閲覧はCAPTCHAで停止したため回避せず、公開検索indexとbioRxiv PDFで照合した。</p>
+        <ul>
+          <li><a href="https://doi.org/10.1016/j.cels.2026.101645">Cell Systems DOI / 最終論文</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/42335897/">PubMed 42335897</a></li>
+          <li><a href="https://doi.org/10.1101/2025.05.15.650607">bioRxiv preprint</a></li>
+          <li><a href="https://github.com/debbiemarkslab/ML-antibody-discovery">著者GitHub（MIT）</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.15707494">NGS / biophysics dataset（CC BY 4.0）</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.20060875">解析コードarchive（MIT）</a></li>
+          <li><a href="https://proteininnovation.org/2026/06/machining-antibodies-at-ipi/">Institute for Protein Innovation 解説</a></li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>著者: Deepash Kothiwal, Aaron W. Kollasch, Murali Anuganti et al. · 精読日 2026-09-10 JST · 原論文本体はCC BY-NC-ND 4.0。本ページのチャートと模式図は報告値・事実関係に基づく独自再構成で、原図の転載ではありません。</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
