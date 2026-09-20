@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="IgGM2論文の日本語ビジュアル精読ノート。抗体・VHH・TCRの全原子構造予測とCDR共設計を図解する。">
+  <title>IgGM2 — 日本語ビジュアル精読ノート</title>
+  <style>
+    :root{--ink:#172523;--muted:#5c6c69;--paper:#f7f8f4;--card:#fff;--line:#d7dfda;--teal:#126e6a;--teal2:#72aaa3;--blue:#3b6591;--gold:#b57618;--red:#a7433f;--soft:#eaf3f1;--warn:#fff4df;--bad:#fbeae8;--shadow:0 10px 28px rgba(28,52,48,.08)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.78;font-size:16px}
+    a{color:#075f78;text-underline-offset:3px} a:focus-visible{outline:3px solid #f0b84b;outline-offset:3px}.wrap{max-width:1180px;margin:auto;padding:0 24px}.hero{background:linear-gradient(130deg,#102d2b,#184b49 58%,#315f6d);color:#fff;padding:66px 0 54px;border-bottom:6px solid #d6a24a}.eyebrow{letter-spacing:.12em;text-transform:uppercase;color:#bee0da;font-weight:700;font-size:.8rem}.hero h1{font-family:Georgia,"Yu Mincho",serif;font-size:clamp(2.1rem,5vw,4.5rem);line-height:1.06;margin:.35em 0 .3em;max-width:1000px}.hero .lead{max-width:880px;font-size:1.15rem;color:#e8f3f1}.badges{display:flex;flex-wrap:wrap;gap:9px;margin:25px 0}.badge{border:1px solid rgba(255,255,255,.38);border-radius:999px;padding:5px 11px;background:rgba(255,255,255,.09);font-size:.86rem}.hero-links{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-block;padding:10px 15px;border-radius:8px;background:#fff;color:#174542;font-weight:700;text-decoration:none}.btn.secondary{background:transparent;color:#fff;border:1px solid #c7dfdb}
+    .layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:38px;align-items:start;padding-top:36px}.toc{position:sticky;top:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;text-decoration:none;color:#40514e;padding:5px 0;font-size:.9rem;border-bottom:1px dashed #edf0ed}.toc a:last-child{border:0}
+    main{min-width:0;padding-bottom:70px} section{scroll-margin-top:16px;margin-bottom:54px} h2{font-family:Georgia,"Yu Mincho",serif;font-size:1.85rem;line-height:1.25;margin:0 0 17px;padding-bottom:8px;border-bottom:2px solid #bed3cf}h3{font-size:1.15rem;margin:1.5em 0 .45em}.kicker{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:800}.lede{font-size:1.08rem}.grid{display:grid;gap:15px}.grid.four{grid-template-columns:repeat(4,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.grid.two{grid-template-columns:repeat(2,1fr)}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow)}.card h3{margin:.1em 0 .45em}.metric{font:700 2rem/1.1 Georgia,serif;color:var(--teal)}.metric small{font:500 .78rem/1.2 -apple-system,sans-serif;color:var(--muted)}.note{background:var(--soft);border-left:5px solid var(--teal);padding:16px 18px;border-radius:0 10px 10px 0}.warning{background:var(--warn);border-left-color:var(--gold)}.danger{background:var(--bad);border-left-color:var(--red)}
+    .flow{display:grid;grid-template-columns:1fr 38px 1fr 38px 1fr;align-items:stretch;gap:10px;margin:22px 0}.node{background:#fff;border:2px solid var(--teal2);border-radius:13px;padding:17px;text-align:center}.node b{display:block;color:#145b57;margin-bottom:5px}.arrow{display:grid;place-items:center;font-size:1.8rem;color:var(--teal);font-weight:900}.phase{border-top:4px solid var(--blue)}.phase.two{border-top-color:var(--gold)}
+    table{width:100%;border-collapse:collapse;background:#fff;font-size:.92rem}caption{text-align:left;font-weight:700;padding:0 0 9px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#edf3f1}.best{font-weight:800;color:#0f625e}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:#fff}.table-wrap table{min-width:650px}
+    .bars{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}.bar-row{display:grid;grid-template-columns:130px 1fr 75px;gap:12px;align-items:center;margin:11px 0}.track{height:21px;background:#edf0ed;border-radius:999px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--teal),#58aaa3);border-radius:999px}.fill.blue{background:linear-gradient(90deg,#38628c,#7298bd)}.fill.gold{background:linear-gradient(90deg,#9a6517,#d9a446)}.legend{font-size:.82rem;color:var(--muted)}
+    .quality{display:grid;grid-template-columns:45.3fr 21.5fr 7fr 26.2fr;height:42px;border-radius:9px;overflow:hidden;color:#fff;font-size:.8rem;font-weight:700}.quality span{display:grid;place-items:center;text-align:center;padding:2px}.q1{background:#176a63}.q2{background:#528c86}.q3{background:#b17b24}.q4{background:#a94c47}.caption{font-size:.86rem;color:var(--muted);margin-top:8px}.figure{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;box-shadow:var(--shadow);break-inside:avoid}.callout-number{font:700 2.2rem/1 Georgia,serif;color:var(--teal)}dl.meta{display:grid;grid-template-columns:190px 1fr;margin:0}dl.meta dt,dl.meta dd{padding:8px 10px;border-bottom:1px solid var(--line);margin:0}dl.meta dt{font-weight:700;color:#445653}.pill{display:inline-block;border-radius:999px;padding:3px 9px;background:#edf3f1;margin:2px;font-size:.83rem}ul,ol{padding-left:1.25rem}li+li{margin-top:.35em}.source-list li{word-break:break-word}.small{font-size:.88rem;color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.85rem}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static}.grid.four,.grid.three{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);min-height:25px}dl.meta{grid-template-columns:1fr}dl.meta dt{padding-bottom:0;border-bottom:0}.bar-row{grid-template-columns:105px 1fr 58px}}
+    @media(max-width:560px){.wrap{padding:0 16px}.hero{padding:42px 0 36px}.grid.four,.grid.three,.grid.two{grid-template-columns:1fr}.bar-row{grid-template-columns:92px 1fr 54px;gap:7px}.quality{height:66px;font-size:.7rem}body{font-size:15px}.card,.figure{padding:15px}}
+    @media print{@page{size:A4;margin:13mm}body{background:#fff;font-size:10pt}.hero{padding:18px 0;color:#111;background:#fff;border-bottom:3px solid #555}.hero .lead,.eyebrow{color:#333}.badge{border-color:#777;background:#fff}.hero-links,.toc{display:none}.layout{display:block;padding-top:18px}.wrap{max-width:none;padding:0}.card,.figure,.bars,.note,.table-wrap{box-shadow:none;break-inside:avoid}section{margin-bottom:28px}h2{break-after:avoid}.grid.four{grid-template-columns:repeat(2,1fr)}a{color:#111;text-decoration:none}.btn{border:1px solid #777}.quality{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">AI × ANTIBODY · VISUAL PAPER NOTE · 2026-09-21</div>
+      <h1>IgGM2</h1>
+      <p class="lead">抗体・VHH・TCRの構造予測とCDR設計を、標的条件付きの全原子拡散モデルで一つにつなぐ。強い計算結果と、実験未検証という境界を同じ画面で読む。</p>
+      <div class="badges"><span class="badge">bioRxiv 2026</span><span class="badge">新着 / モデル起点</span><span class="badge">全原子拡散</span><span class="badge">High priority</span><span class="badge">CC BY-NC-ND 4.0</span></div>
+      <div class="hero-links"><a class="btn" href="https://doi.org/10.64898/2026.07.09.737510">DOI / 論文</a><a class="btn secondary" href="20260921_IgGM2%20An%20All-Atom%20Foundation%20Model%20for%20Adaptive%20Immune%20Receptor%20Design.md">Markdown版</a></div>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <nav class="toc" aria-label="目次"><strong>目次</strong><a href="#takeaways">要点</a><a href="#background">背景</a><a href="#method">手法</a><a href="#data">データと評価</a><a href="#results">主要結果</a><a href="#figures">Figure / Table</a><a href="#impact">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License</a><a href="#learn">前提知識と次</a><a href="#sources">検索ログ・出典</a></nav>
+
+    <main>
+      <section id="takeaways">
+        <div class="kicker">At a glance</div><h2>この論文の要点</h2>
+        <div class="grid four">
+          <article class="card"><div class="metric">1 model</div><h3>免疫受容体を統一</h3><p>抗体、VHH、TCR、各複合体を共通の全原子フレームワークで予測・設計する。</p></article>
+          <article class="card"><div class="metric">0.60 <small>DockQ</small></div><h3>FoldBench</h3><p>epitope条件付き、1×1生成でSR 73.8%。AF3公式値は0.36 / 47.9%。</p></article>
+          <article class="card"><div class="metric">5 / 6 <small>CDRs</small></div><h3>局所構造が強い</h3><p>paired antibody設計で6 CDR中5つのlocal Cα RMSDが最良。</p></article>
+          <article class="card"><div class="metric">0 wet-lab</div><h3>実験検証なし</h3><p>結合・特異性・安定性・developabilityは計算指標からは確定できない。</p></article>
+        </div>
+        <p class="note warning"><strong>最初に押さえる読み方:</strong> IgGM2は「実験で当たった抗体設計法」ではない。既知構造に対する位置・配列・局所構造の回復とRosetta scoreで、統合型モデルの可能性を示した論文である。</p>
+      </section>
+
+      <section id="background">
+        <div class="kicker">Problem</div><h2>背景と解決したい問題</h2>
+        <div class="grid two">
+          <article class="card"><h3>従来のモジュール型</h3><ol><li>複合体またはbackboneを生成</li><li>inverse foldingで配列を後付け</li><li>外部ツールで側鎖packing</li><li>docking・scoreで選別</li></ol><p class="small">工程間で配列、骨格、側鎖、結合姿勢がずれる可能性がある。</p></article>
+          <article class="card"><h3>IgGM2が狙う統合</h3><ol><li>固定標的の周囲へ受容体を配置</li><li>CDR配列と骨格を共同生成</li><li>同じモデルで全原子へ精密化</li><li>抗体/VHH/TCRを共通表現に置く</li></ol><p class="small">構造予測能力を設計の幾何学的事前分布として再利用する。</p></article>
+        </div>
+      </section>
+
+      <section id="method">
+        <div class="kicker">Method</div><h2>提案手法の全体像</h2>
+        <div class="figure" role="img" aria-label="固定された抗原構造からIgGM2-Pを経てIgGM2-Dの二段階CDR設計へ進む独自要約フロー">
+          <div class="flow">
+            <div class="node"><b>入力</b>受容体配列<br>固定抗原 / pMHC構造<br>任意のepitope hotspot</div><div class="arrow">→</div>
+            <div class="node"><b>IgGM2-P</b>ConstraintEmbed + Pairformer<br>受容体原子だけを拡散<br>全原子構造予測</div><div class="arrow">→</div>
+            <div class="node"><b>IgGM2-D</b>構造事前分布を移植<br>CDR配列denoiserを追加<br>配列–構造共設計</div>
+          </div>
+          <div class="grid two">
+            <div class="node phase"><b>Phase 1 · 高ノイズ</b>CDRをUNKとして扱い、残基identityとbackbone geometryを同時に解く。</div>
+            <div class="node phase two"><b>Phase 2 · 低ノイズ</b>T<sub>switch</sub>=75で配列を固定し、側鎖を含む全原子構造を精密化する。</div>
+          </div>
+          <p class="caption">原論文Figure 1・2を参考にした独自の要約図（原図の転載ではない）。配色・配置・文言は独自構成。</p>
+        </div>
+        <div class="grid three" style="margin-top:16px">
+          <article class="card"><h3>Noise alignment</h3><p>EDMのskip coefficientを配列の可視率に対応させ、座標が不確かな段階ほどCDR tokenを多く隠す。</p></article>
+          <article class="card"><h3>Mixed training</h3><p>sequence-design 30% / structure-only 70%。構造能力を保ちながらCDR生成を学ぶ。</p></article>
+          <article class="card"><h3>Immune-centered crop</h3><p>受容体全体を残し、抗原は受容体重心に近い領域を優先。最大512 token。</p></article>
+        </div>
+        <dl class="meta" style="margin-top:18px"><dt>初期化</dt><dd>AF3-like shared modulesをProtenix parametersから初期化</dd><dt>入力</dt><dd>single sequence、固定標的構造、任意のhotspot。MSA/templateなし</dd><dt>表現</dt><dd>atom14全原子slot。非物理的virtual atomで残基種を符号化しない</dd><dt>学習計算</dt><dd>16×A100、Adam、LR 1.8×10<sup>-3</sup>、3,000-step warmup</dd><dt>出力</dt><dd>IgGM2-P: 全原子構造。IgGM2-D: CDR配列＋受容体全原子構造＋標的結合姿勢</dd></dl>
+      </section>
+
+      <section id="data">
+        <div class="kicker">Dataset & protocol</div><h2>データセットと評価設計</h2>
+        <div class="grid three">
+          <article class="card"><div class="callout-number">2021-09-30</div><h3>構造予測cutoff</h3><p>それ以前を学習候補とし、testとfull-sequence identity &gt;95%を除外。</p></article>
+          <article class="card"><div class="callout-number">2024-01-01</div><h3>配列設計cutoff</h3><p>時間分割に加え、train–testのCDRH3 similarityを0.8未満に制御。</p></article>
+          <article class="card"><div class="callout-number">203</div><h3>主要設計test</h3><p>test内部もCDRH3重複除去。paired antibody 148、nanobody 55。</p></article>
+        </div>
+        <div class="table-wrap" style="margin-top:18px"><table><caption>主要benchmark</caption><thead><tr><th>目的</th><th>Dataset</th><th>規模</th><th>主指標</th><th>注意点</th></tr></thead><tbody><tr><td>Ab/VHH–Ag予測</td><td>FoldBench</td><td>172 interfaces / 113 assemblies</td><td>DockQ, SR</td><td>IgGM2はepitope条件付き</td></tr><tr><td>TCR–pMHC予測</td><td>STCRDab-22-TCR_pMHC</td><td>18 complexes</td><td>DockQ, LRMS, iRMS, GDT</td><td>pMHCを固定</td></tr><tr><td>CDR共設計</td><td>SAbDab clean test</td><td>269 full / 203 dedup</td><td>AAR, local RMSD, IMP, dG</td><td>既知nativeへの回復</td></tr></tbody></table></div>
+        <p class="note"><strong>リーク対策は比較的丁寧:</strong> 時間cutoff、cluster split、test内部dedupを併用。ただし学習set最終件数は未報告で、split fileも公開確認できない。</p>
+      </section>
+
+      <section id="results">
+        <div class="kicker">Results</div><h2>主要結果</h2>
+        <div class="figure">
+          <h3>FoldBench: mean DockQ（高いほど良い）</h3>
+          <div class="bars" aria-label="FoldBench mean DockQ比較の横棒グラフ">
+            <div class="bar-row"><span>IgGM2-P</span><div class="track"><div class="fill" style="width:60.4%"></div></div><strong>0.604</strong></div>
+            <div class="bar-row"><span>AlphaFold-3</span><div class="track"><div class="fill blue" style="width:36%"></div></div><strong>0.36</strong></div>
+            <div class="bar-row"><span>Protenix-1.0</span><div class="track"><div class="fill blue" style="width:36%"></div></div><strong>0.36</strong></div>
+            <div class="bar-row"><span>Boltz-1</span><div class="track"><div class="fill gold" style="width:22%"></div></div><strong>0.22</strong></div>
+          </div>
+          <p class="caption">IgGM2: 1 seed×1 sample、候補rankingなし。ただし固定抗原＋epitope情報を使用。baselineは公式FoldBenchの5×5 sampling結果。</p>
+          <h3>IgGM2の172 interfaces品質分布</h3>
+          <div class="quality" aria-label="High 45.3%、Medium 21.5%、Acceptable 7.0%、Incorrect 26.2%"><span class="q1">High<br>45.3%</span><span class="q2">Medium<br>21.5%</span><span class="q3">Accept.<br>7.0%</span><span class="q4">Incorrect<br>26.2%</span></div>
+          <p class="caption">平均が高くても45/172 interfacesはDockQ&lt;0.23。失敗群を隠さず読む。</p>
+        </div>
+
+        <div class="grid two" style="margin-top:18px">
+          <article class="card"><h3>Paired antibody設計</h3><p><span class="metric">0.590 <small>mean AAR</small></span></p><p>AbX 0.610、dyMEAN 0.596に僅かに劣る一方、local Cα RMSDは6 CDR中5つで最良。IMP 0.615、mean dG -23.27。</p></article>
+          <article class="card"><h3>Nanobody設計</h3><p><span class="metric">0.372 <small>mean AAR</small></span></p><p>DiffAb 0.287から改善。HCDR3はIgGM 0.154→0.238（相対+54.55%）。IMP 0.527、mean dG -24.84。</p></article>
+        </div>
+        <div class="table-wrap" style="margin-top:18px"><table><caption>結果を主張の強さ別に整理</caption><thead><tr><th>結果</th><th>IgGM2</th><th>比較</th><th>解釈</th></tr></thead><tbody><tr><td>FoldBench SR</td><td class="best">73.8%</td><td>AF3 47.9%</td><td>標的・epitope条件下のpose回復が強い</td></tr><tr><td>TCR–pMHC DockQ</td><td class="best">0.746</td><td>AF3 0.632</td><td>固定pMHC文脈が有効</td></tr><tr><td>Paired co-generated DockQ</td><td class="best">0.292</td><td>IgGM 0.170</td><td>相対改善は大きいが絶対値は低い</td></tr><tr><td>Nanobody co-generated DockQ / SR</td><td class="best">0.216 / 0.284</td><td>IgGM 0.137 / 0.162</td><td>長いHCDR3は依然難しい</td></tr><tr><td>Wet-lab binding</td><td>未実施</td><td>—</td><td>affinity成功率は不明</td></tr></tbody></table></div>
+        <p class="note warning"><strong>Ablationの教訓:</strong> 最高AAR 0.534の設定はinterface preferenceが落ちる。選択設定30:70 / noise 0.1 / T<sub>switch</sub>75は、配列回復・HCDR3 geometry・IMPの折衷である。</p>
+      </section>
+
+      <section id="figures">
+        <div class="kicker">Reading figures</div><h2>重要なFigure / Table</h2>
+        <div class="grid three">
+          <article class="card"><h3>Figure 1–2</h3><p><strong>読む焦点:</strong> 固定標的に対する受容体拡散を、CDR配列denoiserへどう移植するか。</p><p><strong>要点:</strong> 前半でsequence/backbone、後半でsidechainを解く。</p></article>
+          <article class="card"><h3>Table 1 + S1</h3><p><strong>読む焦点:</strong> mean DockQだけでなく受容体別SRとincorrect率。</p><p><strong>要点:</strong> 全体SR 73.84%だが、incorrect 26.2%。</p></article>
+          <article class="card"><h3>Table 3–5</h3><p><strong>読む焦点:</strong> AAR、local RMSD、Rosetta scoreを分ける。</p><p><strong>要点:</strong> native配列回復は最高でなくても局所構造・interfaceは強い。</p></article>
+        </div>
+        <p class="caption">論文はCC BY-NC-ND 4.0。ここでは原図を保存・転載せず、報告値と概念を独自レイアウトで要約した。</p>
+      </section>
+
+      <section id="impact">
+        <div class="kicker">Translational meaning</div><h2>抗体研究・創薬への意味</h2>
+        <div class="grid three">
+          <article class="card"><h3>工程間誤差を減らす</h3><p>骨格→配列→側鎖を別モデルで接続せず、CDR変異とframework適応を同じ生成過程で扱える可能性。</p></article>
+          <article class="card"><h3>epitope指定設計</h3><p>hotspotを条件として抗原表面の狙った領域へ受容体を配置する。標的構造が既知の初期設計に向く。</p></article>
+          <article class="card"><h3>免疫受容体の共通基盤</h3><p>抗体/VHH/TCRを共通表現に置き、データ・評価・モデル改良を横断できる研究方向を作る。</p></article>
+        </div>
+        <p class="note"><strong>実務での位置づけ:</strong> 候補生成の一段として使い、物理スコア、developability、発現・凝集・polyreactivity予測、SPR/BLIと組み合わせる。現時点では単独でlead selectionを任せる根拠はない。</p>
+      </section>
+
+      <section id="limits">
+        <div class="kicker">Limitations</div><h2>限界と注意点</h2>
+        <div class="grid two">
+          <article class="card"><h3>著者が明記</h3><ul><li>CDR3/VHHのsequence recovery</li><li>早期誤差が側鎖精密化へ伝播</li><li>正確な標的構造・epitopeへの依存</li><li>計算指標はaffinity等を保証しない</li></ul></article>
+          <article class="card"><h3>追加で読むべき注意</h3><ul><li>headline比較は入力情報量が不均一</li><li>既知native complexの後ろ向き回復が中心</li><li>baselineの再学習条件・計算予算が混在</li><li>コード・重み・split未公開</li></ul></article>
+        </div>
+        <p class="note danger"><strong>過大解釈を避ける:</strong> DockQ 0.604はKDやhit rateではない。paired antibodyのco-generated DockQは0.292で、実験的な結合・特異性・安定性は未測定である。</p>
+      </section>
+
+      <section id="code">
+        <div class="kicker">Reproducibility</div><h2>Code / License / Weights</h2>
+        <div class="table-wrap"><table><tbody><tr><th>IgGM2固有コード</th><td>見つからず（論文PDF、GitHub repository search/API、TencentAI4Sを確認）</td></tr><tr><th>IgGM2重み</th><td>見つからず</td></tr><tr><th>Hugging Face</th><td>models / datasets API検索とも0件</td></tr><tr><th>固有split</th><td>indicesファイル名は論文に出るが公開先は見つからず</td></tr><tr><th>関連する前世代</th><td><a href="https://github.com/TencentAI4S/IgGM">TencentAI4S/IgGM</a>（公式、MIT）— IgGM2とは別モデル</td></tr><tr><th>原データ</th><td><a href="https://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/sabdab">SAbDab</a> / <a href="https://opig.stats.ox.ac.uk/webapps/stcrdab/">STCRDab</a></td></tr><tr><th>論文ライセンス</th><td>CC BY-NC-ND 4.0</td></tr></tbody></table></div>
+        <p class="note warning"><strong>再現性評価:</strong> アーキテクチャ、擬似コード、optimizer、主要hyperparameterは詳しい。しかしtrain件数、split、実装、checkpointがないため、数値の完全再現は現状困難。</p>
+      </section>
+
+      <section id="learn">
+        <div class="kicker">Learning path</div><h2>前提知識、関連論文、次に試すこと</h2>
+        <div class="grid two"><article class="card"><h3>前提知識</h3><p><span class="pill">CDR / framework</span><span class="pill">全原子拡散</span><span class="pill">inverse folding</span><span class="pill">DockQ</span><span class="pill">AAR / RMSD</span><span class="pill">pMHC / TCR</span></p><p>特にDockQとaffinityを混同しないこと、native AARとde novo noveltyが異なることが重要。</p></article><article class="card"><h3>関連して読む</h3><ul><li>IgGM — 前世代の抗体/VHH生成</li><li>Protenix — AF3-like初期化元</li><li>ODesign — structural constraint</li><li>DiffAb / dyMEAN / RFantibody</li><li>FoldBench — 比較protocol</li></ul></article></div>
+        <h3>今回この1報を選んだ理由</h3><p>9月14日以降に確認できた新着の一次研究は限定的だった。IgGM2は2026年7月公開だが、抗体/VHH/TCRと予測/設計を統合するモデル起点として学習価値が高く、dedup、ablation、失敗率、補足benchmarkまで読み解ける。新着レビューより一次的で、古典基盤論文より現在の全原子生成モデルの論点を具体的に示すため採用した。</p>
+        <p class="note"><strong>読む優先度: High</strong> — 統合型免疫受容体モデルの設計思想を学ぶ価値が高い。Table 1だけでなくTable 3–5、S6–S7、limitationsまでセットで読む。</p>
+      </section>
+
+      <section id="sources">
+        <div class="kicker">Audit trail</div><h2>検索ログと出典一覧</h2>
+        <ul class="source-list"><li><a href="https://www.biorxiv.org/content/10.64898/2026.07.09.737510v1">bioRxiv abstract / metadata</a> — 書誌、abstract、公開日、license。</li><li><a href="https://www.biorxiv.org/content/10.64898/2026.07.09.737510v1.full">bioRxiv full text</a> — Method、Tables 1–7、appendix Tables S1–S12。</li><li><a href="https://doi.org/10.64898/2026.07.09.737510">DOI landing page</a>。</li><li><a href="https://github.com/TencentAI4S/IgGM">TencentAI4S/IgGM</a> — 前世代公式実装とMIT LICENSE。IgGM2とは区別。</li><li><a href="https://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/sabdab">SAbDab</a> / <a href="https://opig.stats.ox.ac.uk/webapps/stcrdab/">STCRDab</a> — 学習・評価元DB。</li></ul>
+        <p class="small">検索: bioRxiv、PubMed、arXiv、Nature、GitHub Search/API、Hugging Face API。候補はDual-Specific Antibody Design、Frozen Protein Foundation-Model Embeddings、AbAgKer、IgGM2、AI抗体設計レビュー。PDF 24ページとHTML/appendixを確認。Figure 1–3、Table 1–7、S1–S12を確認し、CC BY-NC-ND 4.0のため原図は転載しなかった。調査日: 2026-09-21 JST。</p>
+      </section>
+    </main>
+  </div>
+  <footer><div class="wrap">IgGM2 visual reading note · Independent Japanese reconstruction · Facts and interpretations are separated where possible.</div></footer>
+</body>
+</html>
