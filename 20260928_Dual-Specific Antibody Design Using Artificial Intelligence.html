@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dual-Specific Antibody Design Using Artificial Intelligence — 精読ノート</title>
+  <style>
+    :root{--ink:#17313a;--muted:#5d7178;--paper:#f7f4ed;--card:#fffefa;--line:#d8ddd7;--teal:#167d7f;--teal2:#d9eeeb;--navy:#193e5a;--amber:#d98f35;--amber2:#fff0d8;--red:#a84e4e;--red2:#f9e6e2;--green:#3f7a55;--shadow:0 12px 30px rgba(24,49,58,.08)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.78;font-size:16px}a{color:#126b7a;text-underline-offset:3px}a:hover{color:#0b4f60}.wrap{max-width:1180px;margin:auto;padding:0 28px}.hero{background:linear-gradient(135deg,#112f43 0%,#176c71 68%,#2d8e7b 100%);color:white;padding:70px 0 58px;border-bottom:6px solid #e7bd74}.eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#bfe1dc}.hero h1{font-family:Georgia,"Noto Serif JP",serif;font-size:clamp(2rem,4.7vw,4.5rem);line-height:1.08;max-width:1000px;margin:.45rem 0 1.2rem}.hero p{max-width:860px;font-size:1.1rem;color:#e6f2f0}.badges{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}.badge{border:1px solid rgba(255,255,255,.42);padding:5px 11px;border-radius:99px;font-size:.82rem;background:rgba(255,255,255,.1)}.hero-links{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-block;background:#fff;color:#194659;text-decoration:none;font-weight:700;border-radius:10px;padding:10px 15px}.button.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:38px;align-items:start;padding-top:38px}.toc{position:sticky;top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;padding:5px 2px;text-decoration:none;color:#4e656c;font-size:.9rem}.toc a:hover{color:var(--teal)}main{min-width:0}section{scroll-margin-top:24px;margin-bottom:54px}h2{font-family:Georgia,"Noto Serif JP",serif;font-size:2rem;line-height:1.25;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid var(--line)}h3{font-size:1.17rem;color:var(--navy);margin:25px 0 10px}.lead{font-size:1.08rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);break-inside:avoid}.card h3{margin-top:0}.kicker{font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--teal);font-weight:800}.big{font:700 2rem/1 Georgia,serif;color:var(--navy);margin:.35rem 0}.small{font-size:.88rem;color:var(--muted)}.callout{border-left:5px solid var(--amber);background:var(--amber2);padding:18px 20px;border-radius:0 12px 12px 0;margin:18px 0}.warning{border-left-color:var(--red);background:var(--red2)}.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:22px 0}.step{position:relative;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:12px;padding:16px;min-height:180px;break-inside:avoid}.step:not(:last-child)::after{content:"→";position:absolute;right:-18px;top:44%;font-size:1.5rem;color:var(--amber);z-index:2}.num{width:30px;height:30px;display:grid;place-items:center;background:var(--teal2);color:var(--teal);border-radius:50%;font-weight:800}.step h3{margin:.65rem 0 .35rem}.metric{display:grid;grid-template-columns:145px 1fr 76px;gap:12px;align-items:center;margin:12px 0}.track{height:16px;background:#e8ecea;border-radius:20px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--navy),var(--teal));border-radius:20px}.bar.bad{background:linear-gradient(90deg,#d78a4c,#b85b4d)}.affinity{background:#eef5f3;border-radius:16px;padding:22px}.axis-note{text-align:right;color:var(--muted);font-size:.8rem}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:white}table{border-collapse:collapse;width:100%;min-width:660px}th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid #e4e7e4}th{background:#e8f1ef;color:#254c51;font-size:.86rem}tr:last-child td{border-bottom:0}.pill{display:inline-block;border-radius:99px;padding:3px 9px;background:var(--teal2);color:#225d5c;font-size:.78rem;font-weight:700}.unknown{background:#eee8dc;color:#725d3e}.good{background:#dceedd;color:#356640}.moa{border-top:5px solid var(--amber)}.moa .icon{font-size:1.8rem}.schema{display:grid;grid-template-columns:1fr 120px 1fr;gap:16px;align-items:center;margin:24px 0}.target-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}.fv{height:120px;display:grid;place-items:center;position:relative}.fv::before{content:"";width:68px;height:68px;border:12px solid var(--teal);border-bottom:0;border-radius:38px 38px 8px 8px;transform:rotate(180deg)}.fv span{position:absolute;font-size:.78rem;font-weight:800;color:var(--navy)}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px}.dot.a{background:var(--teal)}.dot.b{background:var(--amber)}dl.meta{display:grid;grid-template-columns:150px 1fr;margin:0}dt,dd{padding:7px 0;border-bottom:1px solid var(--line)}dt{font-weight:700;color:#385660}dd{margin:0}.sources li{margin-bottom:8px}.footer{background:#153846;color:#dce8e6;padding:32px 0;margin-top:55px}.footer a{color:#fff}.print-note{display:none}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static}.toc nav{columns:2}.flow{grid-template-columns:repeat(2,1fr)}.step:nth-child(2)::after{display:none}.grid.three{grid-template-columns:1fr}.schema{grid-template-columns:1fr}.fv{height:90px}}
+    @media(max-width:620px){body{font-size:15px}.wrap{padding:0 18px}.hero{padding:48px 0 38px}.hero h1{font-size:2.15rem}.layout{padding-top:24px}.toc nav{columns:1}.grid,.flow{grid-template-columns:1fr}.step::after{display:none}.metric{grid-template-columns:100px 1fr 58px;font-size:.84rem}h2{font-size:1.55rem}dl.meta{grid-template-columns:1fr}dd{padding-top:0}.card{padding:17px}}
+    @media print{body{background:white;font-size:10.5pt}.hero{background:#fff;color:#153846;border:2px solid #153846;padding:24px}.hero p,.eyebrow{color:#385660}.hero .badge{border-color:#71878c}.hero-links,.toc{display:none}.layout{display:block;padding-top:22px}.wrap{max-width:none;padding:0 14mm}.card,.step,.affinity,.callout,.table-wrap{box-shadow:none;break-inside:avoid}.flow{grid-template-columns:repeat(4,1fr)}section{margin-bottom:28px}a{color:#163f4c;text-decoration:none}.footer{background:#fff;color:#17313a;border-top:1px solid #777}.print-note{display:block}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">AI × Antibody · Daily Research · 2026-09-28</div>
+      <h1>Dual-Specific Antibody Design Using Artificial Intelligence</h1>
+      <p>同じFvに2つの認識様式を共存させ、天然型の対称IgGのまま二重特異性を実現する。AIと実験を交互に回し、親和性だけでなく物性と薬理機能まで最適化した産業的proof-of-concept。</p>
+      <div class="badges"><span class="badge">2026 · bioRxiv</span><span class="badge">新着</span><span class="badge">抗体設計</span><span class="badge">実験検証あり</span><span class="badge">読む優先度 High</span></div>
+      <div class="hero-links"><a class="button" href="https://doi.org/10.64898/2026.08.03.742397">DOI / 論文ページ</a><a class="button secondary" href="20260928_Dual-Specific%20Antibody%20Design%20Using%20Artificial%20Intelligence.md">Markdown版</a></div>
+    </div>
+  </header>
+  <div class="wrap layout">
+    <aside class="toc"><strong>目次</strong><nav>
+      <a href="#takeaways">この論文の要点</a><a href="#background">背景と問題</a><a href="#concept">multibodyとは</a><a href="#method">提案手法</a><a href="#evaluation">評価設計</a><a href="#results">主要結果</a><a href="#figures">重要Figure/Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License</a><a href="#knowledge">前提知識・次</a><a href="#sources">検索ログ・出典</a>
+    </nav></aside>
+    <main>
+      <section id="takeaways">
+        <h2>この論文の要点</h2>
+        <div class="grid">
+          <article class="card"><div class="kicker">Format</div><div class="big">1 Fv × 2標的</div><p>左右非対称のbsAbではない。同一の6 CDRが作る各Fvが標的A/Bのどちらにも競合的に結合する、標準的な対称IgG。</p></article>
+          <article class="card"><div class="kicker">Latest claim</div><div class="big">9 campaigns</div><p>bioRxiv要旨では15種類の非関連標的を組み合わせた9キャンペーン。先行技術報告本文は7キャンペーン・11標的で、版差がある。</p></article>
+          <article class="card"><div class="kicker">Optimization</div><div class="big">最大 ≈100×</div><p>代表例は初期4 nM / 80 nMから、両標的とも一桁nMまたはsub-nMへ。標的別予測を後段で多目的統合する。</p></article>
+          <article class="card"><div class="kicker">Translation</div><div class="big">3つのMOA</div><p>ADC内在化、T細胞engagement、IL-13/TSLP免疫抑制で機能を確認。2候補はIND-enabling段階と報告。</p></article>
+        </div>
+        <div class="callout warning"><strong>先に読むべき注意:</strong> モデル構造、学習データ、配列、split、コード、重みは非公開。これは再現可能なアルゴリズム論文ではなく、閉ループ設計が薬剤候補を生むことを示す企業主導ケーススタディである。</div>
+      </section>
+
+      <section id="background">
+        <h2>背景と解決したい問題</h2>
+        <p class="lead">二重特異性の薬理学と、通常IgGの製造性・二価性を同じ分子で両立できるか。</p>
+        <div class="grid three">
+          <article class="card"><h3>単一特異性IgG</h3><p>製造・精製・PKの知見が豊富で左右対称。だが標的は1種類で、腫瘍抗原不均一性や冗長経路に弱い。</p></article>
+          <article class="card"><h3>一般的なbispecific</h3><p>2標的を扱えるが、異種鎖、scFv/VHH付加、鎖誤対合対策などがCMCや物性の負担になり得る。片方の標的しかない場所では実質一価になる形式もある。</p></article>
+          <article class="card"><h3>multibody</h3><p>標準IgGの両腕がそれぞれA/Bを選べる。A/A、B/B、A/Bへ局所濃度に応じて適応できる一方、同じFv上で2つの結合様式を壊さず最適化するのが難しい。</p></article>
+        </div>
+        <p>従来にもHER2/VEGF、HER3/EGFRなどのtwo-in-one抗体はあったが、個別の巧妙な工学例に留まっていた。本研究は、任意に近い標的対へ反復適用できる「設計工程」に変えることを狙う。必要条件は両標的の親和性だけでなく、polyreactivity、疎水性、熱安定性、発現、狙った作用機序まで含む。</p>
+      </section>
+
+      <section id="concept">
+        <h2>multibodyの結合ロジック</h2>
+        <div class="schema" aria-label="標的AまたはBが同じFvへ競合的に結合する独自模式図">
+          <div class="target-box"><div style="font-size:2.2rem;color:var(--teal)">●</div><strong>標的 A</strong><p class="small">例: Trop-2 / IL-13</p></div>
+          <div class="fv"><span>同じ Fv<br>A または B</span></div>
+          <div class="target-box"><div style="font-size:2.2rem;color:var(--amber)">◆</div><strong>標的 B</strong><p class="small">例: Nectin-4 / TSLP</p></div>
+        </div>
+        <p class="small">原論文Figure 1を参考にした独自の要約図（原図の転載ではない）。AとBは同じFvを占有するため同一腕への結合は競合的だが、IgGは2本の同じ腕を持つためA/A、B/B、A/Bの状態を取り得る。</p>
+        <div class="grid">
+          <article class="card"><h3>薬理上の利点</h3><ul><li>残存する片方の標的へ二価結合できる</li><li>局所標的濃度へ動的に適応</li><li>1分子で冗長経路を遮断</li><li>ADCの受容体架橋・内在化を保ちやすい</li></ul></article>
+          <article class="card"><h3>設計上の衝突</h3><ul><li>A向け変異がB結合を壊す</li><li>共有表面の疎水化・polyreactivity</li><li>親和性と発現・安定性のtrade-off</li><li>エピトープと作用機序を同時制約</li></ul></article>
+        </div>
+      </section>
+
+      <section id="method">
+        <h2>提案手法: AIと実験の4段階閉ループ</h2>
+        <div class="flow">
+          <article class="step"><div class="num">1</div><h3>AI提案</h3><p>標的、エピトープ、望ましい物性、作用機序を入力し、多様な二重結合候補ライブラリを提案。</p></article>
+          <article class="step"><div class="num">2</div><h3>実験screen</h3><p>両標的に結合する弱〜中親和性の初期ヒットを数十件獲得。ここがキャンペーン固有データの種になる。</p></article>
+          <article class="step"><div class="num">3</div><h3>標的別学習</h3><p>AとBを別々にscreenし、各標的の親和性予測器を学習。必要に応じ発現・安定性モデルも追加。</p></article>
+          <article class="step"><div class="num">4</div><h3>多目的確認</h3><p>A/B双方と物性が良い予測候補を探索し、IgG発現、親和性、developability、細胞機能で確認。</p></article>
+        </div>
+        <p class="small">原論文Figure 3を参考にした独自の要約図（原図の転載ではない）。矢印は反復を表し、最終実験値は次ラウンドの学習へ戻せる。</p>
+        <div class="callout"><strong>実務的な工夫:</strong> 最適化ライブラリに「完成したdual binder」が最初から必要とはしない。Aに良い変異とBに良い変異を別screenで学び、予測空間の交差領域を探索する。ただし入力表現、モデル型、損失、獲得関数、配列探索アルゴリズムは未開示。</div>
+      </section>
+
+      <section id="evaluation">
+        <h2>データセットと評価設計</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>評価層</th><th>規模・条件</th><th>指標</th><th>評価上の注意</th></tr></thead>
+          <tbody>
+            <tr><td>設計キャンペーン</td><td>最新要旨: 9件・15標的<br>詳細公開版: 7件・11標的</td><td>両標的への結合、所定閾値</td><td>集計に版差。失敗例や標的名の多くは非開示</td></tr>
+            <tr><td>モデル評価</td><td>キャンペーン固有のunseen data</td><td>予測親和性 vs 実測</td><td>n、分割、相関係数、系列リーク対策は未確認</td></tr>
+            <tr><td>親和性</td><td>原則IgG、#5–6はyeast display</td><td>BLI/SPR Kd、ELISA/flow EC50</td><td>測定法が混在し、値の単純横比較は不可</td></tr>
+            <tr><td>developability</td><td>4キャンペーン、約200 IgG</td><td>BVP、HIC、DSF Tm1</td><td>合格率・閾値の数表、長期安定性、粘度、PKは未開示</td></tr>
+            <tr><td>細胞機能</td><td>24 h内在化 / 48 h killing / 48 h TARC</td><td>蛍光、LDH、CCL17 ELISA</td><td>詳細統計とin vivo disease modelは不足</td></tr>
+          </tbody>
+        </table></div>
+        <div class="grid three" style="margin-top:16px">
+          <article class="card"><span class="pill good">確認済み</span><h3>BVP</h3><p>1,000 nMでbaculovirus particleへの非特異結合を測る。低いほどpolyreactivityリスクが小さい目安。</p></article>
+          <article class="card"><span class="pill good">確認済み</span><h3>HIC</h3><p>硫安勾配で疎水性相互作用を測る。保持が過度に長い候補は凝集や非特異結合の懸念。</p></article>
+          <article class="card"><span class="pill good">確認済み</span><h3>nanoDSF</h3><p>0.5 mg/mL、25–95°C、1°C/minでTm1を評価。熱安定性の一部を反映する。</p></article>
+        </div>
+      </section>
+
+      <section id="results">
+        <h2>主要結果</h2>
+        <h3>代表キャンペーン: 弱い方の標的を大きく改善</h3>
+        <div class="affinity">
+          <div class="axis-note">Kd: 低いほど強い（対数的な差を簡略表示）</div>
+          <div class="metric"><strong>初期 Target A</strong><div class="track"><div class="bar bad" style="width:42%"></div></div><strong>4 nM</strong></div>
+          <div class="metric"><strong>初期 Target B</strong><div class="track"><div class="bar bad" style="width:94%"></div></div><strong>80 nM</strong></div>
+          <div class="metric"><strong>最適化 A</strong><div class="track"><div class="bar" style="width:12%"></div></div><strong>&lt;10 nM</strong></div>
+          <div class="metric"><strong>最適化 B</strong><div class="track"><div class="bar" style="width:12%"></div></div><strong>&lt;10 nM</strong></div>
+          <p class="small">Figure 3Cの報告値を独自に再構成。最終候補群は両標的とも一桁nMまたはsub-nM、標的によって最大約100倍改善。棒長は厳密な線形尺度ではない。</p>
+        </div>
+        <h3>親和性から薬理機能へ</h3>
+        <div class="grid three">
+          <article class="card moa"><div class="icon">↘</div><h3>#1 · ADC内在化</h3><p><strong>Trop-2 / Nectin-4</strong></p><p>共発現細胞でsacituzumab/enfortumab系の単一標的ベンチマークより高い内在化。片方の抗原が低い細胞でも、残る標的への二価架橋を保てるという仮説。</p></article>
+          <article class="card moa"><div class="icon">⚔</div><h3>#2 · T-cell engager</h3><p><strong>Trop-2 / Nectin-4 + CD3</strong></p><p>anti-CD3とのDuobody化で、Trop-2発現細胞とNectin-4発現細胞の双方を用量依存的に傷害。同じ標的対でも#1とは別エピトープを設計。</p></article>
+          <article class="card moa"><div class="icon">⊣</div><h3>#7 · 免疫抑制</h3><p><strong>IL-13 / TSLP</strong></p><p>各単独刺激では臨床抗体相当。二重刺激では完全なTARC抑制を維持し、各単一特異性抗体の部分抑制を上回る。</p></article>
+        </div>
+        <div class="grid" style="margin-top:16px">
+          <article class="card"><div class="kicker">Developability</div><div class="big">≈200 IgG</div><p>4キャンペーンからBVP/HIC/DSFを測定し、多くが良好と報告。ただし「何%が合格したか」は公開数値から確定できない。</p></article>
+          <article class="card"><div class="kicker">Development</div><div class="big">≈9 months</div><p>構想からIND-enabling候補までの期間。2候補がIND-enabling段階とされるが、臨床有効性を示す結果ではない。</p></article>
+        </div>
+      </section>
+
+      <section id="figures">
+        <h2>重要なFigure / Tableの読み方</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>項目</th><th>この図の役割</th><th>見るべき点</th><th>このノートでの扱い</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Figure 3</strong><br>閉ループ</td><td>計算提案と実験をどう接続したかを示す中核図</td><td>A/Bの両軸で改善すること、初期4/80 nM→一桁nM/sub-nM</td><td>4段階フローと親和性バーに独自再構成</td></tr>
+            <tr><td><strong>Figure 5</strong><br>物性</td><td>dual specificityがpolyreactivity・疎水性・不安定性を招かないかを問う</td><td>約200 IgG、BVP/HIC/DSF。ただし合格率非開示</td><td>評価カードと開示状況表に要約</td></tr>
+            <tr><td><strong>Figure 6</strong><br>機能</td><td>結合だけでなく3つの作用機序が成立するかを見る</td><td>内在化、2系統の標的細胞killing、二重刺激TARC抑制</td><td>3列のMOAカードに独自再構成</td></tr>
+            <tr><td><strong>Table 1</strong><br>campaign</td><td>標的クラスと測定法の多様性</td><td>GPCR、膜タンパク質、小型サイトカイン。ELISA/SPR/flowが混在</td><td>評価設計表に必要項目のみ再構成</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small">原図のライセンスを確認できなかったため、画像は保存・転載していない。上記は報告された概念と数値を新しい構成で示した独自要約である。原図は<a href="https://biolojic.com/wp-content/uploads/2026/05/Biolojic-Design-Multibodies-technical-report-1.pdf">技術報告PDF</a>を参照。</p>
+      </section>
+
+      <section id="meaning">
+        <h2>抗体研究・創薬への意味</h2>
+        <div class="grid">
+          <article class="card"><h3>生成モデルより「学習する実験系」</h3><p>一発で最終配列を出すモデルではない。高価な実験を、次の探索に最も効くデータへ変えることが価値の中心。汎用PLMのゼロショット精度が不十分でも、campaign-specific learningで実務成果を作れる。</p></article>
+          <article class="card"><h3>フォーマットと機能を同時設計</h3><p>標準IgGの対称性・二価性を保ちながら多重特異性を得ることで、抗原不均一性、経路冗長性、受容体架橋に対処できる可能性。配列設計はCMC設計でもある。</p></article>
+          <article class="card"><h3>評価指標の拡張</h3><p>AAR、DockQ、予測Kdだけで終わらず、BVP/HIC/DSFと細胞機能へ進む。抗体AIの真価は「生成できたか」より「作用機序を満たし、作れる薬になったか」で測るべき。</p></article>
+          <article class="card"><h3>multiphar­macology</h3><p>サイトカインや腫瘍抗原の局所比率に応じて1分子の働きが変わる。固定比の併用療法とは異なる、濃度依存の分子ロジックを設計対象にできる。</p></article>
+        </div>
+      </section>
+
+      <section id="limits">
+        <h2>限界と注意点</h2>
+        <div class="callout warning"><strong>結論の範囲:</strong> 「複数の社内キャンペーンで有望候補を作れた」は支持される。「任意の標的対へ一般化する」「臨床で通常bsAbより優れる」「天然型だから免疫原性が低い」は未証明。</div>
+        <div class="grid">
+          <article class="card"><h3>計算面</h3><ul><li>入力表現、モデル構造、損失、探索法が非公開</li><li>train/test分割、配列系列リーク対策、相関係数が不明</li><li>ランダム設計、従来DOE、他MLとの比較がない</li><li>コード、重み、配列、生データがない</li></ul></article>
+          <article class="card"><h3>実験・翻訳面</h3><ul><li>アッセイとフォーマットがキャンペーン間で混在</li><li>盲検、反復、統計、陰性campaignの記載が乏しい</li><li>高濃度粘度、長期安定性、PK、毒性、免疫原性は不足</li><li>主な機能結果はin vitro。臨床効果ではない</li></ul></article>
+        </div>
+        <h3>版差をどう読むか</h3>
+        <div class="table-wrap"><table><thead><tr><th>情報源</th><th>集計</th><th>扱い</th></tr></thead><tbody><tr><td>bioRxiv v1要旨（2026-08-05）</td><td>9 multibodies / 15 targets</td><td>最新の総数として採用</td></tr><tr><td>Biolojic技術報告（2026-05）</td><td>7 campaigns / 11 targets</td><td>方法・Figure・具体例の詳細情報源として採用</td></tr></tbody></table></div>
+      </section>
+
+      <section id="code">
+        <h2>Code / License / Weights</h2>
+        <div class="grid three">
+          <article class="card"><span class="pill unknown">見つからず</span><h3>Code</h3><p>公式GitHub、GitLab、Zenodo code archiveなし。モデルは独自・非公開。</p></article>
+          <article class="card"><span class="pill unknown">見つからず</span><h3>Weights / HF</h3><p>Hugging Face model/dataset、GitHub Releases、Zenodo checkpointなし。</p></article>
+          <article class="card"><span class="pill unknown">未確認</span><h3>Paper license</h3><p>Figure再利用を許す明示ライセンスを確認できず。原図は保存せず独自図のみ使用。</p></article>
+        </div>
+        <dl class="meta" style="margin-top:18px">
+          <dt>公開データ</dt><dd>配列、実験表、splitとも見つからず</dd>
+          <dt>再現可能な範囲</dt><dd>閉ループの概念、測定条件、代表結果。モデル自体は再現不能</dd>
+          <dt>検索範囲</dt><dd>論文タイトル、DOI、著者、Biolojic、multibodyをGitHub / Hugging Face / Zenodo / Webで検索</dd>
+          <dt>代替実装案</dt><dd>標的別回帰器2本 + BVP/HIC/Tm予測器 + 制約付きBayesian optimizationまたはPareto探索</dd>
+        </dl>
+      </section>
+
+      <section id="knowledge">
+        <h2>前提知識・関連論文・次に試すこと</h2>
+        <div class="grid">
+          <article class="card"><h3>前提知識</h3><ul><li><strong>Fv/CDR:</strong> VH/VLと6 CDRが抗原認識面を作る。</li><li><strong>affinity/avidity:</strong> 単一接触の強さと多価結合全体の強さは異なる。</li><li><strong>two-in-one:</strong> 1つの結合部位が2標的を競合的に認識。</li><li><strong>BVP/HIC/DSF:</strong> 非特異結合、疎水性、熱安定性の物性指標。</li><li><strong>active learning:</strong> 実験結果を次の候補選びへ戻す。</li></ul></article>
+          <article class="card"><h3>関連して読む</h3><ul><li>Bostrom et al., Science 2009 — HER2/VEGF two-in-one</li><li>Schaefer et al., Cancer Cell 2011 — HER3/EGFR</li><li>Beckmann et al., Nat Commun 2021 — DutaFab</li><li>A blinded prospective AIntibody benchmark, Nat Biotech 2026</li><li>IgGM2, bioRxiv 2026 — 前回ノート</li></ul></article>
+        </div>
+        <div class="callout"><strong>読む優先度: High</strong> — AI、ウェット実験、developability、作用機序を一続きで学べる。ただしアルゴリズム実装の教材ではなく、「何を測り、どう意思決定するか」の教材として読む。</div>
+      </section>
+
+      <section id="sources">
+        <h2>検索ログと出典</h2>
+        <ul class="sources">
+          <li><a href="https://www.biorxiv.org/content/10.64898/2026.08.03.742397v1">bioRxiv論文ページ</a> — DOI、著者、公開日、最新要旨の9キャンペーン/15標的。</li>
+          <li><a href="https://biolojic.com/wp-content/uploads/2026/05/Biolojic-Design-Multibodies-technical-report-1.pdf">Biolojic Design技術報告PDF</a> — Methods、Figure 1–6、Table 1、7キャンペーン版の詳細。</li>
+          <li><a href="https://biolojic.com/capabilities/">Biolojic Design capabilities</a> — multibodyの定義とプラットフォーム説明。</li>
+          <li><a href="https://biolojic.com/teva-and-biolojic-design-initiate-ind-enabling-studies-of-bd9-a-multibody-designed-to-explore-the-treatment-of-atopic-dermatitis-and-asthma/">BD9 / TEV-325情報</a> — IND-enabling programの企業一次情報。</li>
+          <li>検索クエリ: antibody machine learning September 2026、論文タイトル、DOI、Biolojic Design multibody GitHub、Hugging Face、Zenodo。</li>
+          <li>比較候補: SimBinder-IF、AbTune、PLM developability prediction、Frozen protein foundation-model embeddings。今回は新規フォーマット、複数キャンペーン、機能検証を優先した。</li>
+        </ul>
+        <p class="small">確認日: 2026-09-28 JST。未査読プレプリントと企業技術報告に基づく。原Figureはライセンス不明のため転載していない。</p>
+      </section>
+    </main>
+  </div>
+  <footer class="footer"><div class="wrap"><strong>AI × 抗体 論文デイリーリサーチ</strong><br><span class="small">Dual-Specific Antibody Design Using Artificial Intelligence · 2026-09-28</span><div class="print-note">印刷版: リンク先と注記は画面版を参照。</div></div></footer>
+</body>
+</html>
