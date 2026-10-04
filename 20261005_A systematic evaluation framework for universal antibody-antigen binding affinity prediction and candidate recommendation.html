@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MochiBind論文の日本語ビジュアル精読ノート。未見抗原での抗体親和性順位付け、評価設計、主要結果、限界、公開実装を解説。">
+  <title>MochiBind論文精読ノート | AI×抗体</title>
+  <style>
+    :root{--ink:#152b2d;--muted:#52696b;--paper:#f6f8f4;--card:#fff;--line:#cbd8d3;--teal:#176f6a;--deep:#0d4647;--mint:#d8eee5;--gold:#b87719;--amber:#fff0cd;--coral:#a94c3f;--blue:#386b91;--shadow:0 10px 30px rgba(13,70,71,.08)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.78;font-size:16px}a{color:var(--teal);text-underline-offset:3px}a:hover{color:var(--deep)}.shell{width:min(1180px,calc(100% - 32px));margin:auto}.hero{background:linear-gradient(135deg,#0b3d3e 0%,#176f6a 60%,#5a8d76 100%);color:#fff;padding:72px 0 56px}.eyebrow{letter-spacing:.13em;text-transform:uppercase;font-weight:750;font-size:.78rem;color:#bfe8dc}.hero h1{font-size:clamp(2rem,5vw,4.15rem);line-height:1.08;margin:.5rem 0 1.2rem;max-width:1050px}.hero .lead{font-size:clamp(1.05rem,2vw,1.34rem);max-width:850px;color:#e4f3ee}.badges{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.badge{display:inline-flex;padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);font-size:.85rem;font-weight:700}.hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-block;border-radius:10px;padding:10px 15px;font-weight:750;text-decoration:none}.button.primary{background:#fff;color:var(--deep)}.button.ghost{color:#fff;border:1px solid rgba(255,255,255,.45)}.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;align-items:start;padding:34px 0 70px}.toc{position:sticky;top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;padding:6px 7px;border-radius:6px;text-decoration:none;color:var(--muted);font-size:.88rem}.toc a:hover{background:var(--mint);color:var(--deep)}main{min-width:0}section{scroll-margin-top:18px;margin-bottom:48px}.section-kicker{color:var(--teal);font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}h2{font-size:clamp(1.55rem,3vw,2.25rem);line-height:1.25;margin:.2rem 0 1.1rem;color:var(--deep)}h3{font-size:1.18rem;line-height:1.35;margin:1.5rem 0 .6rem}.grid{display:grid;gap:16px}.cards{grid-template-columns:repeat(4,1fr)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}.card .big{font-size:2rem;line-height:1.05;font-weight:850;color:var(--teal);margin-bottom:8px}.card p{margin:.2rem 0;color:var(--muted)}.callout{border-left:5px solid var(--gold);background:var(--amber);border-radius:0 14px 14px 0;padding:17px 20px}.callout.danger{border-color:var(--coral);background:#fae4df}.callout.good{border-color:var(--teal);background:var(--mint)}.flow{display:grid;grid-template-columns:1fr 42px 1fr 42px 1fr 42px 1fr;align-items:stretch;gap:8px}.step{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;min-height:170px}.step .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--deep);color:#fff;font-weight:800}.step h3{margin:.65rem 0 .35rem}.step p{color:var(--muted);font-size:.92rem}.arrow{display:grid;place-items:center;color:var(--teal);font-size:1.8rem;font-weight:900}.figure{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin:18px 0}.caption{font-size:.9rem;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.rotation{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}.fold{border:1px solid var(--line);border-radius:12px;padding:12px;background:#f9fbfa}.fold b{display:block;color:var(--deep);margin-bottom:6px}.chips{display:flex;flex-wrap:wrap;gap:5px}.chip{font-size:.75rem;font-weight:700;padding:3px 7px;border-radius:999px}.train{background:#dbeaf6;color:#275679}.valid{background:#ffedc9;color:#7e5314}.test{background:#e2e5e5;color:#263b3d;border:1px solid #8da0a0}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}table{width:100%;border-collapse:collapse;min-width:680px}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid #e2e9e5}th{background:#eaf3ef;color:var(--deep);font-size:.86rem}tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabular-nums}.winner{font-weight:850;color:var(--teal)}.bars{display:grid;gap:16px}.bar-row{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center}.bar-row>strong{color:var(--deep)}.bar-stack{display:grid;gap:5px}.bar{height:24px;border-radius:5px;min-width:34px;color:#fff;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:flex-end;padding-right:7px}.mochi{background:var(--teal)}.graph{background:var(--blue)}.boltz{background:var(--gold)}.geo{background:#899795}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.83rem;color:var(--muted);margin-bottom:14px}.legend span:before{content:"";width:10px;height:10px;display:inline-block;border-radius:2px;margin-right:5px;background:var(--c)}.dist{grid-template-columns:repeat(4,1fr)}.dist .card{box-shadow:none}.meter{height:10px;border-radius:999px;background:#e6ece9;overflow:hidden;margin:12px 0}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#73a88c);border-radius:inherit}.two{grid-template-columns:1fr 1fr}.limit-list,.clean-list{padding-left:1.15rem}.limit-list li,.clean-list li{margin:.55rem 0}.resource{display:grid;grid-template-columns:170px 1fr;gap:8px 16px;padding:10px 0;border-bottom:1px solid var(--line)}.resource:last-child{border-bottom:0}.resource b{color:var(--deep)}.priority{display:flex;align-items:center;gap:14px}.priority .grade{font-size:2.4rem;font-weight:900;color:var(--teal);border:3px solid var(--teal);padding:5px 15px;border-radius:14px}.sources li{margin:.5rem 0;overflow-wrap:anywhere}.footer{background:#0d3032;color:#d6e6e1;padding:28px 0}.footer a{color:#aee0d2}.small{font-size:.88rem;color:var(--muted)}code{background:#edf2ef;border-radius:5px;padding:.1em .35em}abbr{text-decoration:none;border-bottom:1px dotted currentColor}.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:#fff;color:#000;padding:8px;z-index:50}
+    @media(max-width:940px){.layout{grid-template-columns:1fr}.toc{position:relative;top:0}.cards,.dist{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);min-height:28px}.rotation{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){body{font-size:15px}.shell{width:min(100% - 22px,1180px)}.hero{padding:48px 0 38px}.cards,.dist,.two,.rotation{grid-template-columns:1fr}.bar-row{grid-template-columns:58px 1fr}.resource{grid-template-columns:1fr}.card,.figure{padding:16px}.hero-links .button{width:100%;text-align:center}}
+    @media print{body{background:#fff;font-size:10.5pt}.hero{background:#fff!important;color:var(--ink);padding:20px 0;border-bottom:2px solid var(--deep)}.hero .lead,.eyebrow{color:var(--ink)}.badge{border:1px solid #777;background:#fff}.toc,.hero-links{display:none}.layout{display:block;padding:20px 0}.card,.figure{box-shadow:none}.card,.figure,.callout,.step,.table-wrap{break-inside:avoid}section{break-before:auto;margin-bottom:26px}a{color:inherit;text-decoration:none}a[href^="http"]:after{content:""}h2,h3{break-after:avoid}.bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}.footer{background:#fff;color:#333;border-top:1px solid #999}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <header class="hero">
+    <div class="shell">
+      <div class="eyebrow">AI × ANTIBODY · PAPER DEEP DIVE · 2026-10-05</div>
+      <h1>A systematic evaluation framework for universal antibody–antigen binding affinity prediction and candidate recommendation</h1>
+      <p class="lead">未知抗原への親和性予測を「Kdを当てる問題」から「実験すべき候補を正しく上位へ置く問題」へ。MochiBindとcross-antigen benchmarkを、結果だけでなく評価設計の意味から読む。</p>
+      <div class="badges"><span class="badge">iScience 2026</span><span class="badge">新着</span><span class="badge">親和性予測</span><span class="badge">ベンチマーク</span><span class="badge">読む優先度 High</span></div>
+      <div class="hero-links"><a class="button primary" href="https://doi.org/10.1016/j.isci.2026.116522">DOI / 論文を開く</a><a class="button ghost" href="https://github.com/amazon-science/ab-binding-eval">公式GitHub</a><a class="button ghost" href="20261005_A%20systematic%20evaluation%20framework%20for%20universal%20antibody-antigen%20binding%20affinity%20prediction%20and%20candidate%20recommendation.md">Markdown版</a></div>
+    </div>
+  </header>
+  <div class="shell layout">
+    <nav class="toc" aria-label="ページ内目次"><strong>目次</strong><a href="#takeaways">要点</a><a href="#problem">問題設定</a><a href="#method">提案手法</a><a href="#evaluation">データと評価</a><a href="#results">主要結果</a><a href="#figures">Figure/Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#resources">Code / License</a><a href="#knowledge">前提知識・次</a><a href="#sources">検索ログ・出典</a></nav>
+    <main id="main">
+      <section id="takeaways">
+        <div class="section-kicker">01 · takeaways</div><h2>この論文の要点</h2>
+        <div class="grid cards">
+          <article class="card"><div class="big">順位</div><strong>絶対Kdより候補選抜</strong><p>同一抗原上の二者比較を学び、TrueSkillで全体順位へ統合する。</p></article>
+          <article class="card"><div class="big">4標的</div><strong>抗原単位で完全holdout</strong><p>2 train / 1 validation / 1 testを回し、未知抗原で評価。</p></article>
+          <article class="card"><div class="big">69.20%</div><strong>平均pairwise accuracy</strong><p>fine-tuned Graphinityの64.35%を平均4.85ポイント上回る。</p></article>
+          <article class="card"><div class="big">89秒</div><strong>20万ペア→順位</strong><p>CPU head推論約13秒＋TrueSkill約76秒。埋め込み生成は別。</p></article>
+        </div>
+        <div class="callout good" style="margin-top:18px"><strong>読みどころ：</strong> 新しいencoderの複雑さではなく、非結合体を含む候補群、抗原holdout、Top-K回収という「評価の問い」を変えた点が中心。万能性の証明ではなく、実務に近い下限ベンチマークと捉える。</div>
+      </section>
+
+      <section id="problem">
+        <div class="section-kicker">02 · background</div><h2>何が問題だったのか</h2>
+        <div class="grid two">
+          <article class="card"><h3>従来評価が答えがちな問い</h3><ul class="clean-list"><li>既知抗原に近いtestでKdをどれだけ正確に回帰できるか</li><li>binder中心の小規模集合で相関が高いか</li><li>構造confidenceが高いか</li></ul></article>
+          <article class="card"><h3>探索現場が本当に聞きたい問い</h3><ul class="clean-list"><li>学習にない抗原で通用するか</li><li>多数のnon-binderから上位候補を拾えるか</li><li>限られたwet-lab枠へ何を送るべきか</li></ul></article>
+        </div>
+        <p>絶対親和性はassayやbatchで揺れる。一方、同じ実験内でAとBのどちらが強いかという相対順序は比較的安定する。そこで著者らは回帰中心の評価を、pairwise rankingとretrievalへ組み替えた。</p>
+      </section>
+
+      <section id="method">
+        <div class="section-kicker">03 · method</div><h2>MochiBind：配列から二者比較、二者比較から全体順位</h2>
+        <figure class="figure">
+          <div class="flow" role="img" aria-label="抗体と抗原配列からESM-2埋め込みを作り、二つの候補を比較してTrueSkillで全体順位へ変換する独自フロー図">
+            <div class="step"><span class="n">1</span><h3>配列入力</h3><p>共通の抗原配列と、候補抗体A・B。構造座標は不要。</p></div><div class="arrow" aria-hidden="true">→</div>
+            <div class="step"><span class="n">2</span><h3>ESM-2 3B</h3><p>残基ごと2560次元。平均pooling後、抗体＋抗原を連結して5120次元。</p></div><div class="arrow" aria-hidden="true">→</div>
+            <div class="step"><span class="n">3</span><h3>Pairwise head</h3><p>1024次元へ射影。A−BをMLP 256→128→64へ入れ、相対差をMSE学習。</p></div><div class="arrow" aria-hidden="true">→</div>
+            <div class="step"><span class="n">4</span><h3>TrueSkill順位</h3><p>20万の仮想対戦から候補ごとのμ・σを更新し、Top-Kを推薦。</p></div>
+          </div>
+          <figcaption class="caption">原論文Figure 1を参考にした独自の要約図（原図の転載ではない）。出典：<a href="https://doi.org/10.1016/j.isci.2026.116522">Li et al., iScience (2026)</a>。原Figureの再利用ライセンスは未確認。</figcaption>
+        </figure>
+        <div class="grid cards">
+          <div class="card"><strong>Optimizer</strong><p>Adam / lr 0.001</p></div><div class="card"><strong>Regularization</strong><p>dropout 0.3 / patience 5</p></div><div class="card"><strong>Batch</strong><p>32 pair</p></div><div class="card"><strong>Strong binder</strong><p>log10(Kd[nM]) &lt; 2</p></div>
+        </div>
+      </section>
+
+      <section id="evaluation">
+        <div class="section-kicker">04 · evaluation</div><h2>データセットとリーク対策</h2>
+        <p>AlphaBindの4抗原系を使用。各抗原の元データは約3万variantだが、計算量を抑えつつ分布を保つよう5,000〜10,000候補を層化抽出した。学習・検証pairは親和性差10%超、testは差の小さい曖昧なpairも除外しない。</p>
+        <figure class="figure">
+          <h3>Cross-antigen rotation</h3>
+          <div class="rotation">
+            <div class="fold"><b>Fold · test TRA</b><div class="chips"><span class="chip train">PEM train</span><span class="chip train">PP489 train</span><span class="chip valid">VHH72 val</span><span class="chip test">TRA test</span></div></div>
+            <div class="fold"><b>Fold · test PEM</b><div class="chips"><span class="chip train">他2抗原 train</span><span class="chip valid">1抗原 val</span><span class="chip test">PEM test</span></div></div>
+            <div class="fold"><b>Fold · test PP489</b><div class="chips"><span class="chip train">他2抗原 train</span><span class="chip valid">1抗原 val</span><span class="chip test">PP489 test</span></div></div>
+            <div class="fold"><b>Fold · test VHH72</b><div class="chips"><span class="chip train">他2抗原 train</span><span class="chip valid">1抗原 val</span><span class="chip test">VHH72 test</span></div></div>
+          </div>
+          <figcaption class="caption">各構成はtrain 40万pair、validation 20万pair、test 20万pair。抗原全体がsplitをまたがないため、同一抗原variantの直接リークを防ぐ。原論文Section 4.1.2を基にした独自図。</figcaption>
+        </figure>
+        <div class="table-wrap"><table><thead><tr><th>系</th><th>親抗体 / format</th><th>標的</th><th>使用候補</th><th>親和性分布</th></tr></thead><tbody>
+          <tr><td>PP489</td><td>humanoid scFv</td><td>TIGIT</td><td>10,000</td><td>strongが約40%</td></tr><tr><td>PEM</td><td>Pembrolizumab-scFv</td><td>PD-1</td><td>10,000</td><td>二峰性、strong少数</td></tr><tr><td>VHH72</td><td>camelid VHH</td><td>SARS-CoV-1 RBD</td><td>10,000</td><td>右裾単峰、moderate中心</td></tr><tr><td>TRA</td><td>Trastuzumab-scFv</td><td>HER2</td><td>5,000</td><td>weak/non-binder中心、strongなし</td></tr>
+        </tbody></table></div>
+        <div class="callout" style="margin-top:16px"><strong>評価上の注意：</strong> 抗原間配列類似度は−0.053〜0.034と低いが、全て同じAlphaBind/AlphaSeq基盤で作られた単一seed周辺のライブラリ。抗原holdoutではあっても、cross-lab・cross-assay・完全de novo汎化ではない。</div>
+      </section>
+
+      <section id="results">
+        <div class="section-kicker">05 · results</div><h2>主要結果：4抗原すべてでpairwise accuracy首位</h2>
+        <figure class="figure">
+          <div class="legend"><span style="--c:#176f6a">MochiBind</span><span style="--c:#386b91">Graphinity fine-tuned</span><span style="--c:#b87719">Boltz-2 ipLDDT</span><span style="--c:#899795">GeoDock</span></div>
+          <div class="bars" aria-label="4抗原におけるpairwise accuracy横棒チャート。高いほど良い">
+            <div class="bar-row"><strong>PEM</strong><div class="bar-stack"><div class="bar mochi" style="width:72.35%">72.35%</div><div class="bar graph" style="width:63.2%">63.20%</div><div class="bar boltz" style="width:57.93%">57.93%</div><div class="bar geo" style="width:47.11%">47.11%</div></div></div>
+            <div class="bar-row"><strong>PP489</strong><div class="bar-stack"><div class="bar mochi" style="width:70.29%">70.29%</div><div class="bar graph" style="width:67.01%">67.01%</div><div class="bar boltz" style="width:55.52%">55.52%</div><div class="bar geo" style="width:50.17%">50.17%</div></div></div>
+            <div class="bar-row"><strong>TRA</strong><div class="bar-stack"><div class="bar mochi" style="width:74.27%">74.27%</div><div class="bar graph" style="width:68.55%">68.55%</div><div class="bar boltz" style="width:60.09%">60.09%</div><div class="bar geo" style="width:51.21%">51.21%</div></div></div>
+            <div class="bar-row"><strong>VHH72</strong><div class="bar-stack"><div class="bar mochi" style="width:59.89%">59.89%</div><div class="bar graph" style="width:58.63%">58.63%</div><div class="bar boltz" style="width:57.9%">57.90%</div><div class="bar geo" style="width:49.58%">49.58%</div></div></div>
+          </div>
+          <figcaption class="caption">指標：pairwise accuracy（高いほど良い）。原論文Table 2の報告値を独自に再構成。全抗原でMochiBind対各baselineの片側McNemar検定 p&lt;0.0001。</figcaption>
+        </figure>
+        <div class="grid cards">
+          <div class="card"><div class="big">+4.85 pt</div><strong>vs Graphinity</strong><p>4抗原単純平均。69.20% vs 64.35%。</p></div><div class="card"><div class="big">+11.34 pt</div><strong>vs Boltz-2 proxy</strong><p>69.20% vs 57.86%。</p></div><div class="card"><div class="big">+19.68 pt</div><strong>vs GeoDock</strong><p>69.20% vs 49.52%。</p></div><div class="card"><div class="big">+1.26 pt</div><strong>最小差はVHH72</strong><p>優位性は候補分布に依存。</p></div>
+        </div>
+        <h3>Retrievalで分かったこと</h3>
+        <p>Figure 2のTop-K precisionとFigure 3のTop-K accuracyでもMochiBindが概ね首位、fine-tuned Graphinityが次点。Boltz-2/GeoDockの構造confidenceはrandom guessに近く、構造の確信度を結合強度と同一視できない。論文に曲線全点の数表はないため、本ページでは見た目から値を推定していない。</p>
+        <div class="callout danger"><strong>重要な陰性結果：</strong> Graphinityの事前学習checkpointは47.40〜50.90%でほぼランダム。AlphaBindでfine-tuneして58.63〜68.55%へ上がった。simulated single mutation・共通backboneで学んだ幾何表現は、実験由来multi-mutationと独立構造予測の座標揺らぎへ自動では移らない。</div>
+      </section>
+
+      <section id="figures">
+        <div class="section-kicker">06 · figures</div><h2>重要Figure/Tableの読み方</h2>
+        <div class="grid dist">
+          <article class="card"><strong>Figure 1</strong><h3>設計→推薦の接続</h3><p>pairwise headより、二者比較をTrueSkillとTop-K評価へ接続する全体設計を見る。</p></article>
+          <article class="card"><strong>Figure 2–3</strong><h3>純度と上位一致</h3><p>precisionはgood binderの純度、accuracyは真の上位Kとの重なり。目的が違う。</p></article>
+          <article class="card"><strong>Table 2</strong><h3>抗原別effect size</h3><p>平均だけでなくPEM +9.15 pt、VHH72 +1.26 ptという差を見る。</p></article>
+          <article class="card"><strong>Figure 5</strong><h3>母集団が指標を変える</h3><p>TRAにstrongがなく、PP489に約40%。precisionの比較にはprevalence理解が必須。</p></article>
+        </div>
+        <p class="small">すべて原論文Figure/Tableの事実関係を基にした独自要約。原図の配色・配置はトレースせず、原画像は保存・転載していない。原PDF：<a href="https://cdn.amazon.science/2a/a7/6ea54b214519b0a41eb952a0cc2e/260409-mochibind-manuscript.pdf">著者公開23ページ版</a>。</p>
+      </section>
+
+      <section id="meaning">
+        <div class="section-kicker">07 · implication</div><h2>抗体研究・創薬への意味</h2>
+        <div class="grid two">
+          <article class="card"><h3>使いどころ</h3><ul class="clean-list"><li>生成モデルやdisplay libraryの大量候補を安価にpre-screen</li><li>wet-lab枠がK件しかないときの候補推薦</li><li>未知抗原holdoutを用いたモデル比較の共通土台</li><li>DBTL cycleで実験結果をpairwise supervisionへ追加</li></ul></article>
+          <article class="card"><h3>これだけでは決められないこと</h3><ul class="clean-list"><li>特異性・交差反応性・negative target</li><li>発現、凝集、粘度、熱安定性、免疫原性</li><li>結合poseと作用機序</li><li>臨床候補としての総合developability</li></ul></article>
+        </div>
+        <p>MochiBindは「Kd測定器」ではなく「次に測る順番を作るranker」と位置づけると分かりやすい。上位候補は構造、liability、developability、実験で再評価する必要がある。</p>
+      </section>
+
+      <section id="limits">
+        <div class="section-kicker">08 · limitations</div><h2>限界と注意点</h2>
+        <div class="grid two">
+          <article class="card"><h3>著者が述べる限界</h3><ul class="limit-list"><li>大規模・高品質・利用可能な親和性データが不足。</li><li>抗原ごとにbinder prevalenceと分布が異なる。</li><li>simulated single mutationから実測multi-mutationへのdomain shift。</li><li>retrieval/ranking法とデータ多様性の拡張が必要。</li></ul></article>
+          <article class="card"><h3>本ノートで追加した注意</h3><ul class="limit-list"><li>4抗原、1測定基盤、各抗原1 seed周辺に限定。</li><li>平均poolingはCDR/epitope界面局所性を失う。</li><li>Boltz-2/GeoDockは親和性専用headでなくconfidence proxy。</li><li>20万pairは抗体を共有し、完全独立標本ではない。</li><li>13秒はESM埋め込み生成を含むend-to-end時間ではない。</li><li>prospective campaignでのhit-rate改善は未検証。</li></ul></article>
+        </div>
+        <div class="callout"><strong>商用利用：</strong> 公式コードのライセンスはCC BY-NC 4.0。学術再現には使えるが、商用創薬パイプラインへ組み込む前に許諾確認が必要。AlphaBind由来データ、ESM-2本体、各baselineの条件は別々に確認する。</div>
+      </section>
+
+      <section id="resources">
+        <div class="section-kicker">09 · reproducibility</div><h2>Code / License / Weights</h2>
+        <div class="card">
+          <div class="resource"><b>公式コード</b><span><a href="https://github.com/amazon-science/ab-binding-eval">amazon-science/ab-binding-eval</a></span></div>
+          <div class="resource"><b>別ミラー</b><span><a href="https://osf.io/56azs/overview?view_only=df049360b3684b7db76f567502b164ea">OSF 56azs</a>（論文Resource Availability記載）</span></div>
+          <div class="resource"><b>ライセンス</b><span><a href="https://github.com/amazon-science/ab-binding-eval/blob/main/LICENSE">CC BY-NC 4.0</a>（非商用）</span></div>
+          <div class="resource"><b>Checkpoints</b><span><a href="https://github.com/amazon-science/ab-binding-eval/tree/main/checkpoint">PEM / PP489 / TRA / VHH72</a></span></div>
+          <div class="resource"><b>評価データ</b><span><a href="https://github.com/amazon-science/ab-binding-eval/tree/main/data">sampled CSV / pair PKL</a>、原データは<a href="https://doi.org/10.1080/19420862.2025.2534626">AlphaBind</a></span></div>
+          <div class="resource"><b>Hugging Face</b><span>公式model/datasetは検索したが見つからず</span></div>
+        </div>
+        <p class="small">再現時は先にESM-2 mean embeddingを生成する。READMEのコマンドにある <code>data_processed_esm_mean.py</code> と、repository rootの <code>generate_esm2_embedding.py</code> の名称差に注意。</p>
+      </section>
+
+      <section id="knowledge">
+        <div class="section-kicker">10 · reading guide</div><h2>前提知識、関連論文、次に試すこと</h2>
+        <div class="grid two">
+          <article class="card"><h3>前提知識</h3><ul class="clean-list"><li><b>Kd：</b>小さいほど強結合。log10(Kd[nM])&lt;2はKd&lt;100 nM。</li><li><b>Pairwise ranking：</b>値でなく候補間の順序を学ぶ。</li><li><b>ESM-2：</b>タンパク質配列の事前学習表現。</li><li><b>TrueSkill：</b>対戦結果から潜在能力と不確実性を更新。</li><li><b>Antigen holdout：</b>抗原全体をtestへ隔離する分割。</li></ul></article>
+          <article class="card"><h3>次に読む / 試す</h3><ul class="clean-list"><li>AlphaBind原著で測定系とデータ生成を確認。</li><li>公開checkpointでTable 2を再現。</li><li>sampling seedとTrueSkill処理順への感度を測定。</li><li>CDR-aware pooling / residue attentionを追加。</li><li>Boltz-2 affinity headとの公平な比較を設計。</li></ul></article>
+        </div>
+        <div class="priority"><div class="grade">High</div><p><strong>読む優先度：</strong> 生成・構造論文を評価する物差しになる。4抗原という範囲を忘れず、精度の高さよりsplitとretrieval設計を持ち帰りたい。</p></div>
+      </section>
+
+      <section id="sources">
+        <div class="section-kicker">11 · sources</div><h2>検索ログと出典</h2>
+        <ul class="sources">
+          <li><a href="https://doi.org/10.1016/j.isci.2026.116522">iScience DOI 10.1016/j.isci.2026.116522</a> — version of record。</li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/42564542/">PubMed PMID 42564542</a> — 日付、著者、書誌、abstract。</li>
+          <li><a href="https://www.amazon.science/publications/a-systematic-evaluation-framework-for-universal-antibody-antigen-binding-affinity-prediction-and-candidate-recommendation">Amazon Science publication page</a> — 著者公開情報とPDF。</li>
+          <li><a href="https://cdn.amazon.science/2a/a7/6ea54b214519b0a41eb952a0cc2e/260409-mochibind-manuscript.pdf">著者公開PDF</a> — Figure 1–5、Table 1–2、Appendix A–C、Resource Availabilityを確認。</li>
+          <li><a href="https://github.com/amazon-science/ab-binding-eval">公式GitHub</a> / <a href="https://github.com/amazon-science/ab-binding-eval/blob/main/LICENSE">LICENSE</a> — code、data、checkpoint、CC BY-NC 4.0。</li>
+          <li><a href="https://osf.io/56azs/overview?view_only=df049360b3684b7db76f567502b164ea">OSF公開先</a> — 論文記載のcode / weights。</li>
+          <li><a href="https://doi.org/10.1080/19420862.2025.2534626">AlphaBind原著</a> — 元データ。</li>
+        </ul>
+        <p class="small">検索日：2026-10-05 JST。PubMed、Amazon Science、iScience/Cell、bioRxiv、arXiv、GitHub、Hugging Face、OSFを、論文完全タイトル、DOI、MochiBind、antibody affinity ranking等で検索。iScience HTMLは取得制限があったため、DOI、PubMed/PMC、著者PDFで照合した。原論文Figureの明示的再利用条件を確認できなかったため、原画像は使わず独自図のみ掲載。</p>
+      </section>
+    </main>
+  </div>
+  <footer class="footer"><div class="shell">AI×抗体 論文デイリーリサーチ · 2026-10-05 · <a href="20261005_A%20systematic%20evaluation%20framework%20for%20universal%20antibody-antigen%20binding%20affinity%20prediction%20and%20candidate%20recommendation.md">Markdown版へ</a></div></footer>
+</body>
+</html>
