@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CA-MAP論文の日本語ビジュアル精読ノート。抗体developability、バッチ効果、in-context multi-property predictionを解説。">
+  <title>CA-MAP：文脈適応型・抗体多物性予測 — 論文精読ノート</title>
+  <style>
+    :root{--ink:#162525;--muted:#526666;--paper:#f5f7f2;--card:#fff;--line:#d6dfd9;--teal:#176c68;--teal2:#55aaa1;--navy:#243b53;--gold:#c98d2a;--coral:#c85d4b;--soft:#e6f1ef;--warn:#fff1d6;--danger:#fff0ed;--shadow:0 12px 35px rgba(28,57,53,.09)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;line-height:1.75;font-size:16px}
+    a{color:#0e6665;text-underline-offset:3px} a:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+    .shell{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1450px;margin:auto}.toc{position:sticky;top:0;height:100vh;padding:30px 22px;background:#142f31;color:#eef8f5;overflow:auto}.toc .kicker{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#8fd2ca}.toc h2{font-size:1.15rem;line-height:1.4;margin:.5rem 0 1rem}.toc a{display:block;color:#cde5e1;text-decoration:none;padding:.38rem .2rem;border-left:2px solid transparent}.toc a:hover{color:#fff;border-left-color:#69c1b6;padding-left:.55rem}.toc .back{margin-top:1.4rem;padding-top:1rem;border-top:1px solid #355457;font-size:.84rem}
+    main{min-width:0}.hero{background:linear-gradient(130deg,#173b3e 0%,#1d5756 58%,#2b6d68 100%);color:white;padding:70px clamp(24px,6vw,90px) 64px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:380px;height:380px;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-110px;top:-160px;box-shadow:0 0 0 52px rgba(255,255,255,.035),0 0 0 105px rgba(255,255,255,.025)}
+    .eyebrow{font-weight:750;letter-spacing:.08em;color:#a9e0d8;text-transform:uppercase;font-size:.78rem}.hero h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.05;max-width:1050px;margin:.6rem 0 1.2rem;letter-spacing:-.035em}.hero .lead{font-size:clamp(1.05rem,2vw,1.35rem);max-width:900px;color:#e3f1ee}.badges{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.4rem 0}.badge{display:inline-flex;align-items:center;padding:.36rem .7rem;border:1px solid rgba(255,255,255,.3);border-radius:999px;background:rgba(255,255,255,.09);font-size:.85rem}.hero-links{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}.button{display:inline-block;padding:.7rem 1rem;border-radius:9px;background:#fff;color:#173b3e;font-weight:750;text-decoration:none}.button.ghost{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+    .content{max-width:1120px;margin:auto;padding:42px clamp(20px,5vw,68px) 80px}.section{padding:32px 0;border-bottom:1px solid var(--line)}.section:last-child{border:0}.section h2{font-size:clamp(1.5rem,3vw,2.25rem);line-height:1.25;margin:0 0 1rem;color:#183c3d}.section h3{font-size:1.12rem;margin:1.5rem 0 .55rem;color:#244e4d}.sub{color:var(--muted);max-width:850px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);break-inside:avoid}.card .num{font-size:1.85rem;font-weight:850;line-height:1;color:var(--teal)}.card .label{font-weight:720;margin:.55rem 0 .2rem}.card p{margin:0;color:var(--muted);font-size:.92rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.note{padding:18px 20px;border-radius:12px;border-left:5px solid var(--gold);background:var(--warn);break-inside:avoid}.note.danger{background:var(--danger);border-color:var(--coral)}.note strong{display:block;margin-bottom:.35rem}
+    .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin:25px 0}.flow .step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.flow .step b{display:block;color:var(--teal);margin-bottom:.4rem}.arrow{align-self:center;font-size:1.7rem;color:var(--gold);font-weight:900}
+    .pipeline{border:1px solid var(--line);background:white;border-radius:16px;padding:22px;box-shadow:var(--shadow);break-inside:avoid}.streams{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stream{padding:14px;border-radius:10px;background:var(--soft);border-top:5px solid var(--teal)}.stream:nth-child(2){border-color:var(--navy);background:#edf2f7}.stream:nth-child(3){border-color:var(--gold);background:#fff7e8}.stream:nth-child(4){border-color:var(--coral);background:#fff2ef}.merge{text-align:center;margin:15px 0;font-weight:800;color:var(--muted)}.mamba{padding:18px;text-align:center;color:white;background:linear-gradient(90deg,var(--teal),#285778);border-radius:12px}.head{margin:12px auto 0;max-width:370px;text-align:center;padding:12px;border:2px solid var(--teal);border-radius:12px;font-weight:800}
+    .bars{background:white;border:1px solid var(--line);border-radius:14px;padding:20px;margin:20px 0;break-inside:avoid}.bar-row{display:grid;grid-template-columns:165px 1fr 58px;gap:12px;align-items:center;margin:12px 0}.track{height:21px;background:#e5ece8;border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--teal);border-radius:99px}.fill.base{background:var(--coral)}.fill.gold{background:var(--gold)}.value{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}.dot{width:10px;height:10px;display:inline-block;border-radius:50%;margin-right:6px;background:var(--teal)}.dot.coral{background:var(--coral)}.dot.gold{background:var(--gold)}
+    table{width:100%;border-collapse:collapse;background:white;font-size:.92rem;margin:18px 0;break-inside:avoid}th,td{border:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top}th{background:#e7f0ed;color:#193f3f}td strong{color:var(--teal)}.scroll{overflow-x:auto}.metric{font-variant-numeric:tabular-nums}.small{font-size:.86rem;color:var(--muted)}
+    .split{display:flex;height:54px;border-radius:12px;overflow:hidden;color:white;font-weight:800;text-align:center;margin:20px 0}.split div{display:flex;align-items:center;justify-content:center}.train{width:70%;background:var(--teal)}.val{width:15%;background:var(--gold)}.test{width:15%;background:var(--coral)}
+    .factgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.fact{border:1px solid var(--line);background:white;border-radius:12px;padding:15px}.fact b{display:block;font-size:1.15rem;color:var(--teal)}
+    .limits{display:grid;grid-template-columns:1fr 1fr;gap:13px}.limit{background:white;border:1px solid #ead2cc;border-left:5px solid var(--coral);border-radius:10px;padding:16px;break-inside:avoid}.limit b{display:block;margin-bottom:.3rem}.checklist{padding-left:1.2rem}.checklist li{margin:.55rem 0}.sources li{margin:.65rem 0}.footer{color:var(--muted);font-size:.86rem;margin-top:30px}.cap{color:var(--muted);font-size:.85rem;border-top:1px dashed var(--line);padding-top:10px;margin-top:14px}.tag{display:inline-block;padding:.18rem .45rem;border-radius:5px;background:var(--soft);font-size:.8rem;margin:.12rem}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#edf1ef;border:1px solid var(--line);padding:.08rem .3rem;border-radius:4px}
+    @media(max-width:980px){.shell{display:block}.toc{position:relative;height:auto;padding:20px}.toc nav{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px}.toc .back{grid-column:1/-1}.cards{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){body{font-size:15px}.hero{padding:45px 20px}.content{padding:25px 16px 55px}.toc nav{grid-template-columns:1fr 1fr}.cards,.two,.three,.factgrid,.limits,.streams{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:115px 1fr 48px;gap:8px}.split{font-size:.75rem}.section{padding:26px 0}.hero h1{overflow-wrap:anywhere}}
+    @media print{body{background:white;font-size:10.5pt}.shell{display:block}.toc{display:none}.hero{padding:28px 34px;background:#173b3e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.content{max-width:none;padding:20px 34px}.section{padding:18px 0}.card,.pipeline,.bars,table,.note,.limit{box-shadow:none;break-inside:avoid}.hero-links{display:none}.cards{grid-template-columns:repeat(4,1fr)}a{color:inherit;text-decoration:none}.section h2{font-size:18pt}.section h3{font-size:13pt}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <aside class="toc" aria-label="目次">
+    <div class="kicker">Paper visual note</div>
+    <h2>CA-MAP<br>文脈適応型の抗体物性予測</h2>
+    <nav>
+      <a href="#points">要点</a><a href="#problem">背景・問題</a><a href="#method">手法</a><a href="#data">データ・評価</a><a href="#results">主要結果</a><a href="#figures">Figure/Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License</a><a href="#primer">前提知識・次</a><a href="#log">検索ログ・出典</a>
+      <a class="back" href="20261012_Context-aware%20multi-property%20antibody%20predictor%20a%20novel%20framework%20integrating%20text%20and%20protein%20language%20models.md">Markdown版へ</a>
+    </nav>
+  </aside>
+  <main>
+    <header class="hero">
+      <div class="eyebrow">AI × Antibody · 2026-10-12 research note</div>
+      <h1>CA-MAPは「同じラボの少数例」を読んで抗体物性を予測する</h1>
+      <p class="lead">配列・物性名・数値を別々に埋め込み、Mambaで統合。ランダム変換を使うAB-context-aware trainingにより、モデルが文脈を無視する近道を封じ、模擬バッチ効果へ再学習なしで適応する。</p>
+      <div class="badges"><span class="badge">2026</span><span class="badge">npj Systems Biology and Applications</span><span class="badge">新着 / モデル起点</span><span class="badge">読む優先度 High</span></div>
+      <div class="hero-links"><a class="button" href="https://doi.org/10.1038/s41540-026-00723-1">論文を開く</a><a class="button ghost" href="https://github.com/amazon-science/ca-map">公式GitHub</a></div>
+    </header>
+    <div class="content">
+      <section class="section" id="points">
+        <h2>この論文の要点</h2>
+        <div class="cards">
+          <article class="card"><div class="num">876,898</div><div class="label">ユニーク重鎖</div><p>計算付与された6種のdevelopability特性を使用。</p></article>
+          <article class="card"><div class="num">0.99</div><div class="label">強いbias下のρ</div><p>AB-context-aware TxGemma。通常法はρ=0.58へ低下。</p></article>
+          <article class="card"><div class="num">182K</div><div class="label">学習可能parameter</div><p>凍結encoderを除く。TxGemma LoRAは約40M。</p></article>
+          <article class="card"><div class="num">0.73</div><div class="label">未学習2特性のρ</div><p>相関する全6特性をcontextへ含めた場合。</p></article>
+        </div>
+        <div class="note"><strong>一言で</strong>抗体物性を「固定モデルの出力」ではなく、「同じ測定環境の例に条件づけられた出力」として扱う。実測検証は未完だが、バッチ差をモデル入力へ取り込む設計が新しい。</div>
+      </section>
+
+      <section class="section" id="problem">
+        <h2>背景と解決したい問題</h2>
+        <p class="sub">高親和性でも、凝集しやすい、溶けにくい、不安定、免疫原性が高い抗体は薬になりにくい。しかし物性値は測定系に依存し、別ラボの値を同じ尺度として扱えない。</p>
+        <div class="flow" aria-label="従来法の問題とCA-MAPの解決フロー">
+          <div class="step"><b>従来</b>配列だけから1つの物性を予測。新しいassayごとにheadやモデルを再学習。</div><div class="arrow" aria-hidden="true">→</div>
+          <div class="step"><b>問題</b>ラボ・装置・日付のoffsetで予測がずれる。例をpromptに入れてもモデルが無視しうる。</div><div class="arrow" aria-hidden="true">→</div>
+          <div class="step"><b>CA-MAP</b>同一batchの配列―値ペアをcontextにし、queryの尺度をその場で校正。</div>
+        </div>
+        <div class="two">
+          <div class="card"><h3>Shortcut learning</h3><p>学習データが一つの尺度なら、モデルはcontextを見ず、query配列だけで答えられる。「few-shot形式」でも実際にはfew-shot適応していない。</p></div>
+          <div class="card"><h3>AB-context-awareの解法</h3><p>各promptのcontext値と正解へ同じランダム変換を加える。変換量はquery配列から分からないため、contextを読むことが正解の必要条件になる。</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="method">
+        <h2>提案手法の全体像</h2>
+        <p><span class="kbd">context</span>には複数抗体と既知物性、<span class="kbd">query</span>には対象重鎖と予測したい物性名を置く。自然言語へ一括変換せず、モダリティごとの表現を32次元へ揃えて統合する。</p>
+        <figure class="pipeline" aria-labelledby="arch-title">
+          <h3 id="arch-title">独自再構成図：CA-MAP architecture</h3>
+          <div class="streams">
+            <div class="stream"><b>抗体重鎖配列</b><br>凍結 ESM-2<br><span class="small">残基平均 → linear → 32D</span></div>
+            <div class="stream"><b>物性名</b><br>凍結 Sentence-BERT<br><span class="small">mean pool → linear → 32D</span></div>
+            <div class="stream"><b>物性値</b><br>0〜1の連続値<br><span class="small">linear → 32D</span></div>
+            <div class="stream"><b>構造token</b><br>antibody / query / EOS<br><span class="small">learnable 32D</span></div>
+          </div>
+          <div class="merge">↓ prompt順に連結：10〜15 context抗体 ＋ 1 query抗体 ↓</div>
+          <div class="mamba"><b>6-layer Mamba orchestrator</b><br><span class="small" style="color:#e8f6f3">hidden 32 · convolution width 4 · expansion 2</span></div>
+          <div class="head">末尾EOS → 単一linear head → 予測値</div>
+          <figcaption class="cap">原論文Figure 4を参考にした独自の要約図（原図の転載ではない）。出典：<a href="https://www.nature.com/articles/s41540-026-00723-1.pdf">論文PDF</a>。論文ライセンスはCC BY-NC-ND 4.0。</figcaption>
+        </figure>
+        <div class="three">
+          <div class="fact"><b>可変長context</b>抗体数、物性数、欠損値が固定でなくても扱える。</div>
+          <div class="fact"><b>単一head</b>物性ごとの専用回帰headを作らず、名前で問い合わせる。</div>
+          <div class="fact"><b>再学習なし</b>同一batchの例をcontextへ入れて推論時に適応。</div>
+        </div>
+      </section>
+
+      <section class="section" id="data">
+        <h2>データセットと評価設計</h2>
+        <div class="factgrid">
+          <div class="fact"><b>2,036,789</b>元データの配列数<br><span class="small">OAS 1,738,091 + 実験生成 298,698</span></div>
+          <div class="fact"><b>876,898</b>CA-MAPが使ったユニーク重鎖</div>
+          <div class="fact"><b>6 properties</b>hydrophobicity / solubility / stability / immunogenicity / PosCh / NegCh</div>
+        </div>
+        <h3>配列を先に分割</h3>
+        <div class="split" role="img" aria-label="train 70パーセント、validation 15パーセント、test 15パーセント"><div class="train">setA / train 70%</div><div class="val">setB 15%</div><div class="test">setC 15%</div></div>
+        <p>prompt内のcontextとqueryは必ず同じsetから生成し、test promptのcontextもsetCから取る。直接の配列重複は避ける一方、sequence identity clusterやgermline単位の分割は記載されない。</p>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>実験</th><th>Train prompts</th><th>Validation</th><th>Test</th><th>条件</th></tr></thead>
+            <tbody><tr><td>Hydrophobicity単独</td><td>70,156</td><td>15,043</td><td>15,043</td><td>context 10〜15抗体、bias 0 / 0〜0.1 / 0〜0.3</td></tr><tr><td>4特性同時</td><td>70,156</td><td>15,043</td><td>約15,000</td><td>Hydrophobicity / NegCh / Solubility / Stability</td></tr><tr><td>未学習特性</td><td colspan="3">ImmunogenicityとPosChをtrain/validationの目的から除外</td><td>目的2特性のみ vs 全6特性context</td></tr></tbody>
+          </table>
+        </div>
+        <div class="note danger"><strong>ラベルの性質</strong>6特性は実験測定ではなく、Peptides R、SoluProt、netMHCIIpan、Therapeutic Antibody Profilerなどの計算出力。モデルは現時点で「実測developability」を直接学んだわけではない。</div>
+      </section>
+
+      <section class="section" id="results">
+        <h2>主要結果</h2>
+        <h3>1｜バッチ効果が強いほど学習戦略の差が開く</h3>
+        <div class="bars" role="img" aria-label="通常fine-tuningとAB-context-awareのSpearman rho比較">
+          <div class="legend"><span><i class="dot"></i>AB-context-aware</span><span><i class="dot coral"></i>通常fine-tuning</span></div>
+          <p class="small">Hydrophobicity、TxGemma。高いほど良い。</p>
+          <div class="bar-row"><span>biasなし / context</span><div class="track"><div class="fill" style="width:99%"></div></div><span class="value">≈.99</span></div>
+          <div class="bar-row"><span>biasなし / 通常</span><div class="track"><div class="fill base" style="width:99%"></div></div><span class="value">≈.99</span></div>
+          <div class="bar-row"><span>bias 0–.1 / context</span><div class="track"><div class="fill" style="width:99%"></div></div><span class="value">&gt;.99</span></div>
+          <div class="bar-row"><span>bias 0–.1 / 通常</span><div class="track"><div class="fill base" style="width:95%"></div></div><span class="value">.95</span></div>
+          <div class="bar-row"><span>bias 0–.3 / context</span><div class="track"><div class="fill" style="width:99%"></div></div><span class="value">≈.99</span></div>
+          <div class="bar-row"><span>bias 0–.3 / 通常</span><div class="track"><div class="fill base" style="width:58%"></div></div><span class="value">.58</span></div>
+          <p class="cap">原論文Figure 1の報告値を使った独自チャート。原図の転載ではない。</p>
+        </div>
+        <h3>2｜CA-MAPは4特性すべてで有効な数値を返す</h3>
+        <div class="scroll"><table><thead><tr><th>Property</th><th>CA-MAP ρ<br>bias 0–0.3</th><th>出力率</th><th>ESM-2線形 ρ</th><th>差</th></tr></thead><tbody>
+          <tr><td>Hydrophobicity</td><td><strong class="metric">0.98</strong></td><td>100%</td><td>0.42</td><td>+0.56</td></tr>
+          <tr><td>NegCh heterogeneity</td><td><strong class="metric">0.84</strong></td><td>100%</td><td>0.14</td><td>+0.70</td></tr>
+          <tr><td>Solubility</td><td><strong class="metric">0.83</strong></td><td>100%</td><td>0.49</td><td>+0.34</td></tr>
+          <tr><td>Stability</td><td><strong class="metric">0.97</strong></td><td>100%</td><td>0.47</td><td>+0.50</td></tr>
+        </tbody></table></div>
+        <p class="small">TxGemmaは最大でもSolubilityの2.62%しか数値を返さず、Stabilityは0件。生成LLMのρはparse可能な小さなsubsetに基づくため、CA-MAPとの比較では出力率も必須。</p>
+        <h3>3｜相関する物性を足すと未学習特性が伸びる</h3>
+        <div class="bars" role="img" aria-label="未学習特性の少数contextと全6特性contextのSpearman rho比較">
+          <div class="legend"><span><i class="dot"></i>全6特性context</span><span><i class="dot gold"></i>目的2特性だけ</span></div>
+          <div class="bar-row"><span>Immunogenicity / 全6</span><div class="track"><div class="fill" style="width:73%"></div></div><span class="value">.73</span></div>
+          <div class="bar-row"><span>Immunogenicity / 2</span><div class="track"><div class="fill gold" style="width:25%"></div></div><span class="value">.25</span></div>
+          <div class="bar-row"><span>PosCh / 全6</span><div class="track"><div class="fill" style="width:73%"></div></div><span class="value">.73</span></div>
+          <div class="bar-row"><span>PosCh / 2</span><div class="track"><div class="fill gold" style="width:8%"></div></div><span class="value">.08</span></div>
+          <p class="cap">原論文Table 2の報告値を使った独自チャート。目的特性の例はtest contextに存在するため完全zero-shotではない。</p>
+        </div>
+        <h3>4｜効率</h3>
+        <div class="cards"><article class="card"><div class="num">0.009 s</div><div class="label">CA-MAP / prompt</div><p>128 promptsを1.16秒。埋め込み生成は除外。</p></article><article class="card"><div class="num">1.83 s</div><div class="label">TxGemma / prompt</div><p>12 promptsを22秒。同じL40S GPU。</p></article><article class="card"><div class="num">≈200×</div><div class="label">head側の速度差</div><p>end-to-end差ではない点に注意。</p></article><article class="card"><div class="num">100</div><div class="label">context抗体の目安</div><p>Figure 2では性能向上がこの付近で飽和。</p></article></div>
+      </section>
+
+      <section class="section" id="figures">
+        <h2>重要なFigure / Tableの読み方</h2>
+        <div class="three">
+          <article class="card"><h3>Figure 1</h3><p><b>主張：</b>通常のprompt fine-tuningは例を無視できる。biasが0〜0.3へ増すと通常法だけρ=0.58へ崩れる。</p><p class="small">見る軸：bias強度 × 学習法 × Spearman ρ。</p></article>
+          <article class="card"><h3>Table 1</h3><p><b>主張：</b>専用の数値モデルは巨大生成LLMより4特性同時回帰に向く。ρだけでなく数値出力率を見る。</p><p class="small">見る軸：property × model × ρ × % predicted。</p></article>
+          <article class="card"><h3>Figure 4 + Table 2</h3><p><b>主張：</b>モダリティ別経路と単一headで未知物性へ適応。相関propertyを足すとρが0.73へ上がる。</p><p class="small">見る軸：入力経路、contextのproperty範囲、未学習target。</p></article>
+        </div>
+        <p class="cap">全Figure 1〜4とTable 1〜2を論文PDFで確認。論文はCC BY-NC-ND 4.0のため原図を保存せず、本ページの図は報告事実・数値を新しい構成で可視化したもの。</p>
+      </section>
+
+      <section class="section" id="meaning">
+        <h2>抗体研究・創薬への意味</h2>
+        <div class="two">
+          <div><h3>生成後のmulti-parameter triage</h3><p>候補生成 → 少数実測 → 同一batchの例をcontextへ投入 → 大規模候補をranking、というloopに置ける。物性ごとのfine-tuningを毎回行う運用を減らせる可能性がある。</p></div>
+          <div><h3>測定カスケード</h3><p>安価なassayを広く測り、高価なassayを一部だけ測る。相関物性をcontextへ加え、未測定propertyの優先順位づけを補助する。欠損panelを許す設計とも相性がよい。</p></div>
+          <div><h3>Site transferへの示唆</h3><p>新施設の少数参照例をcontextへ入れて校正する考え方は、装置更新やprotocol変更へ応用できる。ただし実ラボ間の検証はまだない。</p></div>
+          <div><h3>万能scorerではない</h3><p>親和性、特異性、off-target、発現量、抗原条件を未評価。抗体最適化では別モデル・実験と組み合わせる必要がある。</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="limits">
+        <h2>限界と注意点</h2>
+        <div class="limits">
+          <div class="limit"><b>教師値がin silico</b>実験測定ではなく既存予測器の出力。予測器のbiasを再学習している可能性がある。</div>
+          <div class="limit"><b>実batch未検証</b>主に加算offsetのsimulation。非線形driftやラボごとの定義差は未再現。</div>
+          <div class="limit"><b>配列splitの厳しさ</b>重複配列は除くが、sequence cluster / germline / CDR identity splitは未記載。</div>
+          <div class="limit"><b>重鎖のみ</b>軽鎖pairing、抗原、buffer、濃度、formatを入力しない。</div>
+          <div class="limit"><b>zero-shotではない</b>未学習property実験でもtest contextに目的propertyの少数ラベルが入る。</div>
+          <div class="limit"><b>速度比較の条件</b>CA-MAPの0.009秒はESM-2・text embedding生成を除外。</div>
+          <div class="limit"><b>重みなし</b>コードとデータはあるが学習済みCA-MAP checkpointは提供されない。</div>
+          <div class="limit"><b>非商用ライセンス</b>codeはCC BY-NC 4.0、paperはCC BY-NC-ND 4.0。</div>
+        </div>
+      </section>
+
+      <section class="section" id="code">
+        <h2>Code / License / Weights</h2>
+        <div class="scroll"><table><tbody>
+          <tr><th>コード</th><td><a href="https://github.com/amazon-science/ca-map">amazon-science/ca-map</a>（公式・著者実装）</td></tr>
+          <tr><th>コードライセンス</th><td>CC BY-NC 4.0。LICENSE、README、source headerで確認。</td></tr>
+          <tr><th>学習済み重み</th><td><strong>非提供</strong>。READMEに「weights are not provided」。再学習が必要。</td></tr>
+          <tr><th>データ</th><td><a href="https://github.com/csi-greifflab/developability_profiling/blob/main/data/native/developability.csv">developability.csv</a> / <a href="https://github.com/csi-greifflab/developability_profiling">元repository</a></td></tr>
+          <tr><th>Hugging Face</th><td>CA-MAP公式model/dataset/Spaceは見つからず。依存は<a href="https://huggingface.co/facebook/esm2_t6_8M_UR50D">ESM-2</a>と<a href="https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2">Sentence-BERT</a>。</td></tr>
+          <tr><th>再現性</th><td>training、dataset、tokenizer、Mamba、inference、例示出力あり。raw prediction CSVと論文checkpointなし。</td></tr>
+        </tbody></table></div>
+        <div class="note"><strong>実装入口</strong><span class="kbd">train.py</span> の <span class="kbd">propToUseLst</span>、<span class="kbd">abNumRangePerPrompt</span>、<span class="kbd">maxBias</span> を確認。まず公開CSVのsubsetで学習し、その後に自施設の物性名・正規化範囲・batch定義へ置き換える。</div>
+      </section>
+
+      <section class="section" id="primer">
+        <h2>前提知識・関連論文・次に試すこと</h2>
+        <div class="two">
+          <div><h3>前提知識</h3><ul class="checklist"><li><b>Developability：</b>製造・保存・投与に耐えるための複合特性。</li><li><b>Batch effect：</b>生物差ではない測定系由来の系統差。</li><li><b>In-context conditioning：</b>重み更新なしに入力中の例へ適応。</li><li><b>Spearman ρ：</b>候補順位の一致度。</li><li><b>Mamba：</b>state spaceに基づく長系列モデル。</li><li><b>Shortcut learning：</b>意図した情報を無視して簡単な相関で答える現象。</li></ul></div>
+          <div><h3>次に試すこと</h3><ol class="checklist"><li>同一抗体panelを複数日・複数装置で測り、実batch holdoutを作る。</li><li>sequence identity cluster単位でsplitし、近縁配列リークを評価。</li><li>contextをランダム選択ではなくquery近傍・batch代表性で選ぶ。</li><li>prediction intervalまたはensembleで不確実性を付ける。</li><li>重鎖＋軽鎖＋format＋buffer情報へ拡張する。</li></ol></div>
+        </div>
+        <h3>読む優先度：High</h3><p>抗体物性の最高精度を確立した論文というより、実験系固有の尺度をcontextで扱うための設計論として価値が高い。生成―測定―再rankingのloopや、複数siteのassayを運用する研究者に特に有用。</p>
+        <p><span class="tag">antibody developability</span><span class="tag">batch effect</span><span class="tag">in-context learning</span><span class="tag">ESM-2</span><span class="tag">Mamba</span><span class="tag">multi-property optimization</span></p>
+      </section>
+
+      <section class="section" id="log">
+        <h2>検索ログと出典</h2>
+        <p>新着候補と基盤候補を比較し、前回扱ったMochiBind/AlphaBind datasetとの重複を避けてCA-MAPを採用。Nature PDFの全Figure 1〜4、Table 1〜2、Methods、Data/Code availabilityを確認した。</p>
+        <ul class="sources">
+          <li><a href="https://www.nature.com/articles/s41540-026-00723-1">論文HTML / 書誌 / rights</a> — 公開日、著者、CC BY-NC-ND 4.0。</li>
+          <li><a href="https://www.nature.com/articles/s41540-026-00723-1.pdf">論文PDF</a> — 本文、Methods、Figure 1〜4、Table 1〜2。</li>
+          <li><a href="https://github.com/amazon-science/ca-map">CA-MAP公式実装</a> — architecture、training、inference、license、重み非提供。</li>
+          <li><a href="https://github.com/csi-greifflab/developability_profiling">元developability dataset</a> — raw CSVと生成元。</li>
+          <li><a href="https://www.amazon.science/publications/context-aware-multi-property-antibody-predictor-a-novel-framework-integrating-text-and-protein-language-models">Amazon Science publication page</a> — 公式紹介とGitHub導線。</li>
+        </ul>
+        <div class="note danger"><strong>図版の扱い</strong>論文がCC BY-NC-ND 4.0のため、原Figureを保存・改変・転載していない。このHTMLのフロー、棒グラフ、表は論文の報告事実と数値を用いた独自の要約図であり、原図の配置・配色・装飾をトレースしていない。</div>
+        <p class="footer">作成日：2026-10-12 JST · 対応Markdown：<a href="20261012_Context-aware%20multi-property%20antibody%20predictor%20a%20novel%20framework%20integrating%20text%20and%20protein%20language%20models.md">精読ノート</a></p>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>
