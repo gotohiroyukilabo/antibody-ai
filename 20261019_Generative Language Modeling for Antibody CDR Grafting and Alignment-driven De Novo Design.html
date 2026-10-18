@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GenCDR | AI×抗体 論文ビジュアルノート</title>
+  <style>
+    :root{--ink:#152b2a;--muted:#5e716f;--paper:#f7f7f2;--panel:#fff;--line:#d8e1de;--teal:#24756e;--teal2:#dff0ec;--orange:#d7753b;--orange2:#fae9dd;--blue:#315b7c;--blue2:#e4edf4;--warn:#8a4a21;--warnbg:#fff3e8;--good:#176453;--shadow:0 12px 30px rgba(20,52,49,.08)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.75}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px}a:hover{color:var(--teal)}.wrap{max-width:1180px;margin:auto;padding:0 24px}.hero{background:linear-gradient(135deg,#123e3b,#245d58 65%,#354f60);color:#fff;padding:64px 0 54px}.eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;opacity:.78}.hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,5vw,4rem);line-height:1.08;max-width:1030px;margin:.35em 0}.hero p{max-width:820px;font-size:1.1rem;color:#e6f3f0}.badges{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.badge{padding:5px 11px;border:1px solid rgba(255,255,255,.32);border-radius:999px;background:rgba(255,255,255,.09);font-size:.84rem}.cta{display:inline-block;background:#fff;color:#173f3c;padding:11px 17px;border-radius:9px;font-weight:700;text-decoration:none}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:30px;align-items:start;padding-top:34px;padding-bottom:80px}.toc{position:sticky;top:18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;color:var(--muted);font-size:.88rem;padding:5px 0;text-decoration:none}.toc a:hover{color:var(--teal)}main{min-width:0}section{margin:0 0 34px;scroll-margin-top:20px}.section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px;box-shadow:var(--shadow)}h2{font-family:Georgia,"Yu Mincho",serif;font-size:1.7rem;line-height:1.3;margin:0 0 18px}h3{font-size:1.12rem;margin:26px 0 10px}.lead{font-size:1.05rem}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:13px;padding:18px;box-shadow:var(--shadow)}.card b{display:block;font-size:1.45rem;color:var(--teal);line-height:1.2;margin-bottom:8px}.card p{font-size:.9rem;margin:0;color:var(--muted)}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin:18px 0}.node{border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;background:#fff}.node.prompt{background:var(--blue2);border-color:#aac1d3}.node.model{background:var(--teal2);border-color:#9bcbbf}.node.response{background:var(--orange2);border-color:#e2aa88}.arrow{font-size:1.6rem;color:var(--muted)}.sequence{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.aa{padding:7px 10px;border-radius:7px;background:var(--blue2);font-size:.83rem}.aa.cdr{background:var(--orange2)}.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}.step{position:relative;padding:15px 10px;border-radius:11px;background:var(--teal2);text-align:center;font-size:.88rem}.step:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:34%;z-index:2;color:var(--muted);font-size:1.2rem}.note,.warning{border-left:5px solid var(--teal);background:#eef7f4;padding:15px 18px;border-radius:8px}.warning{border-color:var(--orange);background:var(--warnbg);color:#5e3219}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px}table{width:100%;border-collapse:collapse;background:#fff;font-size:.9rem}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#eef3f1;color:#2f4b48}tr:last-child td{border-bottom:0}.num{text-align:right;font-variant-numeric:tabular-nums}.best{font-weight:800;color:var(--good)}.chart{display:grid;gap:15px;margin:18px 0}.barrow{display:grid;grid-template-columns:150px 1fr 72px;gap:12px;align-items:center}.track{height:22px;background:#edf1ef;border-radius:999px;overflow:hidden}.bar{height:100%;border-radius:999px;background:var(--teal)}.bar.orange{background:var(--orange)}.bar.blue{background:var(--blue)}.barvalue{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.84rem;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:var(--teal)}.dot.orange{background:var(--orange)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}.metric{border:1px solid var(--line);border-radius:12px;padding:18px}.metric .big{font-size:2rem;font-weight:800;color:var(--teal);line-height:1}.metric small{color:var(--muted)}.callout{display:grid;grid-template-columns:180px 1fr;gap:18px;align-items:center;border-radius:14px;background:#173f3c;color:#fff;padding:22px}.callout .huge{font-size:3rem;font-weight:900;line-height:1;text-align:center}.callout p{margin:0;color:#e5f2ef}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.plain-list{padding-left:1.2em}.plain-list li{margin:.5em 0}.meta{color:var(--muted);font-size:.9rem}.sources li{word-break:break-word;margin:.45em 0}.figcap{font-size:.85rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;margin-top:14px}.footer{text-align:center;color:var(--muted);padding:32px 0 60px}.mdlink{display:inline-block;margin-top:12px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:relative;top:0}.cards{grid-template-columns:repeat(2,1fr)}.pipeline{grid-template-columns:1fr}.step:not(:last-child)::after{content:"↓";right:auto;left:49%;top:auto;bottom:-22px}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.twocol,.compare{grid-template-columns:1fr}}
+    @media(max-width:560px){.wrap{padding:0 15px}.hero{padding:42px 0}.section{padding:22px 17px}.cards{grid-template-columns:1fr}.barrow{grid-template-columns:100px 1fr 55px;font-size:.82rem}.callout{grid-template-columns:1fr}.pipeline{gap:20px}th,td{padding:9px 8px;font-size:.82rem}}
+    @media print{body{background:#fff}.hero{padding:28px 0;background:#fff!important;color:#111}.hero p{color:#333}.badge{border-color:#777}.cta,.toc{display:none}.layout{display:block;padding-top:18px}.section,.card{box-shadow:none;border-color:#bbb}.card,.flow,.pipeline,.table-wrap,.metric,.callout,.note,.warning{break-inside:avoid}.wrap{max-width:none}.bar,.node,.step{print-color-adjust:exact;-webkit-print-color-adjust:exact}section{break-inside:auto}h2,h3{break-after:avoid}.table-wrap{overflow:visible}a{color:#111;text-decoration:none}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">AI × Antibody · Paper Deep Dive · 2026-10-19</div>
+      <h1>Generative Language Modeling for Antibody CDR Grafting and Alignment-driven De Novo Design</h1>
+      <p>フレームワークを先に読み、CDRを応答として生成する。GenCDRは、配列生成・CDR限定スコア・reward alignmentを1つのprompt–response設計にまとめた。</p>
+      <div class="badges"><span class="badge">2026</span><span class="badge">bioRxiv</span><span class="badge">新着 / モデル起点</span><span class="badge">読む優先度 High</span><span class="badge">査読前</span></div>
+      <a class="cta" href="https://doi.org/10.64898/2026.09.06.749721">DOI / 原論文を開く</a>
+      <br><a class="mdlink" href="20261019_Generative%20Language%20Modeling%20for%20Antibody%20CDR%20Grafting%20and%20Alignment-driven%20De%20Novo%20Design.md" style="color:#fff">Markdown版 ↗</a>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <nav class="toc" aria-label="目次">
+      <strong>目次</strong>
+      <a href="#takeaways">この論文の要点</a><a href="#problem">背景と問題</a><a href="#method">提案手法</a><a href="#data">データと評価</a><a href="#results">主要結果</a><a href="#figures">Figure / Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License / Weights</a><a href="#knowledge">前提知識・次に試す</a><a href="#search">検索ログ・出典</a>
+    </nav>
+
+    <main>
+      <section id="takeaways">
+        <div class="cards">
+          <article class="card"><b>25M</b><p>4-layer LLaMA。大規模抗体モデルとしては小さく、CDR生成に焦点化。</p></article>
+          <article class="card"><b>254M</b><p>human OAS配列でIgGenCDRを事前学習。pairedは1.8M、VHHは6.5M。</p></article>
+          <article class="card"><b>23.8→100%</b><p>PD-L1整列でliability/length filterのaccept率をほぼ完全に内在化。</p></article>
+          <article class="card"><b>36k vs 63k</b><p>同じ20k co-fold poolを埋めるraw generation。GenCDRは約43%少ない。</p></article>
+        </div>
+      </section>
+
+      <section id="problem" class="section">
+        <h2>背景と解決したい問題</h2>
+        <p class="lead">抗体の自然な配列順は、自己回帰モデルにとって都合が悪い。CDR1を生成する時点では、その形を拘束する下流のFR2–FR4がまだ見えていないからだ。</p>
+        <div class="sequence" aria-label="自然配列順"><span class="aa">FR1</span><span class="aa cdr">CDR1</span><span class="aa">FR2</span><span class="aa cdr">CDR2</span><span class="aa">FR3</span><span class="aa cdr">CDR3</span><span class="aa">FR4</span></div>
+        <p>IgLMは1つのspanを周囲文脈から補完できるが、3つの未知CDRを同時に設計する自然なfactorizationではない。構造ベース拡散法は抗原形状を直接使えるが、構造入力と設計長の指定が必要になる。GenCDRは配列の並べ方を変え、全framework文脈と可変長multi-CDR生成を両立する。</p>
+      </section>
+
+      <section id="method" class="section">
+        <h2>提案手法の全体像</h2>
+        <div class="flow" role="img" aria-label="フレームワークpromptからGenCDRでCDR responseを生成するフロー">
+          <div class="node prompt"><b>PROMPT</b><br>FR1 · FR2 · FR3 · FR4<br><small>固定framework</small></div><div class="arrow">→</div><div class="node model"><b>GenCDR</b><br>decoder-only LLaMA<br><small>約25M parameters</small></div><div class="arrow">→</div><div class="node response"><b>RESPONSE</b><br>CDR1 · CDR2 · CDR3<br><small>可変長・共同生成</small></div>
+        </div>
+        <p class="figcap">原論文Figure 1を参考にした独自の要約図（原図の転載ではない）。すべてのFRをCDRより前に置くことで、response tokenだけにrewardを割り当てられる。</p>
+        <h3>3つのモデル系列</h3>
+        <div class="table-wrap"><table><thead><tr><th>モデル</th><th>対象</th><th>学習データ</th><th>設計単位</th></tr></thead><tbody><tr><td><b>IgGenCDR</b></td><td>unpaired H/L</td><td>human OAS 約254M</td><td>単鎖の3 CDR</td></tr><tr><td><b>p-IgGenCDR</b></td><td>paired VH–VL</td><td>paired OAS 約1.8M</td><td>両鎖6 CDRを共同生成</td></tr><tr><td><b>NanoGenCDR</b></td><td>VHH / nanobody</td><td>INDI 約6.5M + human OAS 1:1</td><td>VHHの3 CDR</td></tr></tbody></table></div>
+        <h3>抗原へのalignment</h3>
+        <div class="pipeline" role="img" aria-label="CDR生成からweighted DPOまでの反復フロー"><div class="step"><b>1 Generate</b><br>4 scaffoldでCDR生成</div><div class="step"><b>2 Screen</b><br>長さ + 6 liabilities</div><div class="step"><b>3 Co-fold</b><br>PD-L1 + Boltz-2</div><div class="step"><b>4 Reward</b><br>interface・fold・CDR contact</div><div class="step"><b>5 Align</b><br>scaffold-grouped wDPO</div></div>
+        <p class="figcap">抗原配列・構造は生成器へ直接入力しない。抗原特異性はco-fold rewardから4 roundのpost-trainingで間接的に学ぶ。</p>
+        <div class="note"><b>Composite reward</b><br>0.30×ipSAE + 0.20×pTM<sub>chain</sub> + 0.20×f<sub>CDR</sub> + 0.15×(1−p<sub>helix</sub>) + 0.15×(1−p<sub>strand</sub>)</div>
+      </section>
+
+      <section id="data" class="section">
+        <h2>データセットと評価設計</h2>
+        <div class="table-wrap"><table><thead><tr><th>段階</th><th>規模</th><th>分割・リーク対策</th><th>評価</th></tr></thead><tbody><tr><td>unpaired pretrain</td><td>118M H + 136M L</td><td>元データは95% whole-domain clustering</td><td>recovery / generation quality</td></tr><tr><td>CDR-disjoint test</td><td>202,138 H + 31,014 L</td><td>train CDR3と長さ一致・identity ≥95%を除去</td><td>6 loop NTP accuracy</td></tr><tr><td>paired</td><td>train約1.8M / test約69.8K pair</td><td>held-out OAS pairs</td><td>共同recovery / FLAb</td></tr><tr><td>VHH</td><td>非冗長INDI約6.5M</td><td>cluster分割、human OASをbatch内50%</td><td>recovery / humanness / NbBench</td></tr><tr><td>PD-L1 design</td><td>各pipeline 20,000 co-fold</td><td>同一4 scaffold・filter・Boltz-2設定</td><td>reward成分 / accept率</td></tr></tbody></table></div>
+        <p>元のwhole-domain splitでは同じCDRがtrain/testを跨ぎうる。著者らはCDR3基準でtestを作り直し、raw splitよりH-CDR3 recoveryが約13 points下がることを確認した。評価を厳しくした点は強い。ただし他CDRを含む完全なfamily-disjoint splitではない。</p>
+        <div class="warning"><b>評価の循環性</b><br>alignmentの報酬にも最終評価にもBoltz-2由来指標を使う。したがって「実測結合能の改善」ではなく、「同一in silico oracleへの適合」と読むべきである。</div>
+      </section>
+
+      <section id="results" class="section">
+        <h2>主要結果</h2>
+        <h3>1. Framework-firstはCDR回復率を上げる</h3>
+        <div class="table-wrap"><table><thead><tr><th rowspan="2">モデル</th><th colspan="3">Heavy chain (%)</th><th colspan="3">Light chain (%)</th></tr><tr><th>CDR1</th><th>CDR2</th><th>CDR3</th><th>CDR1</th><th>CDR2</th><th>CDR3</th></tr></thead><tbody><tr><td><b>IgGenCDR</b></td><td class="num best">91.47</td><td class="num">89.81</td><td class="num best">49.75</td><td class="num best">85.63</td><td class="num best">84.25</td><td class="num best">58.54</td></tr><tr><td>同サイズLTR</td><td class="num">88.56</td><td class="num best">90.31</td><td class="num">48.76</td><td class="num">82.19</td><td class="num">84.15</td><td class="num">58.10</td></tr><tr><td>IgLM CDR infill</td><td class="num">88.52</td><td class="num">86.00</td><td class="num">39.09</td><td class="num">80.68</td><td class="num">77.81</td><td class="num">53.17</td></tr><tr><td>p-IgGen LTR</td><td class="num">85.89</td><td class="num">85.39</td><td class="num">40.20</td><td class="num">77.61</td><td class="num">76.22</td><td class="num">50.38</td></tr></tbody></table></div>
+        <p class="figcap">原論文Table 1から主要モデルを再構成。高いほど良い。framework-firstは公表済みAR baselineより6 loopすべてで高い。</p>
+
+        <h3>2. VHH specializationとhuman mixture</h3>
+        <div class="compare"><div class="metric"><div class="big">79.03 / 78.90 / 56.96%</div><small>NanoGenCDRのCDR1/2/3 recovery（scheme平均）</small><p>human OASだけのbaseは39.68 / 43.03 / 13.34%。VHH fine-tuningが分布差を埋める。</p></div><div class="metric"><div class="big">0.471 vs 0.410</div><small>humanised VHH上のCDR OASis</small><p>INDI + OAS mixtureはINDI-onlyより全5 scaffoldで高い（p&lt;0.001）。</p></div></div>
+        <p>OAS mixtureはcamelid recoveryを72.02%（INDI-only 73.37%）へ1.35 points下げるが、human OAS recoveryを80.31%（同44.19%）に保持する。人化VHH設計では合理的なtrade-offである。</p>
+
+        <h3>3. PD-L1 alignmentはfilterを内在化する</h3>
+        <div class="chart" role="img" aria-label="各alignment roundとBoltzGenのaccept率比較">
+          <div class="barrow"><span>Round 0</span><div class="track"><div class="bar orange" style="width:23.8%"></div></div><span class="barvalue">23.8%</span></div>
+          <div class="barrow"><span>Round 1</span><div class="track"><div class="bar" style="width:99.8%"></div></div><span class="barvalue">99.8%</span></div>
+          <div class="barrow"><span>Round 2</span><div class="track"><div class="bar" style="width:100%"></div></div><span class="barvalue">100%</span></div>
+          <div class="barrow"><span>Round 3</span><div class="track"><div class="bar" style="width:100%"></div></div><span class="barvalue">100%</span></div>
+          <div class="barrow"><span>BoltzGen</span><div class="track"><div class="bar blue" style="width:31.8%"></div></div><span class="barvalue">31.8%</span></div>
+        </div>
+        <p class="figcap">原論文Table 3を独自bar chart化。acceptはCDR長制約と6 liability ruleの両方を通過した割合。</p>
+        <div class="callout"><div class="huge">−43%</div><p><b>同じ20,000 co-fold poolを埋めるraw generation</b><br>GenCDR alignment: 約36,000。BoltzGen: 約63,000。これはGPU-hourではなく生成候補数の比較である。</p></div>
+
+        <h3>4. Interfaceは改善、foldabilityは維持</h3>
+        <div class="table-wrap"><table><thead><tr><th>Source</th><th>ipSAE ↑</th><th>pTMchain ↑</th><th>fCDR ↑</th><th>Composite ↑</th></tr></thead><tbody><tr><td>Round 0</td><td class="num">0.404</td><td class="num">0.973</td><td class="num">0.828</td><td class="num">0.715</td></tr><tr><td class="best">Round 2</td><td class="num best">0.530</td><td class="num">0.975</td><td class="num best">0.943</td><td class="num best">0.779</td></tr><tr><td>Round 3</td><td class="num">0.523</td><td class="num">0.975</td><td class="num">0.930</td><td class="num">0.775</td></tr><tr><td>BoltzGen</td><td class="num">0.474</td><td class="num best">0.978</td><td class="num">0.791</td><td class="num">0.719</td></tr></tbody></table></div>
+        <p class="figcap">原論文Figure 4 / Table S4の中央値を再構成。Round 2でinterface confidenceとCDR-localized contactが伸び、chain foldabilityはほぼ不変。実測affinityではない。</p>
+      </section>
+
+      <section id="figures" class="section">
+        <h2>重要なFigure / Tableの読み方</h2>
+        <div class="twocol"><div><h3>Figure 1</h3><p>入力順序とalignment loopが中心。抗原はGenCDRに直接入らず、Boltz-2 scoreを通じてpolicyへ戻る。だから本手法はzero-shot antigen-conditioned generatorではなく、targetごとのpost-training法である。</p></div><div><h3>Table 1</h3><p>全6 loopを見る。CDR1は下流FR文脈の恩恵が大きく、LTR ablationとの差がHで+2.91、Lで+3.44 points。CDR2-HだけはLTRが0.50 point高く、「常に勝つ」わけではない。</p></div><div><h3>Table 3</h3><p>alignment後の価値はaccept率に表れる。REJECTもsurrogate low rewardとしてDPOに残すため、モデルがliability motifを避けるようになる。</p></div><div><h3>Figure 4</h3><p>伸びの主成分はipSAEとfCDR。pTMやgeometryは開始時から飽和気味で、rewardを構成する全要素が同時に改善したわけではない。</p></div></div>
+        <p class="figcap">原論文はCC BY 4.0だが、このノートでは原図を保存せず、事実・報告値だけを新しい構成で可視化した。</p>
+      </section>
+
+      <section id="meaning" class="section">
+        <h2>抗体研究・創薬への意味</h2>
+        <p>CDR graftingをLLMのprompt–response問題として定式化すると、結合、発現、安定性、免疫原性、liabilityといった異なる測定値をCDR responseへ直接割り当てられる。実験campaignではBoltz-2 rewardをSPR/BLI、発現量、SEC、HIC、Tmへ置き換え、同じscaffold内で比較するclosed-loop optimizationへつなげられる。</p>
+        <div class="twocol"><div class="note"><b>向いている用途</b><ul class="plain-list"><li>固定frameworkへのmulti-CDR grafting</li><li>paired VH–VLの共同設計</li><li>humanised VHHのCDR生成</li><li>複数物性のpost-training</li></ul></div><div class="warning"><b>向いていない読み方</b><ul class="plain-list"><li>zero-shotの抗原特異的設計</li><li>実測affinityが改善した証拠</li><li>BoltzGenより総計算量が半分</li><li>すぐ完全再現できる公開モデル</li></ul></div></div>
+      </section>
+
+      <section id="limits" class="section">
+        <h2>限界と注意点</h2>
+        <div class="twocol"><div><h3>著者が明示</h3><ul class="plain-list"><li>weighted DPO以外のRL objectiveを比較していない。</li><li>抗原はPD-L1のみ、frameworkは4種。</li><li>alignment結果はすべてin silicoで、発現・安定性・結合の実験なし。</li><li>bounded rewardがtop tailで飽和し、改善が小さくなる。</li></ul></div><div><h3>精読上の追加注意</h3><ul class="plain-list"><li>学習rewardと評価指標が同じBoltz-2 oracle。</li><li>sampling budgetは候補数で、wall-clock/GPU-hour比較ではない。</li><li>CDR recoveryは結合能の代理ではない。</li><li>CDR3 leakage対策は強いが完全なfamily-disjointではない。</li><li>weight未公開、INDIは商用利用制約あり。</li></ul></div></div>
+      </section>
+
+      <section id="code" class="section">
+        <h2>Code / License / Weights</h2>
+        <div class="table-wrap"><table><tbody><tr><th>公式コード</th><td><a href="https://github.com/AstraZeneca/GenCDR">AstraZeneca/GenCDR</a></td></tr><tr><th>コードライセンス</th><td>Apache-2.0（LICENSE / README / metadata確認済み）</td></tr><tr><th>実装範囲</th><td>generation、region likelihood scoring、paired generation、scaffold-grouped weighted DPO</td></tr><tr><th>モデル重み</th><td><b>見つからず</b>。READMEは「release details will be added」と記載。</td></tr><tr><th>Hugging Face</th><td><a href="https://huggingface.co/AstraZeneca">AstraZeneca organization</a>は公開models 0 / datasets 0。</td></tr><tr><th>OAS由来データ</th><td><a href="https://zenodo.org/records/13880874">Zenodo 10.5281/zenodo.13880874</a>（約6.5 GB）</td></tr><tr><th>VHHデータ</th><td><a href="https://naturalantibody.com/indi2/">INDI2</a>。非商用組織の非商用研究向け、商用利用は問い合わせ。</td></tr></tbody></table></div>
+        <div class="warning"><b>公開状況の不一致</b><br>論文本文/Data availabilityはtrained modelsがGitHubで利用可能と書く。一方、2026-10-19時点のREADMEはweights未収録・今後公開と明記する。コードは再利用可能だが、論文checkpointの即時再現はできない。</div>
+      </section>
+
+      <section id="knowledge" class="section">
+        <h2>前提知識・関連論文・次に試すこと</h2>
+        <div class="twocol"><div><h3>前提知識</h3><ul class="plain-list"><li><b>CDR / FR:</b> 抗原接触loopと保存scaffold。境界はIMGT/Kabat/Chothiaで変わる。</li><li><b>AR model:</b> token順序が利用可能な文脈を決める。</li><li><b>weighted DPO:</b> scalar rewardをsoft targetにしたreference-regularized alignment。</li><li><b>ipSAE / pTM:</b> 構造予測confidenceであり実測affinityではない。</li><li><b>OASis:</b> repertoire 9-merに基づくhumanness。</li></ul></div><div><h3>次に試す</h3><ol class="plain-list"><li>checkpoint公開を監視し、`from_pretrained("iggencdr")`を動かす。</li><li>同一frameworkで温度0.9–1.15を振り、OASis/AbLang/多様性を再現。</li><li>Boltz-2以外のoracleまたは実験assayでrankingの転移を確認。</li><li>IgLM、p-IgGen、BoltzGen、Germinalと設計自由度・計算量を比較。</li></ol></div></div>
+      </section>
+
+      <section id="search" class="section">
+        <h2>検索ログと出典一覧</h2>
+        <p class="meta">リサーチ日: 2026-10-19 JST。bioRxiv 27ページPDF（main + supplementary）を全文抽出し、Figure 1–4、Table 1–3、Figure/Table S1–S16を確認。Figure 1、3、Table 3、Figure 4のページを画像レンダリングして視認した。</p>
+        <ul class="sources"><li><a href="https://www.biorxiv.org/content/10.64898/2026.09.06.749721v1">bioRxiv landing page</a> — 書誌、abstract、CC BY 4.0。</li><li><a href="https://www.biorxiv.org/content/10.64898/2026.09.06.749721v1.full.pdf">bioRxiv PDF</a> — 本文、Figure、Table、Supplementary。</li><li><a href="https://github.com/AstraZeneca/GenCDR">公式GitHub</a> — README、実装、Apache-2.0、weight status。</li><li><a href="https://huggingface.co/AstraZeneca">AstraZeneca Hugging Face</a> — 公開model/dataset件数。</li><li><a href="https://zenodo.org/records/13880874">p-IgGen Dataset / Zenodo</a> — OAS-derived train/val/test files。</li><li><a href="https://naturalantibody.com/indi2/">INDI2</a> — VHH data sourceと利用条件。</li></ul>
+        <p><b>候補比較:</b> HCAbLM（specialised heavy-chain-only foundation model）と抗体製剤active learningも確認した。GenCDRは抗体設計への直接性、公式コード、paired/VHH/alignmentまでの広さ、CDR-disjoint評価を理由に採用した。</p>
+      </section>
+    </main>
+  </div>
+  <footer class="footer">AI×抗体 論文デイリーリサーチ · 本ページの図表は原論文の報告値に基づく独自再構成</footer>
+</body>
+</html>
