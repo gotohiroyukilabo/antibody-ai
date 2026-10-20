@@ -1,0 +1,365 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>survivinナノボディ設計と界面信頼度｜日本語精読レポート</title><style>
+:root{--ink:#182e40;--navy:#234b6b;--teal:#146c70;--paper:#f4f6f5;--line:#d6dfdf;--muted:#536775;--warn:#9a422d}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.9;font-size:16px}a{color:#155f84;text-underline-offset:3px;overflow-wrap:anywhere}header{background:#142f43;color:#fff;padding:64px max(6vw,24px) 48px}header .inner,main{max-width:1120px;margin:auto}h1{font-size:clamp(25px,3.7vw,45px);line-height:1.4;max-width:1050px;margin:20px 0;overflow-wrap:anywhere}h2{font-size:26px;line-height:1.5;margin:4px 0 22px}h3{font-size:20px;line-height:1.6;margin-top:32px}h4{margin:0 0 10px;line-height:1.6}.kicker{font-size:13px;letter-spacing:.16em;color:#9fd3d2}.lead{font-size:19px;max-width:900px;color:#e1eded}header a{color:#b8e3ed}.badges{display:flex;gap:9px;flex-wrap:wrap}.badges span{border:1px solid #678393;border-radius:24px;padding:3px 13px;font-size:13px}.headerlinks{display:flex;gap:22px;flex-wrap:wrap}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:30px 0}.card{background:#fff;padding:22px;border-top:4px solid var(--teal);border-radius:7px}.card strong{font-size:30px;display:block;color:var(--teal);line-height:1.5}.card p{font-size:14px;margin:6px 0;color:var(--muted)}main{padding:0 24px 60px}.notice{background:#fff3e8;border-left:4px solid #ba6a31;padding:17px 20px;margin:24px 0}.toc{background:#e6edee;padding:22px 26px;border-radius:9px}.toc div{display:flex;gap:8px 20px;flex-wrap:wrap}.toc a{font-size:14px}.toc b{display:block;margin-bottom:10px}section{background:#fff;margin-top:25px;padding:34px 40px;border:1px solid var(--line);border-radius:9px;scroll-margin-top:20px;min-width:0}.section-label{font-size:12px;letter-spacing:.15em;color:var(--teal);font-weight:700}p{margin:14px 0}li{margin:7px 0}ul,ol{padding-left:1.6em}img{display:block;max-width:100%;height:auto;background:#fff;margin:24px auto 14px;border:1px solid #e0e6e6}code{font-family:ui-monospace,monospace;font-size:.87em;background:#edf2f3;padding:2px 5px;overflow-wrap:anywhere}.table-wrap{overflow-x:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:14px;text-align:left}th,td{padding:12px 14px;border:1px solid var(--line);vertical-align:top}th{background:#e8eff0;color:#24475d}tr:nth-child(even){background:#f7f9f8}blockquote{border-left:4px solid var(--teal);margin-left:0;padding-left:20px}.flow{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;gap:8px;align-items:stretch}.flow div{background:#eaf2f2;padding:16px 13px;border-radius:7px}.flow b,.flow span{display:block}.flow b{font-size:15px;color:var(--teal);margin-bottom:10px}.flow span{font-size:13px}.flow i{align-self:center;font-style:normal}.caption{font-size:13px;color:var(--muted)}.comparison{padding:24px;background:#edf4f3;border-radius:8px;margin-bottom:30px}.comparison h3{margin-top:0}.chart{background:#fff;padding:22px;margin-top:18px;border:1px solid var(--line);border-radius:6px}.chart p{font-size:13px;color:var(--muted)}.barrow{display:grid;grid-template-columns:140px 1fr 70px;gap:10px;align-items:center;font-size:13px;margin:12px 0}.barrow>div{background:#e4eaec;min-height:29px;border-right:1px solid #9eafb8}.barrow b{display:block;min-width:44px;background:var(--navy);color:#fff;white-space:nowrap;padding-left:5px;font-size:12px;line-height:29px}.barrow b.zero{background:transparent;color:var(--ink);width:0}.wiki{font-size:.94em;color:#4c6475}footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}@media(max-width:760px){header{padding:35px 22px}main{padding:0 14px 35px}.cards{grid-template-columns:1fr 1fr;gap:10px}.card{padding:17px}.card strong{font-size:26px}section{padding:24px 19px}h2{font-size:23px}.flow{grid-template-columns:1fr}.flow i{transform:rotate(90deg);text-align:center}.barrow{grid-template-columns:105px 1fr 48px;gap:6px;font-size:11px}.comparison,.chart{padding:14px}.toc{padding:20px}h1{font-size:27px}table{font-size:12px}td,th{padding:9px}.lead{font-size:17px}}@media print{html{scroll-behavior:auto}body{background:#fff;font-size:10pt}header{background:#fff;color:#000;padding:20px 0}.lead,header a,.kicker{color:#000}header h1{font-size:24pt}.badges span{border-color:#999}.toc{display:none}main{max-width:none;padding:0}section{border:0;padding:12px 0;margin:14px 0}h2,h3,h4{break-after:avoid}img,.card,.chart,.flow,tr{break-inside:avoid}.cards{gap:10px}.card{border:1px solid #aaa}a{color:#000}table{font-size:9pt}thead{display:table-header-group}.table-wrap{overflow:visible}.notice,.comparison{background:#fff;border:1px solid #aaa}.barrow b{print-color-adjust:exact;-webkit-print-color-adjust:exact}footer{padding:10px}}
+</style></head><body><header><div class="inner"><div class="kicker">AI × ANTIBODY · PAPER READING NOTE</div><h1>Benchmarking interface confidence as a selection criterion for computational nanobody design against survivin’s BIR-domain groove</h1><p class="lead">界面の信頼度だけで、狙った場所への接触を選べるか。survivinを標的とした196候補と12 seedの再予測から、選別工程を検証する。</p><div class="badges"><span>2026 · bioRxiv v1</span><span>公開 2026-10-11 · 査読前</span><span>新着／ベンチマーク</span><span>読む優先度 High</span></div><p class="headerlinks"><a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著・DOI 10.64898/2026.10.04.753929 ↗</a><a href="20261020_Benchmarking%20interface%20confidence%20as%20a%20selection%20criterion%20for%20computational%20nanobody%20design%20against%20survivin%20BIR-domain%20groove.md">Markdown版 ↗</a></p></div></header><main><div class="cards"><article class="card"><strong>196候補</strong><b>足切り前の全体評価</b><p>設計200件中196件を予測。CDR3接触合格は123/196。</p></article><article class="card"><strong>ρ +0.100</strong><b>ipTMと接触数</b><p>95% CI −0.04〜+0.24、P=0.164。有意な関連を検出できず。</p></article><article class="card"><strong>10/12 vs 0/12</strong><b>057と145の完全被覆</b><p>各seedで最高rank_scoreを採用。同一MSAで12回ずつ反復。</p></article><article class="card"><strong>12 → 3件</strong><b>全5モデル確認の効果</b><p>31配列での接触ゼロ件数。取りこぼしと再現性を分ける。</p></article></div><aside class="notice"><strong>全て計算上の結果。</strong> 発現・実結合・Kd・阻害活性は未測定。nb_cand_057はin silico候補である。ipTMの普遍的な無効性や、接触ゲートによる実験成功率の改善を証明した研究ではない。</aside><nav class="toc" aria-label="目次"><b>読む順番</b><div><a href="#s0">まず何の論文か</a><a href="#s1">書誌情報</a><a href="#s2">背景と問題設定</a><a href="#s3">この論文のコアアイデア</a><a href="#s4">手法の詳細</a><a href="#s5">データセットと評価設計</a><a href="#s6">主要結果</a><a href="#s7">重要なFigure/Table</a><a href="#s8">Code / License / Weights</a><a href="#s9">抗体研究・創薬への意味</a><a href="#s10">限界と注意点</a><a href="#s11">この論文を読む上での前提知識</a><a href="#s12">今回この1報を選んだ理由</a><a href="#s13">読む優先度</a><a href="#s14">自分用メモ</a><a href="#s15">関連キーワード</a><a href="#s16">検索ログ</a></div></nav><section id="s0"><div class="section-label">01</div><h2>まず何の論文か</h2><p>本論文は、計算設計したナノボディを実験へ進める際に、界面信頼度だけで候補を選んでよいかを検証する研究である。標的はsurvivinのBIRドメインにあるSmac/DIABLO認識溝で、既知結晶構造から目的エピトープを11残基に定義した。ヒト化VHH骨格を固定し、CDR3だけを重み付きランダムサンプリングで200種類作製した。これは新しい拡散モデルや抗体言語モデルの提案ではない。196候補をAlphaFold-Multimerで共折りたたみし、モデル中でCDR3が狙った部位へ触れているかを直接確認した。123候補はこの接触基準を満たしたが、73候補は満たさなかった。ipTMとエピトープ接触数とのSpearman相関はρ=+0.100で、統計的に有意ではなかった。一方、ipTMは同じ予測から出るpTMや平均pLDDTとは関連していた。さらに、単回の構造・エネルギー評価で上位だった2候補を12 seedで再予測すると、nb_cand_057は完全エピトープ接触を10/12回再現し、nb_cand_145は0/12回だった。31配列について全5モデルを調べると、上位1モデルの採用が目的部位に触れる別のモデルを捨てている例が多かった。したがって実務上の価値は、候補配列そのものに加えて「目的部位の確認」と「予測の再現性」を選別工程へ組み込む評価設計にある。ただし、ここでの成功とは予測座標上の接触であり、発現、実結合、親和性、細胞内阻害は測定していない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 Abstract、§§3.1–3.3、Discussion</a></p>
+</section>
+<section id="s1"><div class="section-label">02</div><h2>書誌情報</h2><ul>
+<li>URL/DOI：<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">bioRxiv v1本文</a>／<a href="https://doi.org/10.64898/2026.10.04.753929">10.64898/2026.10.04.753929</a></li>
+<li>公開日/更新日：指定v1は<strong>2026-10-11</strong>。DOI中の2026.10.04を公開日と混同しない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.article-info">Info/History</a></li>
+<li>著者：Charlotte Gately、Xinyao Guan、Xianting Ding。</li>
+<li>所属：Shanghai Jiao Tong UniversityのXinhua Hospital／医学・医工学関連部門（3名）、Case Western Reserve University College of Arts and Sciences（Gately）、Bengbu Medical University第一附属病院検査部（Ding）。正確な所属表記はInfo/Historyを参照。</li>
+<li>掲載：bioRxiv、Bioinformatics。査読前プレプリント。</li>
+<li>リサーチ日：2026-10-20（JST）。分類：新着／選別基準のベンチマーク／ナノボディ設計。</li>
+<li>論文ライセンス：CC BY 4.0。コードとデータのライセンスは後述。</li>
+</ul>
+</section>
+<section id="s2"><div class="section-label">03</div><h2>背景と問題設定</h2><p>survivin（BIRC5）は細胞分裂とアポトーシス制御に関係する細胞内タンパク質である。この研究が扱うのは、その全表面ではなくBIRドメインのペプチド認識溝である。Smac/DIABLO由来AVPIとH3T3phペプチドが結合する既知構造があり、Asp71には既報のD71R変異による機能的根拠がある。著者はこの残基を、単なる接触数の一部より強い確認点として扱う。ただし、候補がAsp71へ近づくこと自体が阻害を証明するわけではない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#sec-1">原著 Introduction、§2.1</a></p>
+<p>抗体設計では、複合体予測後にipTMなどで足切りし、残った候補だけを詳細に調べることが多い。しかし、ipTMは指定エピトープの番号を評価目的として与えられた指標ではない。別の表面で整合的な界面を作ったモデルも高く評価しうる。フィルターを通過した候補だけを見ると、「低スコアでも目的部位に接触した候補」を捨てる問題が見えない。本研究はライブラリ全体で接触を確認し、その取りこぼしを可視化する。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 Introduction、Discussion</a></p>
+</section>
+<section id="s3"><div class="section-label">04</div><h2>この論文のコアアイデア</h2><div class="flow" aria-label="研究の処理フロー"><div><b>01 定義</b><span>結晶構造2件の共通接触<br>エピトープ11残基・Asp71</span></div><i>→</i><div><b>02 設計</b><span>骨格固定・CDR3を変更<br>200配列 → 196を予測</span></div><i>→</i><div><b>03 確認</b><span>各5モデル・重原子4.5 Å<br>CDR3接触・被覆を測る</span></div><i>→</i><div><b>04 反復</b><span>2候補 × 12 seed<br>実行内選別と再現性を分ける</span></div></div><p class="caption">原著Figure 1・Methodsを基にした独自の要約図。新規モデルの学習は行わない。出力は予測上の接触評価であり、実結合の測定ではない。</p><p><strong>配列を選ぶ問題、同じ配列の5モデルから構造を選ぶ問題、選んだ配列が再予測でも同じ部位へ来るかという問題を分ける。</strong></p>
+<ol>
+<li>設計前に機能に関連する標的部位を残基番号で固定する。</li>
+<li>共折りたたみ後、信頼度と別に、目的部位への重原子距離を測る。</li>
+<li>CDR3由来の接触と、共通骨格・CDR1/CDR2由来の接触を区別する。</li>
+<li>全5モデルを確認して選別による取りこぼしを調べ、上位候補を12 seedで再予測する。</li>
+</ol>
+<p>接触ゲートは一回の実行内での構造選択を補い、再予測は候補の安定した挙動を調べる。どちらも実験結合の代用にはならない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §§2.5–2.9、3.3</a></p>
+</section>
+<section id="s4"><div class="section-label">05</div><h2>手法の詳細</h2><h3>標的とライブラリ</h3>
+<p>PDB <a href="https://www.rcsb.org/structure/3UIH">3UIH</a>と<a href="https://www.rcsb.org/structure/3UIG">3UIG</a>で、ペプチド重原子から4.5 Å以内のsurvivin残基をそれぞれ抽出し、共通集合を取る。得られた11残基は <strong>Glu51、Met54、Lys62、Glu63、Leu64、Glu65、Gly66、Trp67、Asp71、Glu76、His80</strong>。5残基が酸性で、Trp67などの疎水・芳香族面もある。番号は全長survivinに基づき、切り出した構築体内の番号と取り違えない。</p>
+<p>VHHはPDB <a href="https://www.rcsb.org/structure/3EAK">3EAK</a>のh-NbBcII10FGLA骨格を使い、<a href="https://www.rcsb.org/structure/3DWT">3DWT</a>との照合でヒト化置換13個を確認した。元のCDR3は18残基で、保存CysとFR4のWGQGTモチーフから交換範囲を特定する。CDR1、CDR2、その他の骨格は全候補共通である。</p>
+<p>CDR3は酸性溝に対してArg/Lysを優先し、極性、芳香族、疎水、柔軟性を担う残基を重み付きでサンプリングする。長さ12–20残基、正味電荷+1〜+5、Proは2個以下、同一残基は4個以下、疎水残基の連続は3個以下とし、余分なジスルフィドを避けてCysを除く。乱数seedは固定。<strong>本研究で学習するニューラルネットワークや損失関数はなく、既存予測器を利用する。</strong><a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §§2.1–2.3</a></p>
+<h3>複合体予測と接触の定義</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>条件・解釈</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>入力</td>
+<td>候補VHH配列＋1F3H chain A由来survivin 21–110（90残基）</td>
+</tr>
+<tr>
+<td>予測器</td>
+<td>ColabFold 1.6.2、AlphaFold-Multimer v3、unpaired MSA、3 recycles、各5モデル</td>
+</tr>
+<tr>
+<td>当初の採用規則</td>
+<td>0.8×ipTM＋0.2×pTMが最大のモデル</td>
+</tr>
+<tr>
+<td>接触数</td>
+<td>11エピトープ残基のいずれかから重原子距離4.5 Å以内にある<strong>ナノボディ側残基数</strong></td>
+</tr>
+<tr>
+<td>接触確認の合格</td>
+<td>再設計したCDR3が目的エピトープに接触すること</td>
+</tr>
+<tr>
+<td>エピトープ被覆</td>
+<td>接触された<strong>標的側11残基のうち何残基か</strong>。接触数とは別の量</td>
+</tr>
+<tr>
+<td>詳細解析</td>
+<td>接触数14以上で10候補をshortlist化。Asp71接触、各CDRと骨格の寄与を解析</td>
+</tr>
+<tr>
+<td>反復</td>
+<td>2候補×12 seed×5モデル＝120モデル。同一MSAを共有</td>
+</tr>
+<tr>
+<td>計算資源</td>
+<td>共折りたたみはNVIDIA T4、エネルギー評価はCPU。無料計算環境を使用</td>
+</tr>
+</tbody></table></div>
+<p>unpairedは両鎖のMSAを残しつつペアリングしない設定であり、MSAを除去するsingle-sequence modeとは異なる。後者はsurvivin側も情報を失い、試行でipTM 0.07–0.13となったため採用しなかった。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §§2.4–2.6、2.9</a></p>
+<p>補足Methodsでは、塩橋は荷電基N–O間4.0 Å以内、水素結合候補はN/O重原子間3.5 Å以内、疎水接触は非極性残基C–C間4.5 Å以内、芳香族接触は環重心間6.0 Å以内とする。水素も角度条件もないため、表中の水素結合数は距離ベースの候補数である。<a href="https://www.biorxiv.org/content/biorxiv/early/2026/10/11/2026.10.04.753929/DC1/embed/media-1.pdf">補足Methods S1</a></p>
+<h3>MM/GBSAと統計</h3>
+<p>OpenMM 8.5、PDBFixer、pH 7.0、amber14＋GBn2を使う。重原子を5 kcal mol⁻¹ Å⁻²で拘束し500 step最小化した後、同じ座標上で <strong>ΔE_int = E_complex − E_receptor − E_nanobody</strong> を計算する。孤立鎖の再最小化はせず、結合項は相殺される。エントロピーも構造集団のサンプリングもなく、Kdや真の結合自由エネルギーへ変換しない。500→1000 stepの差は単一候補の収束試験で約2 kcal/mol未満だった。受容体単独エネルギーの異常から129と169を事後的に除外し、8候補を解析した。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §2.7、補足Methods S2–S3</a></p>
+<p>主解析はSpearman相関。Fisher zによる95% CIを20,000回bootstrapでも確認し、割合にはWilson区間、群比較にはMann–WhitneyとFisher正確検定を用いる。回帰には電荷、長さ、Pro数、芳香族数、ipTM、batchを検討した。多重比較補正は行っていないため、小標本で一つだけ有意になった結果を確証と扱わない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §2.10</a></p>
+</section>
+<section id="s5"><div class="section-label">06</div><h2>データセットと評価設計</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>集合</th>
+<th align="right">規模</th>
+<th>何を評価するか</th>
+<th>主な制約</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主ライブラリ</td>
+<td align="right">設計200、評価196</td>
+<td>ipTMと目的部位接触の関係</td>
+<td>4候補は計算中断で欠落。1標的・1骨格</td>
+</tr>
+<tr>
+<td>信頼度3指標の比較</td>
+<td align="right">186候補</td>
+<td>ipTM、pTM、平均pLDDTの関連</td>
+<td>全信頼度出力の記録がある部分集合</td>
+</tr>
+<tr>
+<td>保存界面の領域別解析</td>
+<td align="right">109構造中104件</td>
+<td>CDR3／骨格寄与と被覆</td>
+<td>接触合格例だけを保存。5変異体はCDR3境界なし</td>
+</tr>
+<tr>
+<td>shortlist</td>
+<td align="right">10候補、MM/GBSA有効8</td>
+<td>被覆、Asp71、塩橋、エネルギー</td>
+<td>接触数で選んだ後の狭い集合</td>
+</tr>
+<tr>
+<td>再予測</td>
+<td align="right">057と145、各12 seed×5</td>
+<td>実行内の選別と実行間の再現性</td>
+<td>同一MSA。12回は12独立配列ではない</td>
+</tr>
+<tr>
+<td>seeded round</td>
+<td align="right">親145＋3群×10＝31配列、155モデル</td>
+<td>酸性／塩基性／中性変異、全モデル確認</td>
+<td>親の姿勢が再現しない。各群10件</td>
+</tr>
+<tr>
+<td>追加変異・交差</td>
+<td align="right">20変異体</td>
+<td>保守的変異とcrossover</td>
+<td>補足S5。最終shortlistには入らない</td>
+</tr>
+<tr>
+<td>単量体予測</td>
+<td align="right">10候補＋親骨格＝11</td>
+<td>標的なしでの領域別信頼度</td>
+<td>複合体とは別ネットワーク・MSA</td>
+</tr>
+</tbody></table></div>
+<p>train/validation/test分割は<strong>該当なし</strong>。新モデルの教師あり学習ではなく、設計集合上の指標の挙動を観察した研究である。外部の未知標的へのテストや抗体系列クラスタ分割はない。AlphaFoldの事前学習データと既知構造との重複監査も本研究では確認できないため、既知骨格を使うこの評価を「未知抗体構造の予測精度評価」とは読まない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 Methods、Data availability</a></p>
+<p>良い点は、足切り前の196候補を評価して選択の偏りを減らしたことと、接触基準を構造由来で明示したことである。一方、正解ラベルも予測座標から算出するので、測っているのは「モデルが設計意図を表現したか」である。実験的なbinder/non-binder分類精度、ROC-AUC、Kd誤差は評価していない。</p>
+</section>
+<section id="s6"><div class="section-label">07</div><h2>主要結果</h2><div class="comparison"><h3>選別と再現性を分けて読む</h3><div class="chart"><h4>31配列のうち「接触なし」となる割合（低いほど少ない）</h4><p>任意領域のエピトープ接触・各配列5モデル。CDR3合格率とは別の基準。</p><div class="barrow"><span>上位1モデル</span><div><b style="width:38.7%">38.7%</b></div><strong>12/31</strong></div><div class="barrow"><span>全5モデル確認</span><div><b style="width:9.7%">9.7%</b></div><strong>3/31</strong></div><p>差は9配列。ただしbest-of-fiveは試行回数の利益を含む。</p></div><div class="chart"><h4>最高rank_scoreモデルの完全被覆率（高いほど再現する）</h4><p>候補ごとに12 seed、同じMSAを共有。標的11残基全てへの予測接触。</p><div class="barrow"><span>nb_cand_057</span><div><b style="width:83.3%">83.3%</b></div><strong>10/12</strong></div><div class="barrow"><span>nb_cand_145</span><div><b class="zero">0%</b></div><strong>0/12</strong></div><p>057の95% CIは55.2–95.3%。145の上限は24.2%。</p></div><p class="caption">原著Figure 3／Table 1の報告値を再構成。棒は0–100%で共通。比率の区間は上記および原図で示す。これらは実験成功率ではない。</p></div><h3>1. 信頼度は目的部位への接触を選別できたか</h3>
+<p>196候補中、CDR3接触合格は123/196＝62.8%（95% CI 55.8–69.2）、不合格は73/196＝37.2%。不合格の内訳は、全ナノボディで接触ゼロの72候補と、CDR3以外だけが1接触したnb_cand_163である。<strong>接触数&gt;0を合格ラベルにすると、論文と1件ずれる。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>比較</th>
+<th>結果</th>
+<th>読み方</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ipTM vs 接触数、n=196</td>
+<td>Spearman ρ=+0.100、95% CI −0.04〜+0.24、P=0.164</td>
+<td>関連を検出できない。厳密な無相関の証明ではない</td>
+</tr>
+<tr>
+<td>ipTM 0.15–0.20群の不合格率</td>
+<td>14/40＝35.0%</td>
+<td>低信頼度帯</td>
+</tr>
+<tr>
+<td>ipTM ≥0.50群の不合格率</td>
+<td>5/14＝35.7%</td>
+<td>高い帯でも低下しない。nが小さくCIは広い</td>
+</tr>
+<tr>
+<td>最高vs最低四分位の不合格odds比</td>
+<td>0.97、95% CI 0.41–2.26、P=1.000</td>
+<td>四分位比較でも差を検出できない</td>
+</tr>
+<tr>
+<td>ipTM vs pTM、n=186</td>
+<td>ρ=+0.614</td>
+<td>信頼度同士は関連</td>
+</tr>
+<tr>
+<td>ipTM vs 平均pLDDT、n=186</td>
+<td>ρ=+0.544</td>
+<td>同上</td>
+</tr>
+</tbody></table></div>
+<p>ipTMの最高3候補130、147、146はそれぞれ0.78、0.71、0.67だがエピトープ接触ゼロだった。逆に、接触数14以上の10候補は全てipTM 0.15–0.42であり、0.50足切りでは全て落ちる。ただし中央値0.23で、0.50以上は14/196しかない。この低信頼度中心の限定的な分布を、高信頼度候補が豊富な別ライブラリへ外挿しない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#F2">原著 §3.2、Figure 2</a></p>
+<h3>2. 12 seed再予測は、単回上位の2候補を分けた</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>採用した最高rank_scoreモデルの評価</th>
+<th align="right">nb_cand_057</th>
+<th align="right">nb_cand_145</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>何らかのエピトープ接触</td>
+<td align="right">12/12</td>
+<td align="right">8/12</td>
+</tr>
+<tr>
+<td>11残基全ての被覆</td>
+<td align="right">10/12（83.3%）</td>
+<td align="right">0/12</td>
+</tr>
+<tr>
+<td>Asp71接触</td>
+<td align="right">11/12（91.7%）</td>
+<td align="right">0/12</td>
+</tr>
+<tr>
+<td>被覆残基数の中央値</td>
+<td align="right">11</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>塩橋数の中央値</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>5モデルのどれかで全11残基を被覆</td>
+<td align="right">12/12</td>
+<td align="right">1/12</td>
+</tr>
+</tbody></table></div>
+<p>057の完全被覆率の95% CIは55.2–95.3%、145の0/12でも上限は24.2%である。Asp71接触の比較はFisher P=9.6×10⁻⁶。145は元の単回構造で完全被覆し、MM/GBSAも最良だったが、その姿勢を再予測で再現できなかった。一方で、5モデルのどれかが少しでもエピトープへ接触するという緩い条件なら145も12/12となる。<strong>部分接触の救済と、機能的に重要な部位の安定した被覆は別である。</strong><a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#F3">原著 §3.3、Figure 3、Table 1</a></p>
+<h3>3. 上位1構造の選択が捨てていたもの</h3>
+<p>31配列のseeded roundでは、上位rankモデルだけならエピトープ接触ゼロは12/31（38.7%）。5モデル全てに接触がないのは3/31（9.7%）だった。見かけの失敗12件中9件には別の接触姿勢が既に存在した。この比較は「5回の最良」は有利という多重試行の効果を含むため、それだけで順位付けの無効性を証明しない。</p>
+<p>より直接的には、上位31モデルと棄却された124モデルで、平均被覆は4.2対3.6残基（Mann–Whitney P=0.610）、接触ゼロ率は38.7%対37.9%だった。著者はランダム選択に対する優位を検出できないと解釈する。ただし、同じ配列のモデル同士は依存しており、非有意差は同等性の証明ではない。再予測24実行ではipTM単独への順位変更も23/24回で同じ構造を選んだ。元のrank_score自体が80% ipTMなので、この一致は予想される。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#T1">原著 §3.3、Table 1、補足S6</a></p>
+<h3>4. 接触の量だけでは設計CDR3の寄与を評価できない</h3>
+<p>shortlistの被覆は11残基が6候補、10残基が2候補、9残基が2候補。129と173はAsp71を外した。CDR3の界面寄与は41.2–85.7%で、最大接触数16の197は最小寄与41.2%だった。197の界面34残基ペア中20は固定したCDR1/CDR2に由来し、接触数首位をCDR3設計だけの成果とみなせない。対照的に、10候補で数えた塩橋28本は全てCDR3由来だった。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#F4">原著 §3.4、Figure 4、補足Table S2</a></p>
+<p>保存構造104件では、CDR3が全界面へ占める比率の中央値は50.9%。Asp71接触54件では61.4%、非接触50件では40.0%だった。一方、ipTMと骨格接触数の相関は<strong>負</strong>（ρ=−0.321）であり、「固定骨格がipTMを吊り上げた」とは結論していない。合格例のみの解析で、同じ座標から作った量同士の関係である。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §3.2、補足S7/Table S4</a></p>
+<h3>5. エネルギーの順位も単回構造に依存する</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>候補</th>
+<th align="right">初回ΔE_int（kcal/mol、低い方が有利）</th>
+<th>Asp71</th>
+<th align="right">塩橋数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>145</td>
+<td align="right">−5.8</td>
+<td>接触</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>057</td>
+<td align="right">+13.4</td>
+<td>接触</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>197</td>
+<td align="right">+20.0</td>
+<td>接触</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>173</td>
+<td align="right">+90.5</td>
+<td>非接触</td>
+<td align="right">1</td>
+</tr>
+</tbody></table></div>
+<p>Table 2から比較に必要な4候補だけを抜粋した。QC通過8候補全体で塩橋数とエネルギーはρ=−0.894（P=0.003）、再計算では−0.830。leave-one-outでも方向は保たれたが、8特性を8候補で検討して補正していない探索結果である。総電荷は気相相互作用とρ=−0.933、脱溶媒和罰則と+0.933だが、差し引き総エネルギーとは+0.258（P=0.538）だった。電荷を増やすことと、適切な位置に塩橋を作ることは同じではない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#T2">原著 §3.5、Table 2、補足Table S1</a></p>
+<p>気相項−492.8〜−1428.2 kcal/molと脱溶媒和項+481.9〜+1442.0 kcal/molが相殺し、総量は小さな差になる。再計算で個別値は平均7.8、最大17.6 kcal/mol動いた。正の値を「実験で結合しない」と読まず、負の値もbinder認定に使わない。<strong>Figure 5Cは分解再計算の値（例057は+8.27）で、Table 2の初回値（+13.41）とは別計算</strong>である。両者を同じデータ列として混ぜない。<a href="https://zenodo.org/records/23131327">原著 §3.5、Figure 5、著者配布CSV</a></p>
+<h3>6. 電荷の探索と単量体の折りたたみ</h3>
+<p>主集合では電荷と接触数はρ=+0.319、回帰では電荷1単位あたり接触合格odds比1.48（95% CI 1.14–1.91、P=0.003）。ipTMは0.1増あたりodds比1.00（P≈0.99）だった。ただしモデル全体のpseudo-R²は0.063と小さい。</p>
+<p>145を親にした3群各10変異体では、塩基性群のCDR3接触は8/10、中性対照は4/10（P=0.170）。Asp71接触は8/10対2/10（P=0.023）だが、多重比較未補正で確証とは扱わない。酸性群の接触は4/10で改善しなかった。30変異体の電荷–接触ρ=+0.535も、群を定義した電荷を再表現した関係であり、独立検証ではない。親145の姿勢自体が再現しないため、特定塩橋の最適化が成功したとはいえない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著 §§3.1、3.6</a></p>
+<p>標的なし単量体予測では骨格pLDDT 91.7–94.8（親94.6）、CDR3は65.1–82.2（親73.3）。予測上、骨格を大きく崩した兆候はないが、発現・溶解性・熱安定性の証明ではない。複合体CDR3の45.9–62.1とは予測条件が違い、数値差をそのまま結合による不安定化と読めない。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full#F6">原著 §3.7、Figure 6、補足S4</a></p>
+</section>
+<section id="s7"><div class="section-label">08</div><h2>重要なFigure/Table</h2><p>全6 Figureと2 Tableの本文・キャプション、原著PDFおよび補足4ページを確認し、主張を追うためにFigure 2、3、5を掲載した。原図はGately、Guan、Ding（2026）作成、<a href="https://doi.org/10.64898/2026.10.04.753929">原著v1</a>、<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>。以下の画像はbioRxiv配布JPEGを改変せず保存し、表示サイズのみ調整した。</p>
+<h3>Figure 2：信頼度と目的部位は別の評価軸</h3>
+<p><img src="assets/20261020_survivin_interface_confidence/survivin_F2.jpg" alt="Figure 2：ipTMと接触数の散布、信頼度帯別不合格率、信頼度指標と位置指標との相関"></p>
+<p>Aは196候補のipTM（横）対ナノボディ側接触残基数（縦）。回帰線の傾きだけで判断せず、ゼロ接触が高ipTMまで分布する点を見る。Bは信頼度帯別の不合格率で、棒の誤差は95% Wilson区間、棒内数字はn。Cは完全な信頼度記録のある186候補に限定するため、Aのρ=0.100とCの接触数相関ρ≈0.047は異なる集合の値である。<a href="https://www.biorxiv.org/content/biorxiv/early/2026/10/11/2026.10.04.753929/F2.large.jpg">原図</a></p>
+<h3>Figure 3／Table 1：選別の改善と候補の再現性を区別する</h3>
+<p><img src="assets/20261020_survivin_interface_confidence/survivin_F3.jpg" alt="Figure 3：057と145の12 seed反復、上位モデルと全5モデル確認による接触判定の違い"></p>
+<p>A/Bはseedごとの被覆。濃色は採用構造、淡色は5モデル中の最大被覆、赤は採用構造がAsp71を外した実行である。Cでは任意の接触とAsp71接触を別々に読む。Dで057は接触ゲートにより完全被覆10/12→12/12になるが、145は1/12止まり。Table 1の31配列列は「接触ゼロの件数」、反復列は「完全被覆の回数」であり、列を跨いで成功率のように比較しない。<a href="https://www.biorxiv.org/content/biorxiv/early/2026/10/11/2026.10.04.753929/F3.large.jpg">原図</a></p>
+<h3>Figure 5／Table 2：相殺する大きなエネルギー項</h3>
+<p><img src="assets/20261020_survivin_interface_confidence/survivin_F5.jpg" alt="Figure 5：塩橋数と初回MM/GBSA、気相・脱溶媒和分解および再計算の総エネルギー"></p>
+<p>Aは塩橋数（横）と初回エネルギー（縦、kcal/mol、低いほど有利）。B/Cは分解再計算で、Bの大きな反対符号の項を足したCは別スケールである。Aの初回値とCの再計算値の差は計算の感度を示す。最良初回エネルギーだった145の姿勢は再現しないため、エネルギー順位が配列の結合能を保証する図ではない。<a href="https://www.biorxiv.org/content/biorxiv/early/2026/10/11/2026.10.04.753929/F5.large.jpg">原図</a></p>
+</section>
+<section id="s8"><div class="section-label">09</div><h2>Code / License / Weights</h2><ul>
+<li>コード公開：<strong>あり</strong>。著者によるZenodo配布。<a href="https://zenodo.org/records/23131327">公式データ・構造・コード</a>／<a href="https://zenodo.org/api/records/23131327/files/SVN057_survivin_nanobody_dataset.zip/content">ZIP</a></li>
+<li>GitHub URL：<strong>見つからず</strong>。本文、Zenodoの関連識別子・README、論文名でのGitHub検索で公式リポジトリを確認できなかった。GitHubがなくてもコード非公開という意味ではない。</li>
+<li>実装種別：著者実装。GitHub確認：該当なし。ライセンス：コードMIT、データ・構造・図CC BY 4.0。</li>
+<li>ライセンス確認元：ZIP内<code>LICENSE-CODE.txt</code>、<code>LICENSE-DATA.txt</code>とREADMEを直接確認。Zenodo metadataはデータのCC BY 4.0を表示する。</li>
+<li>Hugging Face URL／種別：見つからず／該当なし。論文・配布物に記載なく、著者名＋survivin＋Hugging Face検索でも専用公開先を確認できなかった。</li>
+<li>モデル重み・チェックポイント：本研究独自学習モデルは<strong>該当なし</strong>。利用するAlphaFold/ColabFoldの既存重みはこの研究の新規成果ではない。ZIPに新規学習重みの配布は確認できない。</li>
+<li>データセット公開：あり。196候補のTSV、各batch CSV、12 seed反復120モデルの集計、31配列155モデルの集計、単量体信頼度、エネルギー分解、109候補のPDB等を配布。</li>
+<li>実装入口：<code>scripts/generation/</code>で配列・入力生成、<code>scripts/analysis/</code>で接触・MM/GBSA、<code>scripts/figures/loaddata.py</code>と<code>makefigs.py</code>で読み込み・描図。</li>
+<li>利用条件：配布コードのMITと、利用する予測器・配列DB・計算サービスの条件は別途扱う。</li>
+</ul>
+<h3>今回の独立確認と再現性メモ</h3>
+<p>Zenodo ZIPのMD5 <strong>b066b08bd5fa03285ad8a293508da22e</strong> が公式APIの値に一致した。第三者コードを実行せず、配布TSVをPython標準ライブラリで読み、次を独立再集計した。<a href="assets/20261020_survivin_interface_confidence/verified_summary.json">検証結果JSON</a></p>
+<ul>
+<li>主集合196、CDR3接触合格123、全体接触ゼロ72。順位同値を平均順位で扱うSpearman ρ=<strong>0.0999034577</strong>。</li>
+<li>057：60モデル、最高rank_scoreで完全被覆10/12、Asp71 11/12、どれか1モデルで完全被覆12/12。</li>
+<li>145：60モデル、同条件で完全被覆0/12、Asp71 0/12、どれか1モデルで完全被覆1/12。</li>
+<li>seeded round：31配列155モデル、最高rankで接触ゼロ12件、全モデル接触ゼロ3件。</li>
+</ul>
+<p>これらは論文の主要集計と一致した。ただし、全統計検定、共折りたたみ、MD、MM/GBSAの再実行までは行っていない。</p>
+<p><strong>配布版と指定v1の差を記録する。</strong> Zenodo READMEは旧題、DOI未記入、Figure1–7の7図構成を示すが、指定v1はFigure1–6の6図構成である。論文Data availabilityは統計検証スクリプトを述べるものの、今回取得したZIPのファイル一覧に独立したverification名のスクリプトは見つからなかった。統計確認機能が別ファイルに含まれる可能性は未確認。したがって、配布READMEの図番号をそのまま本文v1へ対応させず、内容で照合する。失敗73候補の座標は保存されず、元の196件すべてについて座標から接触判定を再計算できない。109構造は主ライブラリ合格123件中104件と追加変異体5件であり、失敗例も含めた全構造公開ではない。<a href="https://zenodo.org/records/23131327">原著Data availability／Zenodo README</a></p>
+</section>
+<section id="s9"><div class="section-label">10</div><h2>抗体研究・創薬への意味</h2><p>本研究から転用しやすいのは、抗体候補のスコア順位をそのまま成功順位と見なさず、設計目的を満たしているかを別の列で管理する運用である。少なくとも、目的残基への接触、Asp71のような機能関連部位、設計CDRの寄与、モデル間被覆の分布を併記すると、信頼度だけでは見えない失敗が分かる。目的部位が既知なら接触確認は既存座標から計算できる。</p>
+<p>本レポートの実務的提案としては、候補を絞る前に5モデルを保存し、部位確認の結果と信頼度を並べ、候補間の小さな接触数差で順位を確定せず、反復予測後に実験へ進める。057を試す場合も、まず精製survivinへの結合測定、Smacペプチド競合、予測CDR3塩橋の変異実験が必要である。これは著者も次段階として提案する。細胞内標的なので、結合が確認できても細胞内送達や細胞内機能阻害は別の開発課題として残る。<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">原著Discussion</a></p>
+</section>
+<section id="s10"><div class="section-label">11</div><h2>限界と注意点</h2><h3>著者が明記する限界</h3>
+<ul>
+<li>発現・精製・親和性・競合・細胞評価を一切実施していない。057はin silico候補である。</li>
+<li>1タンパク質の1エピトープ、1骨格、CDR3のみの設計。相関係数や閾値の汎用性は示さない。</li>
+<li>ipTMが低いライブラリに偏る。0.5以上の14例のみで高信頼度帯全体を評価できない。</li>
+<li>shortlistの構造・エネルギーは単回予測に依存。再現性確認は2/10候補だけで1候補は失敗した。</li>
+<li>MSAを共有する12 seed反復は、MSA検索サーバーやalignment変動を含めない。</li>
+<li>survivinは21–110の単量体構築体で、C末端二量体化ヘリックスと二量体状態を表現しない。</li>
+<li>MM/GBSAは単一最小化構造・暗黙溶媒・エントロピーなし、8例、事後QC、多重比較未補正。</li>
+<li>保存構造は接触合格例へ偏るため、領域別解析は不合格候補の説明へ使えない。</li>
+</ul>
+<h3>本レポートの批判的評価</h3>
+<ul>
+<li><strong>非有意は同等性や普遍的無効性の証明ではない。</strong> ρのCIは弱い正相関も許す。ipTMが無意味という結論へ広げない。057の同一配列60モデル内ではρ=+0.482であり、候補間評価とモデル間評価を区別する。</li>
+<li>接触ゲートは設計目的との一致を直接評価するが、予測誤りでも合格できる。全5モデルから最良を選ぶほど偶然の接触を拾う余地が増えるため、実験成功率の改善を示したとはいえない。</li>
+<li>上位対棄却モデル比較には配列内依存がある。配列単位のペア比較や階層的bootstrapによる追試が有用だと考える。</li>
+<li>Asp71の既報変異効果は重要な外部根拠だが、全阻害候補にAsp71直接接触が必須と本研究が実証したわけではない。</li>
+<li>単量体pLDDTの良好さは、溶解性、凝集性、発現量、熱安定性や免疫原性の代替指標ではない。</li>
+<li>196件の集計は検証可能でも、全件の元座標がない点と公開物の版差により、完全な再実行・監査は限定される。</li>
+</ul>
+</section>
+<section id="s11"><div class="section-label">12</div><h2>この論文を読む上での前提知識</h2><ul>
+<li><strong>VHH／ナノボディとCDR3</strong>：重鎖由来の単一可変ドメイン。3つのCDRのうち本研究はCDR3のみ変更するため、他領域の接触を設計効果と混同しない。</li>
+<li><strong>ipTM、pTM、pLDDT</strong>：それぞれ界面、全体配置、局所構造の予測信頼度に関連する値。結合親和性や指定部位への選択性を直接測定した値ではない。</li>
+<li><strong>MSAとunpaired</strong>：進化的に関連する配列の整列情報。新規binderと標的に共進化ペアがないため、本研究では各鎖の情報を残して非ペア化する。</li>
+<li><strong>接触数と被覆</strong>：前者はナノボディ側、後者は標的側の残基を数える。どちらも重原子距離の閾値に依存する。</li>
+<li><strong>MM/GBSA</strong>：分子力学と暗黙溶媒による近似的エネルギー評価。本研究の値は実験Kdへ直結しない。</li>
+<li><strong>seed反復と信頼区間</strong>：同じ配列でも予測モデルが変わりうる。比率のCIは12回程度では広く、同じMSAを使う反復は全変動要因を網羅しない。</li>
+</ul>
+</section>
+<section id="s12"><div class="section-label">13</div><h2>今回この1報を選んだ理由</h2><p>ユーザー指定論文である。AI×抗体設計の実務で使う選別指標を、完全なライブラリ評価と反復で見直せるため、精読価値が高い。新規モデルの性能競争よりも、実験へ進める判断の根拠を学ぶ新着ベンチマークとして位置付けた。他候補との新規な優劣選定は行っていない。</p>
+</section>
+<section id="s13"><div class="section-label">14</div><h2>読む優先度</h2><p><strong>High（評価設計の学習として）</strong>。構造予測を使った抗体設計で、信頼度、部位一致、再現性を区別するうえで有用。治療抗体としての成功例や高親和性binderの実証を探す用途では、未検証であることを前提に読む。</p>
+</section>
+<section id="s14"><div class="section-label">15</div><h2>自分用メモ</h2><ul>
+<li>057を出発点とした変異探索を、全モデル保存・MSA変動込みで追試したい。</li>
+<li>4.5 Å閾値の感度、部分被覆とAsp71基準、CDR別寄与を分けた候補比較を行いたい。</li>
+<li>関連原著：既知認識構造を示す<a href="https://doi.org/10.1016/j.str.2011.12.001">Du et al., 2012</a>、機能変異の<a href="https://doi.org/10.1074/jbc.M300957200">Song et al., 2003</a>、ヒト化骨格の<a href="https://doi.org/10.1074/jbc.M806889200">Vincke et al., 2009</a>。ここでは本論文の引用として参照し、個々の再精読は未実施。</li>
+<li>関連ベンチマーク：<a href="https://doi.org/10.1101/2025.08.14.670059">Overath et al.</a>は実験binder成功を扱う比較対象。目的部位接触を扱う本研究とは評価ラベルが違う。</li>
+<li>実装入口はZenodoの<code>data/library_sweep_196.tsv</code>。<code>contact_confirmed</code>をラベルにし、接触数&gt;0で置き換えない。</li>
+<li>既存<span class="wiki">20261020_SpatialPPI Three-dimensional space protein-protein interaction prediction with AlphaFold Multimer</span>と接続し、PPIの有無・目的部位・親和性を別タスクとして整理する。</li>
+</ul>
+</section>
+<section id="s15"><div class="section-label">16</div><h2>関連キーワード</h2><p><span class="wiki">ナノボディ</span>、<span class="wiki">VHH</span>、<span class="wiki">CDR3</span>、<span class="wiki">Survivin</span>、<span class="wiki">BIRC5</span>、<span class="wiki">エピトープ</span>、<span class="wiki">AlphaFold-Multimer</span>、<span class="wiki">ColabFold</span>、<span class="wiki">ipTM</span>、<span class="wiki">MM-GBSA</span>、<span class="wiki">塩橋</span>、<span class="wiki">再現性</span>、<span class="wiki">候補選別</span>。</p>
+</section>
+<section id="s16"><div class="section-label">17</div><h2>検索ログ</h2><ul>
+<li>対象固定：ユーザー提示DOIのbioRxiv v1。Web取得では本文/PDFへアクセスできず、通常ブラウザで本文を確認した後、HTTP取得で原著PDFと補足PDFも取得できた。アクセス制限の回避は実施していない。</li>
+<li>一次資料：<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full">本文</a>、<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.article-info">Info/History</a>、<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.full.pdf">原著PDF</a>、<a href="https://www.biorxiv.org/content/10.64898/2026.10.04.753929v1.supplementary-material">補足ページ</a>、<a href="https://www.biorxiv.org/content/biorxiv/early/2026/10/11/2026.10.04.753929/DC1/embed/media-1.pdf">補足PDF</a>、<a href="https://zenodo.org/records/23131327">Zenodo</a>、<a href="https://zenodo.org/api/records/23131327">公式API</a>。</li>
+<li>書誌：2026-10-11公開、CC BY 4.0をInfo/Historyで確認。全6 Figureと2 Tableの記述を確認し、Figure 2/3/5の配布原図を画像として確認・保存、Table 1/2と補足Table S1–S4をPDFテキストから照合した。補足3ページ目はレンダリングでも確認。</li>
+<li>コード検索クエリ：<code>&quot;10.64898/2026.10.04.753929&quot;</code>、<code>&quot;Benchmarking interface confidence&quot; github</code>、<code>&quot;Gately&quot; &quot;survivin&quot; &quot;huggingface&quot;</code>。検索結果は発見用で、内容の根拠は一次資料に限定。</li>
+<li>コード／重み確認先：本文Data availability、Zenodo API関連リンク、ZIP README、LICENSE2種、全ファイル一覧。GitHub、Hugging Face専用公開先は見つからず。新規モデル重みは該当なし。</li>
+<li>データ確認：ZIPの公式MD5照合、主集合と反復の主要件数・順位相関を独自再集計。第三者配布スクリプトの実行、AlphaFold/ColabFoldの再推論、MM/GBSA再計算は行っていない。</li>
+<li>版差：Zenodoは7図、指定v1は6図。レポートの図番号はv1基準。Figure 5の初回と分解再計算の差をCSVで確認。</li>
+<li>他候補の選定や新着／基盤の比率調整は今回対象外。新着の指定論文として記録。</li>
+</ul>
+</section></main><footer>日本語レポート作成・確認：2026-10-20（JST）｜原図：Gately, Guan & Ding (2026), CC BY 4.0｜数値は指定v1基準</footer></body></html>

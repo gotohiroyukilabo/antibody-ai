@@ -1,0 +1,28 @@
+{
+  "library": {
+    "n": 196,
+    "confirmed": 123,
+    "zero_contact": 72,
+    "spearman": 0.09990345774366402
+  },
+  "replication": {
+    "nb_cand_057": {
+      "n_models": 60,
+      "top_full_epitope": 10,
+      "top_Asp71": 11,
+      "any_full_epitope": 12
+    },
+    "nb_cand_145": {
+      "n_models": 60,
+      "top_full_epitope": 0,
+      "top_Asp71": 0,
+      "any_full_epitope": 1
+    }
+  },
+  "seeded_round": {
+    "n_sequences": 31,
+    "n_models": 155,
+    "top_miss": 12,
+    "all_miss": 3
+  }
+}
