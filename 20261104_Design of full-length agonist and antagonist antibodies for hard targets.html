@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Pythia-1によるfull-length IgG設計、22標的の前向き実験検証、GPCR agonist/antagonist、developability、公開配列と再現性を解説する日本語ビジュアル精読ノート。">
+  <title>Pythia-1 — 機能を指定してfull-length IgGを設計する</title>
+  <style>
+    :root{--ink:#172a33;--muted:#5c6f76;--bg:#f2f5f4;--paper:#fff;--line:#d7e0de;--navy:#153a4b;--teal:#16746f;--teal2:#dff1ed;--gold:#b86f22;--gold2:#f9ead6;--violet:#6554a4;--violet2:#ebe7f8;--red:#a34343;--red2:#fae8e6;--blue:#276b8d;--shadow:0 14px 38px rgba(25,55,62,.09)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:linear-gradient(180deg,#e5efed 0,#f4f6f5 430px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.72}a{color:var(--blue);text-underline-offset:3px}a:hover{color:var(--gold)}
+    .shell{max-width:1240px;margin:auto;padding:24px}.hero{position:relative;overflow:hidden;color:white;background:linear-gradient(132deg,#122f3d,#16575e 55%,#6a5a99);border-radius:28px;padding:58px 64px;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:460px;height:460px;border:72px solid rgba(255,255,255,.06);border-radius:50%;right:-165px;top:-210px}.eyebrow{color:#bde9df;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.hero h1{max-width:1000px;margin:.5rem 0 1rem;font:700 clamp(2.1rem,4.5vw,4.4rem)/1.06 Georgia,"Noto Serif JP",serif}.hero .dek{max-width:870px;font-size:1.15rem;color:#e9f5f2}.badges,.hero-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);border-radius:999px;padding:6px 11px;font-size:.82rem;font-weight:800}.button{display:inline-block;background:#fff;color:var(--navy);font-weight:800;text-decoration:none;padding:10px 14px;border-radius:10px}.button.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+    .layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;margin-top:30px}.toc{position:sticky;top:18px;align-self:start;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;color:#4e6269;text-decoration:none;font-size:.86rem;padding:5px 0;border-bottom:1px solid #edf1f0}.toc a:last-child{border:0}.content{min-width:0}.section{scroll-margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:34px;margin-bottom:22px;box-shadow:0 8px 28px rgba(30,57,62,.05)}h2{font:700 1.8rem/1.25 Georgia,"Noto Serif JP",serif;color:var(--navy);margin:0 0 20px}h3{font-size:1.06rem;color:#244b57;margin:24px 0 10px}.lead{font-size:1.06rem}.small{font-size:.85rem;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.cards{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:#f9fbfa;border:1px solid var(--line);border-radius:14px;padding:18px}.card .k{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:900}.card .big{font-size:1.65rem;line-height:1.15;font-weight:900;color:var(--teal);margin:.3rem 0}.card p{font-size:.88rem;margin:.35rem 0 0}.callout{border-left:5px solid var(--gold);background:var(--gold2);padding:16px 18px;border-radius:6px 12px 12px 6px}.callout.red{border-color:var(--red);background:var(--red2)}.callout.teal{border-color:var(--teal);background:var(--teal2)}
+    .flow{display:grid;grid-template-columns:1.1fr 42px 1.2fr 42px 1.15fr 42px 1fr;gap:7px;align-items:stretch;margin:22px 0}.node{min-height:120px;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:14px;border:2px solid #a9cbc4;background:#edf7f4;border-radius:14px}.node.model{background:#e7eef5;border-color:#9db8c8}.node.filter{background:var(--violet2);border-color:#b9addf}.node strong{color:var(--navy)}.arrow{align-self:center;text-align:center;font-size:1.7rem;font-weight:900;color:var(--teal)}
+    table{width:100%;border-collapse:collapse;font-size:.9rem;margin:14px 0}th,td{text-align:left;vertical-align:top;padding:10px 11px;border-bottom:1px solid var(--line)}th{background:#eef3f1;color:#294a54}td.num{text-align:right;font-variant-numeric:tabular-nums}.table-wrap{overflow-x:auto}.legend{font-size:.82rem;color:var(--muted)}
+    .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;margin:22px 0}.stage{border-radius:14px 14px 6px 6px;padding:16px;text-align:center;color:#fff}.stage small{display:block;color:inherit;opacity:.88}.stage .n{font-size:1.75rem;font-weight:900}.s1{background:#274f61;min-height:150px}.s2{background:#287d79;min-height:132px}.s3{background:#6757a1;min-height:112px}.s4{background:#b2702a;min-height:94px}.target-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.target{border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;background:#fafcfc;font-size:.78rem}.target .dots{font-size:1.1rem;letter-spacing:.08em}.bind{color:var(--teal)}.func{color:var(--violet)}.fail{color:#b4bfbd}
+    .barset{display:grid;gap:10px}.barrow{display:grid;grid-template-columns:132px 1fr 66px;gap:10px;align-items:center;font-size:.87rem}.track{height:25px;background:#e8eeec;border-radius:7px;position:relative;overflow:hidden}.bar{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--teal),#55aaa1)}.bar.v{background:linear-gradient(90deg,var(--violet),#9c8dd1)}.bar.g{background:linear-gradient(90deg,var(--gold),#d9a25e)}.value{text-align:right;font-weight:900}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}.figure{border:1px solid var(--line);border-radius:15px;padding:20px;background:#fcfefd}.figure figcaption{font-size:.83rem;color:var(--muted);margin-top:14px}.state-flow{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:8px;align-items:center}.state{border-radius:12px;padding:16px;text-align:center;background:#eef4f3;border:1px solid var(--line)}.state.active{background:var(--violet2)}.state.out{background:var(--gold2)}
+    .checks{list-style:none;padding:0}.checks li{padding:.55rem 0 .55rem 1.7rem;border-bottom:1px solid #edf1ef;position:relative}.checks li:before{content:"✓";position:absolute;left:.2rem;color:var(--teal);font-weight:900}.checks li.warn:before{content:"!";color:var(--red)}.sources li{margin:.45rem 0;overflow-wrap:anywhere}code{background:#eef2f1;padding:.12em .35em;border-radius:5px}
+    @media(max-width:940px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto}.cards{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}.hero{padding:42px 28px}.target-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:620px){.shell{padding:10px}.hero{padding:34px 20px;border-radius:18px}.hero h1{font-size:2rem}.section{padding:24px 18px;border-radius:16px}.grid,.cards,.two-col{grid-template-columns:1fr}.funnel{grid-template-columns:1fr}.stage{min-height:auto}.target-grid{grid-template-columns:repeat(2,1fr)}.state-flow{grid-template-columns:1fr}.state-flow .arrow{transform:rotate(90deg)}.barrow{grid-template-columns:105px 1fr 57px}table{min-width:700px}}
+    @media print{body{background:white}.shell{max-width:none;padding:0}.hero{border-radius:0;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}.layout{display:block}.toc{display:none}.section{box-shadow:none;border-color:#bbb;break-inside:auto}.section h2{break-after:avoid-page}.card,.callout,.figure,.flow,.funnel,table,.state-flow{break-inside:avoid}.hero-links{display:none}a{color:inherit;text-decoration:none}.flow{grid-template-columns:1.1fr 24px 1.2fr 24px 1.15fr 24px 1fr;gap:3px}.flow .arrow{transform:none}.flow .node{min-height:95px;padding:8px;font-size:.72rem}.target-grid{grid-template-columns:repeat(7,1fr)}.content{width:100%}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <div class="eyebrow">AI × Antibody · Daily Research · 2026-11-04</div>
+    <h1>結合だけでなく、抗体の「作用」を設計する</h1>
+    <p class="dek"><strong>Pythia-1</strong> は標的構造・epitope・receptor stateを条件にfull-length IgGを全原子生成する。22標的、最大48本/標的の前向きscreenで、GPCR antagonistとagonistまで実証した。</p>
+    <div class="badges"><span class="badge">bioRxiv 2026</span><span class="badge">新着</span><span class="badge">Full-length IgG</span><span class="badge">GPCR</span><span class="badge">読む優先度 High</span><span class="badge">CC BY-NC 4.0</span></div>
+    <div class="hero-links"><a class="button" href="https://doi.org/10.64898/2026.10.21.760573">原論文 / DOI</a><a class="button ghost" href="https://pythialabs.com/antibody-sequences/pythia-1m/v1">公開抗体配列</a><a class="button ghost" href="20261104_Design%20of%20full-length%20agonist%20and%20antagonist%20antibodies%20for%20hard%20targets.md">Markdown版</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="目次"><strong>このページ</strong><a href="#takeaways">要点</a><a href="#problem">背景</a><a href="#method">提案手法</a><a href="#data">データと評価</a><a href="#results">主要結果</a><a href="#figures">Figure / Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License / Weights</a><a href="#next">前提・関連・次に試す</a><a href="#log">検索ログ・出典</a></nav>
+    <div class="content">
+      <section id="takeaways" class="section">
+        <h2>この論文の要点</h2>
+        <div class="grid cards">
+          <article class="card"><div class="k">Target panel</div><div class="big">22標的</div><p>可溶性/ectodomain 15、GPCR 7。full-length human IgG1で評価。</p></article>
+          <article class="card"><div class="k">Experimental budget</div><div class="big">最大48本</div><p>標的ごとのscreen数。全928本から49一次hit。</p></article>
+          <article class="card"><div class="k">Functional control</div><div class="big">状態指定</div><p>inactive state→antagonist、active state→agonistを狙う。</p></article>
+          <article class="card"><div class="k">Reproducibility</div><div class="big">配列のみ</div><p>lead配列は公開。コード・重み・pipelineは非公開。</p></article>
+        </div>
+        <p class="lead">最も重要なのは、affinityを最大化しただけではなく、<strong>epitopeと標的conformationを入力仕様にして作用機序を先に決めた</strong>ことである。一方、「22標的すべてで機能性lead」ではない。一次hitは15/22標的、機能実証はその一部である。</p>
+      </section>
+
+      <section id="problem" class="section">
+        <h2>背景と解決したい問題</h2>
+        <div class="two-col">
+          <div><h3>従来探索の制御不足</h3><p>免疫やdisplayはbinderを見つけられるが、狙ったepitope、活性状態、agonism/antagonism、developabilityを同時に選びにくい。hit後の再設計が長くなる。</p></div>
+          <div><h3>full-length IgGの難しさ</h3><p>paired VH/VLの6本の柔軟なCDRを設計し、さらにFc付きformatで発現・安定性・機能を保つ必要がある。VHHやminiproteinより自由度が大きい。</p></div>
+        </div>
+        <div class="callout"><strong>GPCRが厳しい理由:</strong> 細胞外表面が小さく、orthosteric pocketは深く、active/inactive stateが動的である。単に表面へ結合してもsignalは変わらない。</div>
+      </section>
+
+      <section id="method" class="section">
+        <h2>提案手法の全体像</h2>
+        <div class="flow" role="img" aria-label="標的構造とepitope、human germline scaffoldからPythia-1生成、配列変異とfilter、full-length IgG実験へ進む流れ">
+          <div class="node"><strong>設計仕様</strong><span>標的3D構造<br>epitope / receptor state<br>human VH–VL framework</span></div><div class="arrow">→</div>
+          <div class="node model"><strong>Pythia-1</strong><span>all-atom flow matching<br>backbone + sequence + side chainを共同生成</span></div><div class="arrow">→</div>
+          <div class="node filter"><strong>Variant &amp; triage</strong><span>CTMC sequence sampling<br>self-consistency refold<br>confidence / physics / liability</span></div><div class="arrow">→</div>
+          <div class="node"><strong>Full-length IgG1</strong><span>CHO発現<br>BLI / cell binding<br>function / developability</span></div>
+        </div>
+        <p class="small">原論文Figure 1とMethodsをもとにした独自の要約図（原図の転載ではない）。</p>
+        <div class="grid">
+          <div class="card"><div class="k">Soluble target generation</div><div class="big">360 × 4</div><p>360構造、各構造に元配列＋3 variantで最大1,440 sequence。</p></div>
+          <div class="card"><div class="k">GPCR generation</div><div class="big">720 × 4</div><p>最大2,880 sequenceから構造poseの多様性を保って48本以下へ。</p></div>
+        </div>
+        <h3>「機能」を幾何学へ翻訳する</h3>
+        <div class="state-flow" role="img" aria-label="標的の状態とepitopeを選び、CDRの結合姿勢を生成して、阻害または活性化を起こす関係">
+          <div class="state active"><strong>標的state + epitope</strong><br>inactive CCR8 / active MRGPRX2 / receptor interface</div><div class="arrow">→</div><div class="state"><strong>CDR pose</strong><br>pocket侵入・ligand site競合・state安定化</div><div class="arrow">→</div><div class="state out"><strong>機能</strong><br>antagonism / agonism / neutralization</div>
+        </div>
+      </section>
+
+      <section id="data" class="section">
+        <h2>データセットと評価設計</h2>
+        <h3>学習データとleakage対策</h3>
+        <p>PDB（2025年6月まで）とAlphaFold2高信頼single-chain予測を合わせて約9,000万entry。sequence・structureでcluster化し、SAbDabにはCDR geometry clusteringも加えた。可溶性panelは標的とhomolog clusterをtrainingから除外したが、GPCRには同じ除外を適用していない。入力構造のうちCCR8 antagonistとCXCR7はtrainingに含まれた。</p>
+        <div class="table-wrap"><table><thead><tr><th>群</th><th>標的数</th><th>screen本数</th><th>一次hit</th><th>hit標的</th><th>一次評価</th></tr></thead><tbody>
+          <tr><td>可溶性 / ectodomain</td><td class="num">15</td><td class="num">672</td><td class="num">31</td><td class="num">8/15</td><td>BLI response &gt;0.06 nm</td></tr>
+          <tr><td>GPCR</td><td class="num">7</td><td class="num">256</td><td class="num">18</td><td class="num">7/7</td><td>flow cytometry robust z &gt;10</td></tr>
+          <tr><td><strong>合計</strong></td><td class="num"><strong>22</strong></td><td class="num"><strong>928</strong></td><td class="num"><strong>49</strong></td><td class="num"><strong>15/22</strong></td><td>full-length IgG1</td></tr>
+        </tbody></table></div>
+        <div class="two-col">
+          <div class="callout teal"><strong>強い点:</strong> 配列や構造scoreだけで終わらず、CHOでfull-length IgGを作り、binding、off-target cell、機能、developabilityまで同じ候補を進める。</div>
+          <div class="callout red"><strong>比較上の穴:</strong> 公開生成法、免疫、display、random libraryとの同一標的・同一本数head-to-headがない。相対成功率は未確定。</div>
+        </div>
+      </section>
+
+      <section id="results" class="section">
+        <h2>主要結果</h2>
+        <h3>928本から機能hitまで</h3>
+        <div class="funnel" role="img" aria-label="実験screen 928、一次hit 49、確認binding、機能hitへ絞る概念的funnel">
+          <div class="stage s1"><small>Full-length IgG screen</small><div class="n">928</div><small>22 targets</small></div>
+          <div class="stage s2"><small>Primary hits</small><div class="n">49</div><small>31 soluble + 18 GPCR</small></div>
+          <div class="stage s3"><small>Target success</small><div class="n">15 / 22</div><small>primary hitあり</small></div>
+          <div class="stage s4"><small>GPCR function</small><div class="n">4 / 7</div><small>CCR8, CXCR4, CXCR7, MRGPRX2</small></div>
+        </div>
+        <p class="legend">最後の4/7はGPCR標的単位。soluble群の機能評価はIL11、β-NGF、TrkA等で選択的に実施され、全15標的を一律に評価していない。</p>
+
+        <h3>GPCR標的の進捗</h3>
+        <div class="target-grid" aria-label="GPCR 7標的のbindingと機能hitの有無">
+          <div class="target"><strong>AMY1</strong><div class="dots"><span class="bind">●</span> <span class="fail">○</span></div>2 hit / function 0</div>
+          <div class="target"><strong>CB1</strong><div class="dots"><span class="bind">●</span> <span class="fail">○</span></div>1 hit / function 0</div>
+          <div class="target"><strong>CCR8</strong><div class="dots"><span class="bind">●</span> <span class="func">●</span></div>9 hit / 5 active</div>
+          <div class="target"><strong>CXCR4</strong><div class="dots"><span class="bind">●</span> <span class="func">●</span></div>3 hit / 2 active</div>
+          <div class="target"><strong>CXCR7</strong><div class="dots"><span class="bind">●</span> <span class="func">●</span></div>1 hit / 1 active</div>
+          <div class="target"><strong>MC4R</strong><div class="dots"><span class="bind">●</span> <span class="fail">○</span></div>1 hit / function 0</div>
+          <div class="target"><strong>MRGPRX2</strong><div class="dots"><span class="bind">●</span> <span class="func">●</span></div>1 agonist</div>
+        </div>
+        <p class="legend"><span class="bind">● binding hit</span> / <span class="func">● functional hit</span> / ○ none。Supplementary Figure S3を独自再構成。</p>
+
+        <h3>代表候補のbindingとfunction</h3>
+        <div class="two-col">
+          <figure class="figure"><div class="barset">
+            <div class="barrow"><span>IL11_04 KD</span><div class="track"><div class="bar" style="width:98%"></div></div><span class="value">2.53 nM</span></div>
+            <div class="barrow"><span>IL11_04 IC50</span><div class="track"><div class="bar v" style="width:91%"></div></div><span class="value">5.6 nM</span></div>
+            <div class="barrow"><span>CXCR4_23 bind</span><div class="track"><div class="bar" style="width:72%"></div></div><span class="value">15.5 nM</span></div>
+            <div class="barrow"><span>CXCR4_23 IC50</span><div class="track"><div class="bar v" style="width:91%"></div></div><span class="value">5.5 nM</span></div>
+            <div class="barrow"><span>MRGPRX2 bind</span><div class="track"><div class="bar" style="width:40%"></div></div><span class="value">84.5 nM</span></div>
+            <div class="barrow"><span>MRGPRX2 agonism</span><div class="track"><div class="bar g" style="width:22%"></div></div><span class="value">213.5 nM</span></div>
+          </div><figcaption>低濃度ほど強い。視覚幅はlogスケール相当の相対表示で、同じassay間のみ直接比較すべき。原論文Figure 2, 5, 6の報告値を独自再構成。</figcaption></figure>
+          <div><div class="callout"><strong>Affinity ≠ function</strong><br>CCR8ではIC50/EC50比が約0.8〜6.3。CXCR4_23は対照REGN7663よりcell bindingは弱いが、機能阻害IC50は5.5 vs 33 nMで約6倍低い。</div><p>結合強度だけでなく、epitope、pocket侵入深度、receptor state、signal geometryを評価する必要がある。</p></div>
+        </div>
+
+        <h3>Developability gate</h3>
+        <div class="grid cards">
+          <div class="card"><div class="k">Humanness</div><div class="big">≥ 0.8</div><p>OASis identityのpass目安。</p></div>
+          <div class="card"><div class="k">CHO titer</div><div class="big">≥ 250</div><p>mg/L。transient expression。</p></div>
+          <div class="card"><div class="k">Fab Tm</div><div class="big">≥ 65°C</div><p>DSFによる熱安定性。</p></div>
+          <div class="card"><div class="k">HIC retention</div><div class="big">≤ 1.8 min</div><p>tremelimumab基準の疎水性flag。</p></div>
+        </div>
+      </section>
+
+      <section id="figures" class="section">
+        <h2>重要なFigure / Tableの読み方</h2>
+        <div class="grid">
+          <article class="card"><div class="k">Figure 1 + S1 + S3</div><h3>成功段階の分母</h3><p>22標的、928本、49一次hit、15/22標的を分けて読む。binding、confirmed affinity、functionは同じではない。</p></article>
+          <article class="card"><div class="k">Figure 2 / 5 / 6</div><h3>state-to-function</h3><p>IL11 receptor competition、CXCR4 pocket antagonism、MRGPRX2 active-state agonismを、予測poseとdose responseの両方で結ぶ。</p></article>
+          <article class="card"><div class="k">Figure S4 / S7</div><h3>薬らしさとnovelty</h3><p>DLS、AC-SINS、疎水性、非特異結合と、SAbDabへのCDR edit distance / framework RMSDを確認する。</p></article>
+          <article class="card"><div class="k">Figure S11</div><h3>binding–functionの非単調性</h3><p>同じGPCR hitのscreen z-score、on/off-target EC50、functional potencyを横並びにし、affinityだけのlead選抜を戒める。</p></article>
+        </div>
+        <p class="small">論文はCC BY-NC 4.0だが、本HTMLでは原図を保存せず、事実・報告値を別構成で可視化した。</p>
+      </section>
+
+      <section id="meaning" class="section">
+        <h2>抗体研究・創薬への意味</h2>
+        <ul class="checks">
+          <li><strong>作用機序を入力仕様にする:</strong> receptor stateとepitopeを変え、neutralization、antagonism、agonismを設計問題として扱う。</li>
+          <li><strong>通常IgG formatで前進:</strong> VHHではなくpaired VH/VL + Fcを最初から作り、screenから機能・developabilityへ同一分子を進める。</li>
+          <li><strong>多目的設計へ:</strong> human germline、CDR長、liability、発現、Tm、HICを初期段階へ組み込み、hit後修復を減らす。</li>
+          <li><strong>hard targetへ:</strong> 狭いGPCR pocketへ長いCDRを入れ、従来IgGが届きにくいsurfaceを設計対象にする。</li>
+          <li class="warn"><strong>現状はclosed capability:</strong> modelとpipelineが公開されていないため、コミュニティが同じ設計を実行できるわけではない。</li>
+        </ul>
+      </section>
+
+      <section id="limits" class="section">
+        <h2>限界と注意点</h2>
+        <div class="two-col">
+          <div class="callout red"><strong>論文内の限界</strong><br>in vivo PK・efficacy・safetyなし。β-NGF KDは二量体antigen由来のapparent値。TrkAはbindingしても機能阻害しなかった。</div>
+          <div class="callout"><strong>評価設計の限界</strong><br>全著者が企業社員、査読前、独立validationなし。同一条件の生成法・従来探索baselineなし。</div>
+        </div>
+        <ul>
+          <li>epitopeは文献・PDB・surface解析後に手動refineされ、人間のexpertise寄与が分離されない。</li>
+          <li>GPCR panelは厳密なtraining holdoutではなく、CCR8/CXCR7入力構造はtrainingに存在した。</li>
+          <li>予測poseをcryo-EM/X-rayで検証しておらず、作用機序の構造説明はmodel依存。</li>
+          <li>developabilityは初期assayであり、高濃度viscosity、長期保存、免疫原性、PKは未確認。</li>
+          <li>公開配列pageは40 pairと表示するが、取得FASTAは39 pair。release整合性に注意。</li>
+        </ul>
+      </section>
+
+      <section id="code" class="section">
+        <h2>Code / License / Weights</h2>
+        <div class="table-wrap"><table><tbody>
+          <tr><th>コード</th><td>見つからず。公式GitHub repositoryなし。</td></tr>
+          <tr><th>モデル重み</th><td>見つからず。公式Hugging Face model/organizationなし。</td></tr>
+          <tr><th>学習データ</th><td>PDB + AF2約9,000万entryという説明のみ。curated manifestとsplitは非公開。</td></tr>
+          <tr><th>lead配列</th><td><a href="https://pythialabs.com/antibody-sequences/pythia-1m/v1">Pythia-1m v1</a>。公式表示80 sequence / 40 pair。</td></tr>
+          <tr><th>取得時検証</th><td>2026-11-04取得FASTAは78 record = 39 HC + 39 LC。</td></tr>
+          <tr><th>配列license</th><td>Pythia Labs独自license。研究・改変・発現・共有可、帰属必須、商用利用は別途書面license。</td></tr>
+          <tr><th>論文license</th><td>CC BY-NC 4.0。配列licenseとは別。</td></tr>
+        </tbody></table></div>
+        <div class="callout red"><strong>再現できるもの:</strong> 公開lead配列の独立合成・再測定。<br><strong>再現できないもの:</strong> Pythia-1学習、生成、epitope仕様、全候補ranking、同じ48本の選抜。</div>
+      </section>
+
+      <section id="next" class="section">
+        <h2>前提知識、関連論文、次に試すこと</h2>
+        <div class="grid">
+          <div><h3>前提知識</h3><ul><li>paired VH/VLとfull-length IgG</li><li>CDR / human germline framework</li><li>flow matching / CTMC</li><li>BLI KDとcell-binding EC50</li><li>agonist / antagonistとreceptor state</li><li>developability assay</li></ul></div>
+          <div><h3>関連して読む</h3><ul><li>Chai-2</li><li>RFAntibody</li><li>BoltzGen</li><li>IgGM2</li><li>Germinal / OpenGerminal</li><li>SANDAN</li><li>AIntibody Challenge</li></ul></div>
+        </div>
+        <h3>次に試すこと</h3><ol><li>公開39 pairをANARCIでnumberingし、CDR長とframework使用頻度を確認。</li><li>liability、aggregation、immunogenicity、OASisを独立再計算。</li><li>FASTA欠落pairが何かをSupplementaryのconfirmed hit一覧と照合。</li><li>同一targetで公開生成法を48本budgetに揃えたprospective comparisonを設計。</li></ol>
+      </section>
+
+      <section id="log" class="section">
+        <h2>検索ログと出典一覧</h2>
+        <p>候補は2026-10-26以降のbioRxiv、arXiv、PubMed、出版社新着から探索した。SANDAN（Antibody Therapeutics、2026-10-27）も有力だったが、本論文は標的数、full-length format、GPCR機能、developabilityの広さで採用した。PDF 47ページを全ページrenderし、Figure 1–6、Supplementary Figure S1–S12、Table S1–S2を確認した。</p>
+        <ul class="sources">
+          <li><a href="https://www.biorxiv.org/content/10.64898/2026.10.21.760573v1">bioRxiv abstract / metadata</a></li>
+          <li><a href="https://www.biorxiv.org/content/10.64898/2026.10.21.760573v1.full.pdf">本文・Supplementary PDF</a></li>
+          <li><a href="https://pythialabs.com/news">Pythia Labs News</a></li>
+          <li><a href="https://pythialabs.com/antibody-sequences/pythia-1m/v1">Pythia-1m antibody sequences v1 / 独自license</a></li>
+          <li><a href="https://academic.oup.com/abt/advance-article/doi/10.1093/abt/tbag054/9002952">候補比較: SANDAN</a></li>
+        </ul>
+        <p class="small">GitHub / Hugging FaceではPythia Labsの抗体model・weight・datasetを検索したが見つからず。同名のEleutherAI Pythia、VQA Pythia、Wublab Pythiaは無関係として除外した。</p>
+      </section>
+    </div>
+  </div>
+</main>
+</body>
+</html>
