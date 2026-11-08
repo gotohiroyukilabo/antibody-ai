@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CHAD: Probabilistic Steering of Generative Priors for Lab-in-the-Loop Antibody Optimization の日本語ビジュアル精読ノート">
+  <title>CHAD | 抗体生成priorから反復最適化への確率的handoff</title>
+  <style>
+    :root{--ink:#152626;--muted:#5b6c6b;--paper:#f4f6f1;--card:#fff;--line:#d7dfd8;--teal:#176b69;--teal2:#dcefed;--orange:#d06a3b;--orange2:#f9e7dc;--violet:#6a5a97;--green:#447a53;--warn:#8b4d29;--warnbg:#fff4e8;--shadow:0 16px 42px rgba(28,53,48,.08)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.75;font-size:16px}a{color:var(--teal);text-underline-offset:3px}a:hover{color:#0e4d4b}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}.hero{background:linear-gradient(120deg,#0f3434 0%,#175a59 58%,#813f29 100%);color:#fff;padding:64px 0 50px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:430px;height:430px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:-160px;top:-210px;box-shadow:0 0 0 50px rgba(255,255,255,.035),0 0 0 100px rgba(255,255,255,.025)}.eyebrow{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:#bfe4de;font-weight:700}.hero h1{max-width:920px;font-family:Georgia,"Noto Serif JP",serif;font-size:clamp(2.05rem,5vw,4.1rem);line-height:1.07;margin:.55rem 0 1.1rem;letter-spacing:-.03em}.hero .lead{font-size:clamp(1.05rem,2vw,1.28rem);max-width:850px;color:#e9f4f2}.badges{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}.badge{border:1px solid rgba(255,255,255,.35);padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.1);font-size:.84rem}.hero-links{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-block;padding:10px 15px;border-radius:8px;background:#fff;color:#164b49;font-weight:700;text-decoration:none}.button.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.42)}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:34px;align-items:start;padding:34px 0 80px}.toc{position:sticky;top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;color:#455;text-decoration:none;padding:5px 7px;border-left:2px solid transparent;font-size:.9rem}.toc a:hover{border-color:var(--teal);background:var(--teal2)}main{min-width:0}.section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;margin-bottom:22px;box-shadow:var(--shadow);scroll-margin-top:18px}.section h2{font-family:Georgia,"Noto Serif JP",serif;font-size:1.65rem;line-height:1.25;margin:0 0 18px}.section h3{font-size:1.08rem;margin:24px 0 10px}.kicker{font-size:.78rem;color:var(--teal);font-weight:800;text-transform:uppercase;letter-spacing:.13em}.grid{display:grid;gap:15px}.grid.four{grid-template-columns:repeat(4,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.grid.two{grid-template-columns:repeat(2,1fr)}.card{background:#fbfcfa;border:1px solid var(--line);border-radius:12px;padding:18px}.card .big{font-family:Georgia,serif;font-size:2rem;line-height:1;color:var(--teal);font-weight:700;margin:8px 0}.card p{margin:4px 0}.meta{display:grid;grid-template-columns:180px 1fr;gap:5px 14px}.meta dt{font-weight:700;color:var(--muted)}.meta dd{margin:0}.callout{border-left:5px solid var(--orange);background:var(--warnbg);padding:17px 20px;border-radius:0 10px 10px 0;margin:18px 0}.callout strong{color:var(--warn)}.flow{display:grid;grid-template-columns:1fr 38px 1.25fr 38px 1fr;align-items:stretch;gap:8px;margin:20px 0}.flow .node{border:1px solid var(--line);border-radius:14px;padding:18px;background:#f9fbf8}.flow .node.primary{background:var(--teal2);border-color:#a7cfca}.flow .arrow{display:grid;place-items:center;color:var(--orange);font-size:1.8rem}.step{display:inline-grid;place-items:center;width:29px;height:29px;border-radius:50%;background:var(--teal);color:#fff;font-weight:800;margin-bottom:8px}.equation{background:#102b2b;color:#e8f4f1;border-radius:12px;padding:18px 20px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.handoff{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin:20px 0}.handoff div{padding:18px;border:1px solid var(--line);background:#fafcf9}.handoff div:first-child{border-radius:12px 0 0 12px}.handoff div:last-child{border-radius:0 12px 12px 0}.handoff .mid{background:linear-gradient(90deg,var(--teal2),var(--orange2))}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;font-size:.91rem;background:#fff}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#eef3ee;font-weight:800}tr:last-child td{border-bottom:0}.small{font-size:.88rem;color:var(--muted)}.legend{display:flex;flex-wrap:wrap;gap:15px;font-size:.84rem;margin:8px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.bars{display:grid;gap:12px}.bar-row{display:grid;grid-template-columns:115px 1fr 72px;gap:11px;align-items:center}.track{height:24px;background:#edf0ec;border-radius:6px;overflow:hidden;position:relative}.fill{height:100%;border-radius:6px;background:var(--teal)}.fill.orange{background:var(--orange)}.fill.violet{background:var(--violet)}.fill.green{background:var(--green)}.bar-value{font-variant-numeric:tabular-nums;font-weight:800}.campaign{border-top:1px solid var(--line);padding-top:18px;margin-top:20px}.campaign:first-of-type{border-top:0;padding-top:0}.quality-map{display:grid;grid-template-columns:1fr 1fr;gap:18px}.axis{position:relative;height:145px;border-left:2px solid #8b9995;border-bottom:2px solid #8b9995;margin:20px 8px 26px}.axis .label-x{position:absolute;right:0;bottom:-28px;font-size:.78rem}.axis .label-y{position:absolute;left:-6px;top:-24px;font-size:.78rem}.point{position:absolute;width:17px;height:17px;border-radius:50%;transform:translate(-50%,50%);border:2px solid white;box-shadow:0 1px 5px #657}.point.mean{background:var(--orange)}.point.acq{background:var(--violet)}.figure-note{background:#f7f9f6;border:1px dashed #aab9af;border-radius:10px;padding:14px;font-size:.87rem;color:var(--muted);margin-top:14px}.lever{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}.lever .side{padding:18px;border-radius:12px;border:1px solid var(--line)}.lever .balance{font-size:2.3rem;color:var(--orange)}.risk-list,.plain-list{padding-left:1.25rem}.risk-list li::marker{color:var(--orange)}.plain-list li{margin:7px 0}.status{display:inline-block;border-radius:999px;padding:3px 9px;font-size:.78rem;font-weight:800;background:var(--teal2);color:#185d5a}.status.warn{background:var(--orange2);color:#89421f}.citation{word-break:break-word}.footer{color:var(--muted);font-size:.85rem;margin-top:30px;text-align:center}.print-only{display:none}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static}.toc nav{columns:2}.grid.four,.grid.three{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}.meta{grid-template-columns:1fr}.meta dt{margin-top:7px}.quality-map{grid-template-columns:1fr}}
+    @media(max-width:560px){body{font-size:15px}.wrap{width:min(100% - 22px,1180px)}.hero{padding:42px 0 34px}.layout{padding-top:20px;gap:20px}.section{padding:21px;margin-bottom:15px}.grid.four,.grid.three,.grid.two,.handoff{grid-template-columns:1fr}.handoff div:first-child,.handoff div:last-child{border-radius:10px}.bar-row{grid-template-columns:90px 1fr 58px;gap:7px}.toc nav{columns:1}.lever{grid-template-columns:1fr}.lever .balance{transform:rotate(90deg);text-align:center}}
+    @media print{body{background:#fff;font-size:10.5pt}.hero{background:#153c3b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:28px 0}.layout{display:block;padding:18px 0}.toc{display:none}.section{box-shadow:none;border-color:#bbb;padding:20px;break-inside:auto}.section h2{break-after:avoid-page}#evaluation,#code{break-before:page}.flow{grid-template-columns:1fr 24px 1.25fr 24px 1fr!important}.flow .arrow{transform:none!important}.grid.four{grid-template-columns:repeat(4,1fr)!important}.grid.three{grid-template-columns:repeat(3,1fr)!important}.grid.two,.quality-map{grid-template-columns:repeat(2,1fr)!important}.handoff{grid-template-columns:repeat(3,1fr)!important}.lever{grid-template-columns:1fr auto 1fr!important}.card,.flow,.table-wrap,.bars,.callout,.quality-map,.lever{break-inside:avoid}.hero h1{font-size:28pt}.button{border:1px solid #fff}.print-only{display:block}a{color:#164b49;text-decoration:none}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">AI × Antibody · visual paper note · 2026-11-09</div>
+      <h1>生成priorから抗体最適化へ、いつ主導権を渡すか</h1>
+      <p class="lead">CHADは、Proteina-Complexaの生成分布をGPの獲得関数で傾け、de novo発見と少数データ最適化を同じ反復系に置く。3キャンペーンで高いoracle性能を示す一方、検証はwet labではなく回顧的in silico replayである。</p>
+      <div class="badges"><span class="badge">2026 · arXiv v1</span><span class="badge">新着</span><span class="badge">抗体最適化</span><span class="badge">FK steering</span><span class="badge">読む優先度 High</span></div>
+      <div class="hero-links"><a class="button" href="https://arxiv.org/abs/2611.03844">論文ページ</a><a class="button secondary" href="https://doi.org/10.48550/arXiv.2611.03844">DOI</a><a class="button secondary" href="20261109_Probabilistic%20Steering%20of%20Generative%20Priors%20for%20Lab-in-the-Loop%20Antibody%20Optimization.md">Markdown版</a></div>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <aside class="toc" aria-label="目次"><strong>目次</strong><nav>
+      <a href="#takeaways">この論文の要点</a><a href="#background">背景と問題</a><a href="#method">提案手法</a><a href="#evaluation">データと評価</a><a href="#results">主要結果</a><a href="#figures">重要Figure/Table</a><a href="#meaning">創薬への意味</a><a href="#limits">限界</a><a href="#code">Code / License</a><a href="#prereq">前提知識</a><a href="#next">関連・次に試す</a><a href="#sources">検索ログ・出典</a>
+    </nav></aside>
+
+    <main>
+      <section class="section" id="takeaways">
+        <div class="kicker">Executive read</div><h2>この論文の要点</h2>
+        <div class="grid four">
+          <article class="card"><div class="big">1 loop</div><p><strong>生成とBOを接続</strong></p><p class="small">固定した生成priorを、各ラウンドのGP獲得関数で直接steerする。</p></article>
+          <article class="card"><div class="big">3</div><p><strong>抗体キャンペーン</strong></p><p class="small">VHH–PT、scFv–SARS-CoV-2、trastuzumab–HER2。</p></article>
+          <article class="card"><div class="big">1.20–1.51×</div><p><strong>CDR空間被覆AUC</strong></p><p class="small">posterior meanだけでなく不確実性を使う効果。</p></article>
+          <article class="card"><div class="big">0</div><p><strong>新規wet-lab測定</strong></p><p class="small">完了済みcampaignを学習oracleで再生したin silico評価。</p></article>
+        </div>
+        <div class="callout"><strong>一番大事な読み方:</strong> 題名の “Lab-in-the-Loop” は想定用途であり、この論文自体が新規抗体を実験で改善したわけではない。結果は「少数データ最適化アルゴリズムとして有望」という証拠である。</div>
+        <dl class="meta"><dt>原題</dt><dd>Probabilistic Steering of Generative Priors for Lab-in-the-Loop Antibody Optimization</dd><dt>著者</dt><dd>Anisha Parsan, Sebastian Ober, Calvin McCarter, Nick Bhattacharya, Hunter Elliott</dd><dt>所属</dt><dd>MIT / BigHat Biosciences</dd><dt>公開</dt><dd>2026-11-02、arXiv:2611.03844 v1。NeurIPS 2026 GEM・AI4DD workshop採択</dd><dt>選定理由</dt><dd>前回のde novo設計研究の次工程である、低N反復最適化を生成priorと接続する新着方法論だから。</dd></dl>
+      </section>
+
+      <section class="section" id="background">
+        <div class="kicker">Why it matters</div><h2>背景と解決したい問題</h2>
+        <div class="handoff" aria-label="従来工程の3段階">
+          <div><strong>発見 · N=0</strong><br><span class="small">構造条件付き生成モデルは候補を出せるが、hit率・親和性・developabilityはまだ不十分。</span></div>
+          <div class="mid"><strong>低Nの空白</strong><br><span class="small">生成priorをいつ手放し、測定データへどこまで寄せるかが曖昧。</span></div>
+          <div><strong>最適化 · N↑</strong><br><span class="small">GP/BOは測定が増えるほど強いが、初期はサロゲートが不確実。</span></div>
+        </div>
+        <p>既存pipelineでは、生成モデルから得たhitを別のBO stackへ渡す。CHADは、このhandoffを一度の切替ではなく、生成分布を獲得関数で徐々に傾ける確率的推論として定義する。低Nでは構造生成priorを残し、観測が増えてGPの不確実性が縮むほどデータ駆動の活用へ移る、という発想である。</p>
+      </section>
+
+      <section class="section" id="method">
+        <div class="kicker">Method</div><h2>提案手法 CHAD の全体像</h2>
+        <div class="flow" role="img" aria-label="親抗体と測定値からGPを学習し、Proteina-ComplexaをFeynman-Kac steeringして候補バッチを選ぶ流れ">
+          <div class="node"><span class="step">1</span><strong>観測を集約</strong><p class="small">親抗体 + これまでの測定値 D<sub>r</sub>。frameworkは固定し、指定CDRだけを設計。</p></div><div class="arrow">→</div>
+          <div class="node primary"><span class="step">2</span><strong>GPでlogPIを作る</strong><p class="small">one-hot CDR + Tanimoto kernel。予測平均 μ と標準偏差 σ から改善確率を計算。</p></div><div class="arrow">→</div>
+          <div class="node"><span class="step">3</span><strong>生成途中で再標本化</strong><p class="small">Proteina-Complexaの粒子をstep 320/340/360/380で評価し、高logPI粒子を残す。</p></div>
+        </div>
+        <div class="flow">
+          <div class="node"><span class="step">4</span><strong>qHSRIでbatch選択</strong><p class="small">μ–σ Pareto frontから32配列。高予測値だけでなく情報価値も残す。</p></div><div class="arrow">→</div>
+          <div class="node primary"><span class="step">5</span><strong>oracleへquery</strong><p class="small">論文ではlabの代わりに固定oracle。結果をD<sub>r</sub>へ追加しGPを再fit。</p></div><div class="arrow">→</div>
+          <div class="node"><span class="step">6</span><strong>多様なincumbent</strong><p class="small">上位20%からCDR Hamming距離が離れたseedを選び、次roundへ。</p></div>
+        </div>
+        <div class="equation" aria-label="CHADの目的分布">p<sub>r</sub>(x) ∝ p<sub>θ</sub>(x) · exp( λ · a<sub>r</sub>(x) )<br>a<sub>r</sub>(x) = log Φ( [ μ<sub>r</sub>(x) − y* ] / σ<sub>r</sub>(x) )</div>
+        <p class="small">p<sub>θ</sub>: 固定生成prior、a<sub>r</sub>: log probability of improvement、λ: steering強度。微分可能なrewardを要求しないことがFK steeringの実装上の利点。</p>
+        <div class="grid three">
+          <div class="card"><strong>生成設定</strong><p>400 step、γ=0.75でstep 300からwarm start。非CDRを毎step親へclamp。</p></div>
+          <div class="card"><strong>比較法</strong><p>Best-of-N、OberBO、LaMBO。おおむねper-round computeを合わせる。</p></div>
+          <div class="card"><strong>制御レバー</strong><p>λ、粒子数、warm-start、再標本化頻度が探索–活用を変える。</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="evaluation">
+        <div class="kicker">Data & evaluation</div><h2>3キャンペーンとoracle</h2>
+        <div class="table-wrap"><table><thead><tr><th>Campaign</th><th>形式 / 設計範囲</th><th>oracle学習データ</th><th>oracle性能</th></tr></thead><tbody>
+          <tr><td><strong>VHH–PT</strong><br>独自標的</td><td>117 aa<br>3 CDR・31残基</td><td>658,000 phage-display配列でpretrain、1,335 BLI測定でfine-tuneした10-model ensemble</td><td>CV Spearman 0.71<br><span class="status warn">非公開</span></td></tr>
+          <tr><td><strong>scFv–SARS-CoV-2</strong><br>peptide</td><td>264 aa<br>VL 3 CDR・30残基</td><td>59,019 unique VL、random 80/10/10。test n=5,901</td><td>MAE 0.557<br>Spearman 0.858</td></tr>
+          <tr><td><strong>trastuzumab–HER2</strong><br>subdomain IV</td><td>227 aa<br>CDR-H3・10残基</td><td>367,042 CDR-H3 variants、binder / non-binder</td><td>ROC-AUC 0.995<br>PR-AUC 0.990</td></tr>
+        </tbody></table></div>
+        <div class="grid three" style="margin-top:15px">
+          <div class="card"><div class="big">32</div><p>初期配列 / seed</p></div><div class="card"><div class="big">10 × 32</div><p>round × batch</p></div><div class="card"><div class="big">1,056</div><p>methodあたり総design数<br><span class="small">352 query × 3 seeds</span></p></div>
+        </div>
+        <div class="callout"><strong>評価設計の注意:</strong> SARSはsequence-clusterではなくrandom split。HER2はwild-typeがoracle ceilingなので、CDR-H3を50% randomizeした人工的に弱いparent（p≈0.74）から開始。PTはCDR edit distance &gt;9を除外する。いずれも同じ学習oracleを探索と最終評価に使う。</div>
+      </section>
+
+      <section class="section" id="results">
+        <div class="kicker">Results</div><h2>主要結果: CHADは強いが、差の意味は標的ごとに違う</h2>
+        <div class="legend"><span><i class="dot" style="background:var(--orange)"></i>CHAD / FK</span><span><i class="dot" style="background:var(--teal)"></i>Best-of-N</span><span><i class="dot" style="background:var(--green)"></i>OberBO</span><span><i class="dot" style="background:var(--violet)"></i>LaMBO</span></div>
+        <div class="campaign"><h3>PT · best quality（親比、上限表示5.5×）</h3><div class="bars">
+          <div class="bar-row"><span>CHAD</span><div class="track"><div class="fill orange" style="width:92.7%"></div></div><span class="bar-value">5.1×</span></div>
+          <div class="bar-row"><span>Best-of-N</span><div class="track"><div class="fill" style="width:74.5%"></div></div><span>4.1×</span></div>
+          <div class="bar-row"><span>OberBO</span><div class="track"><div class="fill green" style="width:72.7%"></div></div><span>4.0×</span></div>
+          <div class="bar-row"><span>LaMBO</span><div class="track"><div class="fill violet" style="width:89.1%"></div></div><span>4.9×</span></div></div></div>
+        <div class="campaign"><h3>SARS-CoV-2 · best quality（親比、上限表示125×）</h3><div class="bars">
+          <div class="bar-row"><span>CHAD</span><div class="track"><div class="fill orange" style="width:95.4%"></div></div><span class="bar-value">119.3×</span></div>
+          <div class="bar-row"><span>Best-of-N</span><div class="track"><div class="fill" style="width:94.8%"></div></div><span>118.5×</span></div>
+          <div class="bar-row"><span>OberBO</span><div class="track"><div class="fill green" style="width:80.6%"></div></div><span>100.7×</span></div>
+          <div class="bar-row"><span>LaMBO</span><div class="track"><div class="fill violet" style="width:48.6%"></div></div><span>60.7×</span></div></div><p class="small">CHADは首位だが、Best-of-Nとの差は0.8×に過ぎない。</p></div>
+        <div class="campaign"><h3>親配列を上回るdesignの割合</h3><div class="table-wrap"><table><thead><tr><th>Target</th><th>CHAD</th><th>Best-of-N</th><th>OberBO</th><th>LaMBO</th></tr></thead><tbody><tr><td>PT</td><td><strong>91±1%</strong></td><td>83±3%</td><td>69±20%</td><td>77±4%</td></tr><tr><td>SARS-CoV-2</td><td><strong>94±1%</strong></td><td>92±2%</td><td>80±3%</td><td>77±4%</td></tr><tr><td>HER2</td><td><strong>86±2%</strong></td><td>68±3%</td><td>60±10%</td><td>39±7%</td></tr></tbody></table></div><p class="small">HER2のbest/top-10は全法1.000で同点。classifier飽和下では親超え率だけが差を示す。</p></div>
+        <h3>不確実性は何を増やしたか</h3>
+        <div class="quality-map">
+          <div class="card"><strong>mean steering</strong><div class="axis"><span class="label-y">予測quality ↑</span><span class="label-x">CDR多様性 →</span><i class="point mean" style="left:36%;bottom:65%"></i><i class="point mean" style="left:43%;bottom:69%"></i><i class="point mean" style="left:48%;bottom:61%"></i><i class="point mean" style="left:52%;bottom:72%"></i></div><p class="small">高予測値の近傍へ集まりやすい。</p></div>
+          <div class="card"><strong>logPI acquisition steering</strong><div class="axis"><span class="label-y">予測quality ↑</span><span class="label-x">CDR多様性 →</span><i class="point acq" style="left:25%;bottom:63%"></i><i class="point acq" style="left:43%;bottom:70%"></i><i class="point acq" style="left:63%;bottom:65%"></i><i class="point acq" style="left:78%;bottom:68%"></i><i class="point acq" style="left:88%;bottom:58%"></i></div><p class="small">同程度のqualityを保ちつつ被覆を拡大。</p></div>
+        </div>
+        <div class="grid three" style="margin-top:15px"><div class="card"><div class="big">≈2×</div><p>batch選択前のunique variant</p></div><div class="card"><div class="big">1.20–1.51×</div><p>#Circles AUC比</p></div><div class="card"><div class="big">not best</div><p>3標的すべてで平均CDR diversity首位ではない</p></div></div>
+        <div class="figure-note">原論文Figure 1・3とTable 1を参考にした独自の要約図（原図の転載ではない）。軸・配置・配色は再構成。</div>
+      </section>
+
+      <section class="section" id="figures">
+        <div class="kicker">Figure reading</div><h2>重要なFigure / Tableの読み方</h2>
+        <div class="grid three">
+          <article class="card"><span class="status">Fig. 1 + Table 1</span><h3>性能とtrade-off</h3><p>CHADは全標的で集約性能が最良。ただしSARSのbestはBest-of-Nと僅差、HER2はceiling。Figureの上段だけでなくdiversity panelも同時に読む。</p><a href="https://arxiv.org/html/2611.03844v1#S3.SS1">原Figureへ</a></article>
+          <article class="card"><span class="status">Fig. 3</span><h3>不確実性ablation</h3><p>logPIとposterior meanの比較。主効果はfitness向上ではなく、unique high-scoring候補とCDR被覆を残すこと。</p><a href="https://arxiv.org/html/2611.03844v1#S3.SS2">原Figureへ</a></article>
+          <article class="card"><span class="status">Fig. 4, 11–12</span><h3>制御レバー</h3><p>warm-start↓・粒子数↑で探索が広がり、λ↑・再標本化頻度↑で高rewardへ集中。実運用は「自動handoff」より調整が多い。</p><a href="https://arxiv.org/html/2611.03844v1#S3.SS3">原Figureへ</a></article>
+        </div>
+        <h3>探索–活用のレバー（独自再構成）</h3>
+        <div class="lever"><div class="side" style="background:var(--teal2)"><strong>探索を広げる</strong><ul class="plain-list"><li>warm-start fractionを下げる</li><li>粒子数を増やす</li><li>不確実性を含むlogPI</li></ul></div><div class="balance">⇄</div><div class="side" style="background:var(--orange2)"><strong>高rewardへ集中</strong><ul class="plain-list"><li>λを上げる</li><li>再標本化頻度を上げる</li><li>posterior mean寄りにする</li></ul></div></div>
+        <p class="small">論文はarXiv non-exclusive distribution license。Figure再利用可能なCC licenseを確認できなかったため、原図は保存・埋め込みせず、報告値と関係だけを独自に再構成した。</p>
+      </section>
+
+      <section class="section" id="meaning">
+        <div class="kicker">Translation</div><h2>抗体研究・創薬への意味</h2>
+        <div class="grid three">
+          <div class="card"><strong>de novo hitを捨てない</strong><p>生成モデルを初回候補作成器で終わらせず、反復campaignでも構造・配列priorとして残す。</p></div>
+          <div class="card"><strong>初期32件を有効化</strong><p>測定が少ないほどGP単独は不安定。priorとposterior uncertaintyを併用する設計が低Nに合う。</p></div>
+          <div class="card"><strong>多目的へ拡張可能</strong><p>affinity、発現、HIC、非特異結合をPareto-aware acquisitionで統合できる可能性がある。</p></div>
+        </div>
+        <p>framework固定・CDRのみ可変という設定は、既存leadのaffinity maturationへ自然に接続する。ただし、現論文は単一fitnessを最適化し、developabilityは後から計算指標で確認しただけである。創薬価値を示す次の一手は、実測のaffinity・発現・polyreactivityを同じloopで扱う前向きcampaignである。</p>
+      </section>
+
+      <section class="section" id="limits">
+        <div class="kicker">Caveats</div><h2>限界と注意点</h2>
+        <div class="grid two">
+          <div class="card"><h3>著者が明記</h3><ul class="risk-list"><li>de novo hitではなくcampaign由来parentを使用</li><li>wet-labではなく学習oracleで改善を測定</li><li>oracleの分布外exploitが起こりうる</li><li>priorは抗体特異的ではない</li><li>σのround別収縮を未解析</li></ul></div>
+          <div class="card"><h3>精読上の追加注意</h3><ul class="risk-list"><li>SARSはrandom splitでcluster leakage対策が不明</li><li>PTは非公開、距離filter付きで完全再現不能</li><li>HER2 classifierは1.0で飽和</li><li>λ・粒子数・warm-start等の調整余地が大きい</li><li>CHAD固有コードと3 oracleが未公開</li></ul></div>
+        </div>
+        <div class="callout"><strong>結論の境界:</strong> 「CHADが実験で抗体親和性を119倍改善した」ではなく、「既存データで学習したoracle上の回顧simulationにおいて、SARSキャンペーンのbest predicted qualityが親比119.3×だった」が正確。</div>
+      </section>
+
+      <section class="section" id="code">
+        <div class="kicker">Reproducibility</div><h2>Code / License / Weights</h2>
+        <div class="table-wrap"><table><thead><tr><th>項目</th><th>状況</th><th>確認先</th></tr></thead><tbody>
+          <tr><td>CHAD固有コード</td><td><span class="status warn">見つからず</span></td><td>論文、著者GitHub、BigHat organization、GitHub APIを検索</td></tr>
+          <tr><td>生成prior</td><td><span class="status">公開</span> Proteina-Complexa</td><td><a href="https://github.com/NVIDIA-BioNeMo/Proteina-Complexa">公式GitHub</a></td></tr>
+          <tr><td>コードlicense</td><td>Apache-2.0</td><td>root LICENSE → licenses/license_code.txt</td></tr>
+          <tr><td>model weights</td><td><span class="status">公開</span> 約3 GB / protein pair</td><td><a href="https://catalog.ngc.nvidia.com/orgs/nvidia/teams/clara/models/proteina_complexa">NVIDIA NGC</a> · NVIDIA Open Model License</td></tr>
+          <tr><td>dataset license</td><td>Proteina-Complexa同梱対象はCC BY 4.0</td><td>licenses/license_datasets.txt</td></tr>
+          <tr><td>Hugging Face</td><td><span class="status warn">CHAD該当なし</span></td><td>models / datasets / spacesを検索</td></tr>
+          <tr><td>campaign data</td><td>SARS公開、PT非公開</td><td><a href="https://doi.org/10.1038/s41597-022-01779-4">SARS antibody dataset</a></td></tr>
+        </tbody></table></div>
+        <p><strong>再現性判断:</strong> 生成priorとweightsは触れるが、CHAD loop、3 oracle、完全なsplit・評価環境がまとまった公式repoはない。Table 1をend-to-endで再現できる状態ではない。</p>
+      </section>
+
+      <section class="section" id="prereq">
+        <div class="kicker">Primer</div><h2>読む前に知っておきたい概念</h2>
+        <div class="grid two">
+          <div class="card"><strong>Bayesian optimization / GP</strong><p>高価な測定を少数回で最大化する。GPは予測平均μと不確実性σを返し、どこを測ると得かを判断できる。</p></div>
+          <div class="card"><strong>acquisition function</strong><p>次の測定価値を数値化する。logPIは現bestを改善する確率で、CHADでは生成途中のrewardになる。</p></div>
+          <div class="card"><strong>flow matching</strong><p>noiseから配列・構造を段階的に復元する生成法。途中の複数trajectoryを粒子として保持できる。</p></div>
+          <div class="card"><strong>Feynman–Kac steering</strong><p>粒子をreward比例で再標本化し、元の生成priorを高reward領域へ傾ける。reward微分は不要。</p></div>
+          <div class="card"><strong>CDR / framework</strong><p>CDRは抗原認識loop、frameworkはfoldを支える骨格。CHADではframeworkを固定しCDRだけを変える。</p></div>
+          <div class="card"><strong>oracle exploitation</strong><p>予測器の誤差を突く候補が高得点になる現象。in silico最適化の数字をwet-lab成果へ直結できない理由。</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="next">
+        <div class="kicker">Reading path</div><h2>関連論文と次に試すこと</h2>
+        <div class="grid two">
+          <div class="card"><h3>関連して読む</h3><ul class="plain-list"><li><a href="https://arxiv.org/abs/2603.27950">Proteina-Complexa</a>: CHADの生成prior</li><li><a href="https://arxiv.org/abs/2509.24933">Is Sequence Information All You Need for BO of Antibodies?</a>: OberBO</li><li><a href="https://arxiv.org/abs/2412.07763">CloneBO</a>: 免疫進化priorを使う抗体BO</li><li><a href="https://arxiv.org/abs/2611.05270">iGC</a>: SHM prior + RL</li></ul></div>
+          <div class="card"><h3>実装で確認する</h3><ol class="plain-list"><li>公開SARS datasetでsequence-cluster splitを作る</li><li>Proteina-ComplexaのFK searchを固定priorとして動かす</li><li>mean / logPI / UCBを同一budgetで比較する</li><li>holdout oracleとwet-lab surrogateを分離してexploitを監視する</li></ol></div>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <div class="kicker">Audit trail</div><h2>検索ログと出典一覧</h2>
+        <p>arXiv、bioRxiv、PubMedで2026年11月のAI×抗体新着を検索。候補はCHAD、iGC、agentic antibody design、immunogenicity label研究、multi-objective GFlowNet、HCAbLM。新着性、抗体創薬への接続、評価の読み応え、公開priorを総合してCHADを選定した。</p>
+        <ul class="plain-list citation">
+          <li>論文: <a href="https://arxiv.org/abs/2611.03844">arXiv abstract</a> · <a href="https://arxiv.org/html/2611.03844v1">HTML全文</a> · <a href="https://arxiv.org/pdf/2611.03844">PDF</a></li>
+          <li>確認範囲: PDF 12ページ、Figure 1–12、Table 1–5、Methods・Appendix全体</li>
+          <li>論文license: <a href="https://arxiv.org/licenses/nonexclusive-distrib/1.0/">arXiv non-exclusive distribution license</a>。CC再利用条件を確認できず、原図は転載していない</li>
+          <li>実装: <a href="https://github.com/NVIDIA-BioNeMo/Proteina-Complexa">Proteina-Complexa GitHub</a> · <a href="https://research.nvidia.com/labs/genair/proteina-complexa/">project page</a> · <a href="https://catalog.ngc.nvidia.com/orgs/nvidia/teams/clara/models/proteina_complexa">NGC weights</a></li>
+          <li>データ: <a href="https://doi.org/10.1038/s41597-022-01779-4">104,972 SARS-CoV-2 antibody binding interactions</a></li>
+          <li>コード検索: 論文名完全一致、CHAD + antibody + 著者名、著者GitHub、BigHat organization、Hugging Face models/datasets/spaces。CHAD固有公開は見つからず</li>
+        </ul>
+        <p class="footer">リサーチ日 2026-11-09 JST · 事実と解釈を分離し、数値はarXiv v1本文・Appendixで照合。</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
